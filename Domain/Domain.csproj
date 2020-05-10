@@ -5,8 +5,4 @@
     <Nullable>Enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Customer\" />
-  </ItemGroup>
-
 </Project>

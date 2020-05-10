@@ -1,6 +1,10 @@
-﻿using Domain.Category;
+﻿using Domain.Categories;
 using Domain.Common;
-using Domain.ShopItem;
+using Domain.Customers;
+using Domain.OrderDetails;
+using Domain.Orders;
+using Domain.ShopItems;
+using Domain.ShoppingCartItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +15,11 @@ namespace Persistence.Shared
     {
         public DbSet<ShopItem> ShopItems { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
+
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {

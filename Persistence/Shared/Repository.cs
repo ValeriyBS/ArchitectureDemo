@@ -4,7 +4,7 @@ using Domain.Common;
 
 namespace Persistence.Shared
 {
-    internal class Repository<T> : IRepository<T> where T : class, IEntity
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly IDatabaseContext _databaseContext;
 
