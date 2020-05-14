@@ -6,7 +6,7 @@ using Persistence.Shared;
 
 namespace Persistence.Categories
 {
-    public class CategoryRepository : Repository<Customer> , ICustomerRepository
+    public class CategoryRepository : Repository<Category> , ICategoryRepository
     {
         public CategoryRepository(IDatabaseContext databaseContext) : base(databaseContext)
         {

@@ -10,13 +10,12 @@ namespace PersistenceTests.Categories
         [Fact]
         public void TestConstructorShouldCreateRepository()
         {
-            //ToDo
             //Arrange
-            //var mockCategoryRepository = new Mock<IDatabaseContext>();
-            ////Act
-            //var sut = new CategoryRepository(mockCategoryRepository.Object);
-            ////Assert
-            //Assert.NotNull(sut);
+            var mockCategoryRepository = new Mock<IDatabaseContext>();
+            //Act
+            var sut = new CategoryRepository(mockCategoryRepository.Object);
+            //Assert
+            Assert.NotNull(sut);
         }
     }
 }
