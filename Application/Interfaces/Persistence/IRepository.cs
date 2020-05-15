@@ -2,14 +2,14 @@
 
 namespace Application.Interfaces.Persistence
 {
-    public interface IRepository<T>
+    public interface IRepository<TEntity>
     {
-        IQueryable<T> GetAll();
+        IQueryable<TEntity> GetAll();
 
-        T Get(int id);
+        TEntity Get(int id);
 
-        void Add(T entity);
+        void Add(TEntity entity);
 
-        void Remove(T entity);
+        void Remove(TEntity entity);
     }
 }

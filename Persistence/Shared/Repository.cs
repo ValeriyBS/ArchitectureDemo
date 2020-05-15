@@ -4,7 +4,7 @@ using Domain.Common;
 
 namespace Persistence.Shared
 {
-    public class Repository<T> : IRepository<T> where T : class, IEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly IDatabaseContext _databaseContext;
 
@@ -13,25 +13,25 @@ namespace Persistence.Shared
             _databaseContext = databaseContext;
         }
 
-        public IQueryable<T> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return _databaseContext.Set<T>();
+            return _databaseContext.Set<TEntity>();
         }
 
-        public T Get(int id)
+        public TEntity Get(int id)
         {
-            return _databaseContext.Set<T>().Single(t => t.Id == id);
+            return _databaseContext.Set<TEntity>().Single(t => t.Id == id);
         }
 
-        public void Add(T entity)
+        public void Add(TEntity entity)
         {
-            _databaseContext.Set<T>().Add(entity);
+            _databaseContext.Set<TEntity>().Add(entity);
         }
 
 
-        public void Remove(T entity)
+        public void Remove(TEntity entity)
         {
-            _databaseContext.Set<T>().Remove(entity);
+            _databaseContext.Set<TEntity>().Remove(entity);
         }
     }
 }
