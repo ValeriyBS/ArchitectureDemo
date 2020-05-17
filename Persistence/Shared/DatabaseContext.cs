@@ -1,4 +1,5 @@
-﻿using Domain.Categories;
+﻿using System.Collections.Generic;
+using Domain.Categories;
 using Domain.Common;
 using Domain.Customers;
 using Domain.OrderDetails;
@@ -47,41 +48,97 @@ namespace Persistence.Shared
         {
             base.OnModelCreating(modelBuilder);
 
-            //var categoryMen = new Category {Id = 1, Name = "Men"};
-            //var categoryWomen = new Category {Id = 2, Name = "Women"};
-            //var categoryKids = new Category {Id = 3, Name = "Kids"};
-
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "Men" });
-            //modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women" });
-            //modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids" });
+            modelBuilder.Entity<Category>(c =>
+            {
+                c.HasData(new Category {Id = 1, Name = "Men"});
+            });
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women" });
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids" });
 
 
             modelBuilder.Entity<ShopItem>().HasData(new ShopItem
             {
                 Id = 1,
+                CategoryId = 1,
                 Name = "Sleek Trousers",
                 ShortDescription = "Very Sleek Trousers",
                 LongDescription = "Very very sleek trousers",
                 Price = 5.99m,
                 ImageThumbnailUrl = "",
+                ImageUrl = "",
                 InStock = true,
-                CategoryId = 1,
-                Notes = "It is a fine item to have!"});
+                Notes = "It is a fine item to have!"
+            });
 
-            //modelBuilder.Entity<ShopItem>().HasData(new ShopItem
-            //    {Id = 2, Category = categoryMen, CategoryId = 1, Name = "Work Trousers", Price = 8.99m});
-            //modelBuilder.Entity<ShopItem>().HasData(new ShopItem
-            //{
-            //    Id = 3, Category = categoryWomen, CategoryId = 2, Name = "Sleek Dress", Price = 15.99m
-            //});
-            //modelBuilder.Entity<ShopItem>().HasData(new ShopItem
-            //    {Id = 4, Category = categoryWomen, CategoryId = 2, Name = "Work Dress", Price = 20.99m});
-            //modelBuilder.Entity<ShopItem>().HasData(new ShopItem
-            //{
-            //    Id = 5, Category = categoryKids, CategoryId = 3, Name = "Sleek Diapers", Price = 10.99m
-            //});
-            //modelBuilder.Entity<ShopItem>().HasData(new ShopItem
-            //    {Id = 6, Category = categoryKids, CategoryId = 3, Name = "Work Diapers", Price = 12.99m});
+            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            {
+                Id = 2,
+                CategoryId = 1,
+                Name = "Work Trousers",
+                ShortDescription = "Heavy Duty Trousers",
+                LongDescription = "Very heavy duty trousers",
+                Price = 28.99m,
+                ImageThumbnailUrl = "",
+                ImageUrl = "",
+                InStock = true,
+                Notes = "It is a fine item to have!"
+            });
+
+            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            {
+                Id = 3,
+                CategoryId = 2,
+                Name = "Sleek Dress",
+                ShortDescription = "Very Sleek dress",
+                LongDescription = "Very very sleek dress",
+                Price = 0.99m,
+                ImageThumbnailUrl = "",
+                ImageUrl = "",
+                InStock = true,
+                Notes = "It is a fine item to have!"
+            });
+
+            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            {
+                Id = 4,
+                CategoryId = 2,
+                Name = "Work Dress",
+                ShortDescription = "Heavy duty work dress",
+                LongDescription = "Very heavy duty work dress",
+                Price = 15.99m,
+                ImageThumbnailUrl = "",
+                ImageUrl = "",
+                InStock = true,
+                Notes = "It is a fine item to have!"
+            });
+
+            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            {
+                Id = 5,
+                CategoryId = 3,
+                Name = "Sleek Diapers",
+                ShortDescription = "Very sleek diapers",
+                LongDescription = "Very very sleek diapers",
+                Price = 0.99m,
+                ImageThumbnailUrl = "",
+                ImageUrl = "",
+                InStock = true,
+                Notes = "It is a fine item to have!"
+            });
+
+            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            {
+                Id = 6,
+                CategoryId = 3,
+                Name = "Work diapers",
+                ShortDescription = "Heavy duty work diapers",
+                LongDescription = "Very heavy duty diapers",
+                Price = 15.99m,
+                ImageThumbnailUrl = "",
+                ImageUrl = "",
+                InStock = true,
+                Notes = "It is a fine item to have!"
+            });
 
             modelBuilder.Entity<Customer>().HasData(new Customer
             {

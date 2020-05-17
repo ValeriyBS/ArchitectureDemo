@@ -10,7 +10,7 @@ namespace Domain.Categories
 
         public string Description { get; set; } = "";
 
-        public List<ShopItem> ShopItems { get; set; } = new List<ShopItem>();
+        public List<ShopItem> ShopItems { get; set; } = null!;
         public int Id { get; set; }
     }
 }

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersistenceTests", "PersistenceTests\PersistenceTests.csproj", "{983A3A7F-A0F0-479E-95C8-2BCB4A7D6CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{9F0669BD-8A70-4972-A84F-08098C6B8208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{9F0669BD-8A70-4972-A84F-08098C6B8208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
