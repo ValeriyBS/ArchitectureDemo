@@ -18,6 +18,18 @@
     <Compile Remove="Migrations\20200515103300_ItemsSeed.Designer.cs" />
     <Compile Remove="Migrations\20200515105701_ItemsSeed.cs" />
     <Compile Remove="Migrations\20200515105701_ItemsSeed.Designer.cs" />
+    <Compile Remove="Migrations\20200517140248_initial.cs" />
+    <Compile Remove="Migrations\20200517140248_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200517140603_initial.cs" />
+    <Compile Remove="Migrations\20200517140603_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200517140819_initial.cs" />
+    <Compile Remove="Migrations\20200517140819_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200517141225_initial.cs" />
+    <Compile Remove="Migrations\20200517141225_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200517171135_initial.cs" />
+    <Compile Remove="Migrations\20200517171135_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200517171821_initial.cs" />
+    <Compile Remove="Migrations\20200517171821_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +39,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <None Update="settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

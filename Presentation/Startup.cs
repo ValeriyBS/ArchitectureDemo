@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Persistence.AutoFac;
 using Persistence.Categories;
 using Persistence.Shared;
 
@@ -31,9 +32,7 @@ namespace Presentation
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<ICategoryRepository,FakeCategoryRepository>();
             services.AddControllersWithViews();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<RazorViewEngineOptions>(o =>
             {
@@ -88,9 +87,7 @@ namespace Presentation
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<FakeCategoryRepository>().As<IRepository<Category>>().InstancePerDependency();
-            builder.RegisterType<FakeCategoryRepository>().As<ICategoryRepository>().InstancePerDependency();
-
+            builder.RegisterModule<PersistenceModule>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
 using Domain.Categories;
 using Domain.Common;
 using Domain.Customers;
@@ -13,9 +14,6 @@ namespace Persistence.Shared
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-        {
-        }
 
         public DbSet<ShopItem> ShopItems { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
@@ -34,24 +32,21 @@ namespace Persistence.Shared
             SaveChanges();
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    var configuration = new ConfigurationBuilder()
-        //        .AddJsonFile("appsettings.json")
-        //        .Build();
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("settings.json")
+                .Build();
 
-        //    optionsBuilder
-        //        .UseSqlServer(configuration.GetConnectionString("MyConnection"));
-        //}
+            optionsBuilder
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Category>(c =>
-            {
-                c.HasData(new Category {Id = 1, Name = "Men"});
-            });
+            
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "Men" });
             modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women" });
             modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids" });
 
@@ -145,6 +140,30 @@ namespace Persistence.Shared
                 Id = 1, FirstName = "Gordon", LastName = "Freeman", Email = "Gordon.Freeman@Gmail.com",
                 City = "Washington", Country = "USA", State = "Washington"
             });
+
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                modelBuilder.Entity(entityType.Name).Property<DateTime>("Created").HasDefaultValue(DateTime.UtcNow);
+                modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified").HasDefaultValue(DateTime.UtcNow);
+            }
+        }
+
+
+        public override int SaveChanges()
+        {
+            var timestamp = DateTime.UtcNow;
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e=>e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                entry.Property("LastModified").CurrentValue = timestamp;
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Property("Created").CurrentValue = timestamp;
+                }
+            }
+            return base.SaveChanges();
         }
     }
 }
