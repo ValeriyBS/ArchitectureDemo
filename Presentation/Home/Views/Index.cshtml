@@ -1,12 +1,11 @@
-﻿@{
-    ViewBag.Title = "Categories";
-}
+﻿@model IEnumerable<CategoryModel>
 <h2>Home Page</h2>
 <table class="table table-striped">
     <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Description</th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +14,7 @@
         <tr>
             <td>@category.Id</td>
             <td>@category.Name</td>
+            <td>@category.Description</td>
         </tr>
     }
     </tbody>

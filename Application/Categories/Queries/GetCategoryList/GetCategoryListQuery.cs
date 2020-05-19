@@ -18,7 +18,9 @@ namespace Application.Categories.Queries.GetCategoryList
                 .Select(c => new CategoryModel()
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    Description = c.Description
+                    
                 });
 
             return categories.ToList();

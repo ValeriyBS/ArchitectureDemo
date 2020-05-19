@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.AutoFac;
 using Application.Categories.Queries.GetCategoryList;
 using Application.Interfaces.Persistence;
 using Autofac;
 using Domain.Categories;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +22,7 @@ using Persistence.Shared;
 
 namespace Presentation
 {
+   
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -39,6 +42,7 @@ namespace Presentation
                 // {2} is area, {1} is controller,{0} is the action    
                 o.ViewLocationFormats.Clear();
                 o.ViewLocationFormats.Add("/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
+                o.ViewLocationFormats.Add("/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
                 //o.ViewLocationFormats.Add("/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
 
                 // Untested. You could remove this if you don't care about areas.
@@ -47,6 +51,9 @@ namespace Presentation
                 //o.AreaViewLocationFormats.Add("/Areas/{2}/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
                 //o.AreaViewLocationFormats.Add("/Areas/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
             });
+            services.AddHttpContextAccessor();
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +75,7 @@ namespace Presentation
 
                 app.UseHttpsRedirection();
                 app.UseStaticFiles();
-                //app.UseSession();
+                app.UseSession();
 
                 app.UseRouting();
                 //app.UseAuthentication();
@@ -88,6 +95,7 @@ namespace Presentation
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<PersistenceModule>();
+            builder.RegisterModule<ApplicationModule>();
         }
     }
 }

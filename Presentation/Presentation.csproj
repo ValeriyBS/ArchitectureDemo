@@ -9,8 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Home\Model\" />
+    <Folder Include="Category\Models\" />
+    <Folder Include="Home\Models\" />
     <Folder Include="Pages\Home\" />
+    <Folder Include="ShopItems\Models\" />
+    <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
   <ItemGroup>

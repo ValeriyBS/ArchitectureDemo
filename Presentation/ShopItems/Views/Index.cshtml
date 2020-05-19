@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ShopItemsModel>
+<h2>Home Page</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>ShortDescription</th>
+            <th>LongDescription</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+                <td>@category.ShortDescription</td>
+                <td>@category.LongDescription</td>
+                <td>@category.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>

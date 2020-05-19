@@ -14,6 +14,12 @@ namespace Persistence.Shared
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+        }
+        public DatabaseContext()
+        {
+        }
 
         public DbSet<ShopItem> ShopItems { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
@@ -34,6 +40,8 @@ namespace Persistence.Shared
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (optionsBuilder.IsConfigured) return;
+
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("settings.json")
                 .Build();
@@ -46,9 +54,9 @@ namespace Persistence.Shared
         {
             
             //base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "Men" });
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women" });
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids" });
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "Men", Description = "Fancy items for men"});
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women", Description = "Fancy items for Women" });
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids", Description = "Fancy items for kids" });
 
 
             modelBuilder.Entity<ShopItem>().HasData(new ShopItem

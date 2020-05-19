@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Categories.Queries.GetCategoryList;
 using Application.Interfaces.Persistence;
+using Application.ShopItems.Queries.GetShopItemsList;
 using Autofac;
 
 namespace Application.AutoFac
@@ -10,7 +12,8 @@ namespace Application.AutoFac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<CategoryRepository>().As<ICategoryRepository>>().Instance
+            builder.RegisterType<GetCategoryListQuery>().As<IGetCategoryListQuery>().InstancePerDependency();
+            builder.RegisterType<GetShopItemsListQuery>().As<IGetShopItemsListQuery>().InstancePerDependency();
         }
     }
 }

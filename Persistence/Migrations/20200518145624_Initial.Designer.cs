@@ -10,7 +10,7 @@ using Persistence.Shared;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200518070037_Initial")]
+    [Migration("20200518145624_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 313, DateTimeKind.Utc).AddTicks(4460));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 429, DateTimeKind.Utc).AddTicks(4592));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -40,7 +40,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(4121));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 434, DateTimeKind.Utc).AddTicks(9887));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -54,19 +54,19 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "",
+                            Description = "Fancy items for men",
                             Name = "Men"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "",
+                            Description = "Fancy items for Women",
                             Name = "Women"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "",
+                            Description = "Fancy items for kids",
                             Name = "Kids"
                         });
                 });
@@ -100,7 +100,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(5232));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(1404));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -115,7 +115,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(6549));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(2485));
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -171,12 +171,12 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(7674));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(3508));
 
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(8430));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(4327));
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -209,7 +209,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(9205));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(5125));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -217,7 +217,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 318, DateTimeKind.Utc).AddTicks(9957));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(5906));
 
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime2");
@@ -245,7 +245,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 319, DateTimeKind.Utc).AddTicks(990));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(6887));
 
                     b.Property<string>("ImageThumbnailUrl")
                         .IsRequired()
@@ -261,7 +261,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 319, DateTimeKind.Utc).AddTicks(2008));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(8431));
 
                     b.Property<string>("LongDescription")
                         .IsRequired()
@@ -382,12 +382,12 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 319, DateTimeKind.Utc).AddTicks(2666));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(9122));
 
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 5, 18, 7, 0, 36, 319, DateTimeKind.Utc).AddTicks(3296));
+                        .HasDefaultValue(new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(9806));
 
                     b.Property<int>("ShopItemId")
                         .HasColumnType("int");

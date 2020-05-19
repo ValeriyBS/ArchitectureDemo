@@ -15,16 +15,16 @@ namespace Presentation.Home
 {
     public class HomeController : Controller
     {
-        private readonly ICategoryRepository _query;
+        private readonly IGetCategoryListQuery _getCategoryList;
 
-        public HomeController(ICategoryRepository query)
+        public HomeController(IGetCategoryListQuery getCategoryList)
         {
-            _query = query;
+            _getCategoryList = getCategoryList;
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var categories = _query.GetAll();
+            var categories = _getCategoryList.Execute();
             return View(categories);
         }
     }
