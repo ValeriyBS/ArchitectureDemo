@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 429, DateTimeKind.Utc).AddTicks(4592)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 434, DateTimeKind.Utc).AddTicks(9887))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 655, DateTimeKind.Utc).AddTicks(7713)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 660, DateTimeKind.Utc).AddTicks(4847))
                 },
                 constraints: table =>
                 {
@@ -39,8 +39,8 @@ namespace Persistence.Migrations
                     Country = table.Column<string>(maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 25, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(1404)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(2485))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 660, DateTimeKind.Utc).AddTicks(6036)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 660, DateTimeKind.Utc).AddTicks(6800))
                 },
                 constraints: table =>
                 {
@@ -62,8 +62,8 @@ namespace Persistence.Migrations
                     InStock = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     Notes = table.Column<string>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(6887)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(8431))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 661, DateTimeKind.Utc).AddTicks(1050)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 661, DateTimeKind.Utc).AddTicks(2883))
                 },
                 constraints: table =>
                 {
@@ -85,8 +85,8 @@ namespace Persistence.Migrations
                     CustomerId = table.Column<int>(nullable: false),
                     OrderTotal = table.Column<decimal>(nullable: false),
                     OrderPlaced = table.Column<DateTime>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(5125)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(5906))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 660, DateTimeKind.Utc).AddTicks(9165)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 661, DateTimeKind.Utc).AddTicks(22))
                 },
                 constraints: table =>
                 {
@@ -108,8 +108,8 @@ namespace Persistence.Migrations
                     ShopItemId = table.Column<int>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     ShoppingCartId = table.Column<string>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(9122)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(9806))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 661, DateTimeKind.Utc).AddTicks(4534)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 661, DateTimeKind.Utc).AddTicks(6699))
                 },
                 constraints: table =>
                 {
@@ -129,12 +129,11 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
-                    PieId = table.Column<int>(nullable: false),
+                    ShopItemId = table.Column<int>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    ShopItemId = table.Column<int>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(3508)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 18, 14, 56, 24, 435, DateTimeKind.Utc).AddTicks(4327))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 660, DateTimeKind.Utc).AddTicks(7592)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 5, 20, 16, 38, 1, 660, DateTimeKind.Utc).AddTicks(8356))
                 },
                 constraints: table =>
                 {

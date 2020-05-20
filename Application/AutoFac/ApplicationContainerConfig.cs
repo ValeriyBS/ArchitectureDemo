@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
+using Common.AutoFac;
+using Common.Dates;
 
 namespace Application.AutoFac
 {
@@ -10,6 +12,8 @@ namespace Application.AutoFac
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
+
+            builder.RegisterModule<CommonModule>();
 
             return builder.Build();
         }

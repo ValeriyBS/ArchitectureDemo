@@ -20,7 +20,7 @@ namespace Presentation.ShopItems
         // GET: /<controller>/
         public IActionResult Index(int id)
         {
-            return View(_getShopItemsListQuery.Execute(id));
+            return id>0 ? View(_getShopItemsListQuery.Execute(id)) : View(_getShopItemsListQuery.Execute());
         }
 
     }

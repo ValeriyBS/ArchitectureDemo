@@ -9,9 +9,9 @@ namespace Domain.Orders
 {
     public class Order : IEntity
     {
-        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public List<OrderDetail> OrderDetails { get; set; } = null!;
 
-        public Customer Customer { get; set; } = new Customer();
+        public Customer Customer { get; set; } = null!;
 
         [ScaffoldColumn(false)] public decimal OrderTotal { get; set; }
 
