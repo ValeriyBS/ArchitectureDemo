@@ -7,7 +7,9 @@
 
   <ItemGroup>
     <Folder Include="Categories\Commands\" />
+    <Folder Include="Orders\Queries\" />
     <Folder Include="ShopItems\Commands\" />
+    <Folder Include="ShoppingCartItems\Commands\" />
   </ItemGroup>
 
   <ItemGroup>

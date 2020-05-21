@@ -4,6 +4,7 @@ using System.Text;
 using Application.Categories.Queries.GetCategoryList;
 using Application.Interfaces.Persistence;
 using Application.ShopItems.Queries.GetShopItemsList;
+using Application.ShoppingCartItems.Queries;
 using Autofac;
 
 namespace Application.AutoFac
@@ -14,6 +15,7 @@ namespace Application.AutoFac
         {
             builder.RegisterType<GetCategoryListQuery>().As<IGetCategoryListQuery>().InstancePerDependency();
             builder.RegisterType<GetShopItemsListQuery>().As<IGetShopItemsListQuery>().InstancePerDependency();
+            builder.RegisterType<GetShoppingCartItems>().As<IGetShoppingCartItems>().InstancePerDependency();
         }
     }
 }

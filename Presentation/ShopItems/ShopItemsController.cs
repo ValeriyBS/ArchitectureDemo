@@ -11,16 +11,16 @@ namespace Presentation.ShopItems
 {
     public class ShopItemsController : Controller
     {
-        private readonly IGetShopItemsListQuery _getShopItemsListQuery;
+        private readonly IGetShopItemsList _getShopItemsList;
 
-        public ShopItemsController(IGetShopItemsListQuery getShopItemsListQuery)
+        public ShopItemsController(IGetShopItemsList getShopItemsList)
         {
-            _getShopItemsListQuery = getShopItemsListQuery;
+            _getShopItemsList = getShopItemsList;
         }
         // GET: /<controller>/
         public IActionResult Index(int id)
         {
-            return id>0 ? View(_getShopItemsListQuery.Execute(id)) : View(_getShopItemsListQuery.Execute());
+            return id>0 ? View(_getShopItemsList.Execute(id)) : View(_getShopItemsList.Execute());
         }
 
     }

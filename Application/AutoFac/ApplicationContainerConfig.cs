@@ -14,6 +14,7 @@ namespace Application.AutoFac
             var builder = new ContainerBuilder();
 
             builder.RegisterModule<CommonModule>();
+            builder.RegisterModule<ApplicationModule>();
 
             return builder.Build();
         }
