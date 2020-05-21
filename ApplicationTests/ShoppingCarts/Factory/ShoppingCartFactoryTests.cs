@@ -58,8 +58,7 @@ namespace ApplicationTests.ShoppingCarts.Factory
             _shoppingCartItems = new List<ShoppingCartItem>
             {
                 _shoppingCartItem1,
-                _shoppingCartItem2,
-                shoppingCartItem3
+                _shoppingCartItem2
             };
         }
 
@@ -72,9 +71,14 @@ namespace ApplicationTests.ShoppingCarts.Factory
             //Arrange
             const string cartId = "uniqueCartId";
             var expectedShoppingCart = new ShoppingCart(cartId);
+            expectedShoppingCart.ShoppingCartItems.Add(_shoppingCartItem1);
+            expectedShoppingCart.ShoppingCartItems.Add(_shoppingCartItem2);
+
 
             var mockGetShoppingCartItems = new Mock<IGetShoppingCartItemsQuery>();
 
+            mockGetShoppingCartItems.Setup(g => g.Execute(cartId))
+                .Returns(_shoppingCartItems);
 
 
             var sut = new ShoppingCartFactory(mockGetShoppingCartItems.Object);
@@ -86,6 +90,8 @@ namespace ApplicationTests.ShoppingCarts.Factory
             //Assert
 
             Assert.Equal(expectedShoppingCart.CartId,result.CartId);
+
+            Assert.Equal(expectedShoppingCart.ShoppingCartItems,result.ShoppingCartItems);
 
 
         }

@@ -17,9 +17,10 @@ namespace Application.ShoppingCarts.Factory
         }
         public ShoppingCart Create(string cartId)
         {
-            var shoppingCart = new ShoppingCart(cartId)
+            var newCartId = cartId ?? Guid.NewGuid().ToString();
+            var shoppingCart = new ShoppingCart(newCartId)
             {
-                ShoppingCartItems = _getShoppingCartItemsQuery.Execute(cartId)
+                ShoppingCartItems = _getShoppingCartItemsQuery.Execute(newCartId)
             };
             return shoppingCart;
         }
