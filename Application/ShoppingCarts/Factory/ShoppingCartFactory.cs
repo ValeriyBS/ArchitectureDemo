@@ -9,17 +9,17 @@ namespace Application.ShoppingCarts.Factory
 {
     public class ShoppingCartFactory
     {
-        private readonly IGetShoppingCartItems _getShoppingCartItems;
+        private readonly IGetShoppingCartItemsQuery _getShoppingCartItemsQuery;
 
-        public ShoppingCartFactory(IGetShoppingCartItems getShoppingCartItems)
+        public ShoppingCartFactory(IGetShoppingCartItemsQuery getShoppingCartItemsQuery)
         {
-            _getShoppingCartItems = getShoppingCartItems;
+            _getShoppingCartItemsQuery = getShoppingCartItemsQuery;
         }
         public ShoppingCart Create(string cartId)
         {
             var shoppingCart = new ShoppingCart(cartId)
             {
-                ShoppingCartItems = _getShoppingCartItems.Execute(cartId)
+                ShoppingCartItems = _getShoppingCartItemsQuery.Execute(cartId)
             };
             return shoppingCart;
         }

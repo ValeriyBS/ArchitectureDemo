@@ -7,11 +7,11 @@ using Domain.ShoppingCartItems;
 
 namespace Application.ShoppingCartItems.Queries
 {
-    public class GetShoppingCartItems : IGetShoppingCartItems
+    public class GetShoppingCartItemsQuery : IGetShoppingCartItemsQuery
     {
         private readonly IShoppingCartItemRepository _shoppingCartItemRepository;
 
-        public GetShoppingCartItems(IShoppingCartItemRepository shoppingCartItemRepository)
+        public GetShoppingCartItemsQuery(IShoppingCartItemRepository shoppingCartItemRepository)
         {
             _shoppingCartItemRepository = shoppingCartItemRepository;
         }

@@ -15,7 +15,7 @@ namespace Application.AutoFac
         {
             builder.RegisterType<GetCategoryListQuery>().As<IGetCategoryListQuery>().InstancePerDependency();
             builder.RegisterType<GetShopItemsListQuery>().As<IGetShopItemsListQuery>().InstancePerDependency();
-            builder.RegisterType<GetShoppingCartItems>().As<IGetShoppingCartItems>().InstancePerDependency();
+            builder.RegisterType<GetShoppingCartItemsQuery>().As<IGetShoppingCartItemsQuery>().InstancePerDependency();
         }
     }
 }
