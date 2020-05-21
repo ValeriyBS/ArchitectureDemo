@@ -11,9 +11,9 @@ namespace Presentation.ShopItems
 {
     public class ShopItemsController : Controller
     {
-        private readonly IGetShopItemsList _getShopItemsList;
+        private readonly IGetShopItemsListQuery _getShopItemsList;
 
-        public ShopItemsController(IGetShopItemsList getShopItemsList)
+        public ShopItemsController(IGetShopItemsListQuery getShopItemsList)
         {
             _getShopItemsList = getShopItemsList;
         }

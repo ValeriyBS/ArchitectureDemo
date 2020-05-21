@@ -6,12 +6,12 @@ namespace Application.ShoppingCarts.Queries
     public class ShoppingCart
     {
 
-        public ShoppingCart(string cartId)
+        public ShoppingCart(string uniqueCartId)
         {
-            CartId = cartId;
+            UniqueCartId = uniqueCartId;
         }
 
-        public string CartId { get; } 
+        public string UniqueCartId { get; } 
         public List<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
 
     }
