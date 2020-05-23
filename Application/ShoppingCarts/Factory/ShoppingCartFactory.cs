@@ -7,7 +7,7 @@ using Domain.ShoppingCartItems;
 
 namespace Application.ShoppingCarts.Factory
 {
-    public class ShoppingCartFactory
+    public class ShoppingCartFactory : IShoppingCartFactory
     {
         private readonly IGetShoppingCartItemsQuery _getShoppingCartItemsQuery;
 
