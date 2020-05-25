@@ -11,14 +11,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in Model)
+        @foreach (var shopItemsModel in Model)
         {
             <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
-                <td>@category.ShortDescription</td>
-                <td>@category.LongDescription</td>
-                <td>@category.Price</td>
+                <td>@shopItemsModel.Id</td>
+                <td>@shopItemsModel.Name</td>
+                <td>@shopItemsModel.ShortDescription</td>
+                <td>@shopItemsModel.LongDescription</td>
+                <td>@shopItemsModel.Price</td>
+                <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@shopItemsModel.Id">Add to Cart</a></td>
             </tr>
         }
     </tbody>

@@ -3,9 +3,11 @@ using Autofac;
 using Common.Dates;
 using Domain.Categories;
 using Domain.ShopItems;
+using Domain.ShoppingCartItems;
 using Persistence.Categories;
 using Persistence.Shared;
 using Persistence.ShopItems;
+using Persistence.ShoppingCartItems;
 
 namespace Persistence.AutoFac
 {
@@ -20,6 +22,11 @@ namespace Persistence.AutoFac
 
             builder.RegisterType<Repository<ShopItem>>().As<IRepository<ShopItem>>().InstancePerDependency();
             builder.RegisterType<ShopItemRepository>().As<IShopItemRepository>().InstancePerDependency();
+
+            builder.RegisterType<Repository<ShoppingCartItem>>().As<IRepository<ShoppingCartItem>>()
+                .InstancePerDependency();
+            builder.RegisterType<ShoppingCartItemRepository>().As<IShoppingCartItemRepository>()
+                .InstancePerDependency();
         }
     }
 }

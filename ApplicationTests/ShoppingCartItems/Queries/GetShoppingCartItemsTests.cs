@@ -75,7 +75,7 @@ namespace ApplicationTests.ShoppingCartItems.Queries
                 .Setup(s => s.GetAll())
                 .Returns(_shoppingCartItems.AsQueryable);
 
-            var sut = new GetShoppingCartItemsQuery(mockShoppingCartItemRepository.Object);
+            var sut = new GetShoppingCartItemsListQuery(mockShoppingCartItemRepository.Object);
             //act
 
             var results = sut.Execute(testCartId);
@@ -102,7 +102,7 @@ namespace ApplicationTests.ShoppingCartItems.Queries
 
             mockShoppingCartItemRepository.Setup(s => s.GetAll()).Returns(_shoppingCartItems.AsQueryable);
 
-            var sut = new GetShoppingCartItemsQuery(mockShoppingCartItemRepository.Object);
+            var sut = new GetShoppingCartItemsListQuery(mockShoppingCartItemRepository.Object);
             //act
 
             var results = sut.Execute(testCartId);

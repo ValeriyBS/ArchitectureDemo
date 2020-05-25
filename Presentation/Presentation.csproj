@@ -15,7 +15,6 @@
     <Folder Include="Pages\Home\" />
     <Folder Include="ShopItems\Models\" />
     <Folder Include="ShoppingCarts\Models\" />
-    <Folder Include="ShoppingCarts\Views\" />
     <Folder Include="wwwroot\Images\" />
     <Folder Include="wwwroot\css\" />
   </ItemGroup>

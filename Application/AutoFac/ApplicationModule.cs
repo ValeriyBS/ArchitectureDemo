@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Application.Categories.Queries.GetCategoryList;
-using Application.Interfaces.Persistence;
+﻿using Application.Categories.Queries.GetCategoryList;
 using Application.ShopItems.Queries.GetShopItemsList;
+using Application.ShoppingCartItems.Commands;
 using Application.ShoppingCartItems.Queries;
 using Application.ShoppingCarts.Factory;
+using Application.ShoppingCarts.Queries;
 using Autofac;
 
 namespace Application.AutoFac
@@ -16,8 +14,11 @@ namespace Application.AutoFac
         {
             builder.RegisterType<GetCategoryListQuery>().As<IGetCategoryListQuery>().InstancePerDependency();
             builder.RegisterType<GetShopItemsListQuery>().As<IGetShopItemsListQuery>().InstancePerDependency();
-            builder.RegisterType<GetShoppingCartItemsQuery>().As<IGetShoppingCartItemsQuery>().InstancePerDependency();
+            builder.RegisterType<GetShoppingCartItemsListQuery>().As<IGetShoppingCartItemsListQuery>().InstancePerDependency();
             builder.RegisterType<ShoppingCartFactory>().As<IShoppingCartFactory>().InstancePerDependency();
+            builder.RegisterType<ShoppingCart>().As<IShoppingCart>().InstancePerLifetimeScope();
+            builder.RegisterType<AddShoppingCartItemCommand>().As<IAddShoppingCartItemCommand>()
+                .InstancePerLifetimeScope();
         }
     }
 }

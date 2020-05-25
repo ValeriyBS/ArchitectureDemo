@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Application.AutoFac;
 using Application.Categories.Queries.GetCategoryList;
 using Application.Interfaces.Persistence;
+using Application.ShoppingCarts.Factory;
+using Application.ShoppingCarts.Queries;
 using Autofac;
 using Domain.Categories;
 using JetBrains.Annotations;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Persistence.AutoFac;
 using Persistence.Categories;
 using Persistence.Shared;
+using Presentation.ShoppingCarts.Services.Queries;
 
 namespace Presentation
 {
@@ -35,7 +38,7 @@ namespace Presentation
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+           
 
             services.Configure<RazorViewEngineOptions>(o =>
             {
@@ -51,7 +54,10 @@ namespace Presentation
                 //o.AreaViewLocationFormats.Add("/Areas/{2}/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
                 //o.AreaViewLocationFormats.Add("/Areas/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
             });
+
+            services.AddScoped<GetShoppingCart>(GetShoppingCart.Execute);
             services.AddHttpContextAccessor();
+            services.AddControllersWithViews();
             services.AddSession();
 
         }
@@ -96,6 +102,7 @@ namespace Presentation
         {
             builder.RegisterModule<PersistenceModule>();
             builder.RegisterModule<ApplicationModule>();
+            //builder.RegisterType<ShoppingCart>().WithParameter(""," GetShoppingCart.Execute(sp)");
         }
     }
 }

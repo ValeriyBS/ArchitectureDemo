@@ -3,7 +3,7 @@ using Domain.ShoppingCartItems;
 
 namespace Application.ShoppingCartItems.Queries
 {
-    public interface IGetShoppingCartItemsQuery
+    public interface IGetShoppingCartItemsListQuery
     {
         List<ShoppingCartItem> Execute(string cartId);
     }

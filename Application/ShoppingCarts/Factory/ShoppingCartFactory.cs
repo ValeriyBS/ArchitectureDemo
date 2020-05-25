@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Application.ShoppingCartItems.Queries;
 using Application.ShoppingCarts.Queries;
-using Domain.ShoppingCartItems;
 
 namespace Application.ShoppingCarts.Factory
 {
     public class ShoppingCartFactory : IShoppingCartFactory
     {
-        private readonly IGetShoppingCartItemsQuery _getShoppingCartItemsQuery;
+        //private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
 
-        public ShoppingCartFactory(IGetShoppingCartItemsQuery getShoppingCartItemsQuery)
-        {
-            _getShoppingCartItemsQuery = getShoppingCartItemsQuery;
-        }
+        //public ShoppingCartFactory(IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery)
+        //{
+        //    _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
+        //}
         public ShoppingCart Create(string cartId)
         {
+            //var container = ApplicationContainerConfig.Configure();
+
+            //var getShoppingCartItemsListQuery = container.Resolve<IGetShoppingCartItemsListQuery>();
+
             var newCartId = cartId ?? Guid.NewGuid().ToString();
-            var shoppingCart = new ShoppingCart(newCartId)
-            {
-                ShoppingCartItems = _getShoppingCartItemsQuery.Execute(newCartId)
-            };
+            var shoppingCart = new ShoppingCart(newCartId);
             return shoppingCart;
         }
     }

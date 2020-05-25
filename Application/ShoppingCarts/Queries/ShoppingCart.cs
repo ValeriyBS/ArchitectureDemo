@@ -4,7 +4,7 @@ using Domain.ShoppingCartItems;
 
 namespace Application.ShoppingCarts.Queries
 {
-    public class ShoppingCart : IEquatable<ShoppingCart>
+    public class ShoppingCart : IEquatable<ShoppingCart>, IShoppingCart
     {
 
         public ShoppingCart(string cartId)
