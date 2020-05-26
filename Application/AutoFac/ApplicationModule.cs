@@ -19,6 +19,10 @@ namespace Application.AutoFac
             builder.RegisterType<ShoppingCart>().As<IShoppingCart>().InstancePerLifetimeScope();
             builder.RegisterType<AddShoppingCartItemCommand>().As<IAddShoppingCartItemCommand>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<RemoveShoppingCartItemCommand>().As<IRemoveShoppingCartItemCommand>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<GetShopItemsListByCategoryQuery>().As<IGetShopItemsListByCategoryQuery>()
+                .InstancePerDependency();
         }
     }
 }

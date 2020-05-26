@@ -1,34 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Application.Interfaces.Persistence;
 using Domain.ShopItems;
 
 namespace Application.ShopItems.Queries.GetShopItemsList
 {
-    public class GetShopItemsListQuery : IGetShopItemsListQuery
+    public class GetShopItemsListByCategoryQuery : IGetShopItemsListByCategoryQuery
     {
         private readonly IShopItemRepository _shopItemRepository;
 
-        public GetShopItemsListQuery(IShopItemRepository shopItemRepository)
+        public GetShopItemsListByCategoryQuery(IShopItemRepository shopItemRepository)
         {
             _shopItemRepository = shopItemRepository;
         }
-        public List<ShopItemsModel> Execute()
+
+        public List<ShopItemsModel> Execute(int categoryId)
         {
-            var shopItems =  _shopItemRepository.GetAll();
-            var shopItemsModels = shopItems.Select(s=> ShopItemModelMapping(s));
-            return shopItemsModels.ToList();
+            return _shopItemRepository.GetAll().Where(c => c.CategoryId == categoryId)
+                .Select(s => ShopItemModelMapping(s))
+                .ToList();
         }
-
-       
-
-        public ShopItemsModel Execute(int itemId)
-        {
-            var shopItem =_shopItemRepository.Get(itemId);
-            return ShopItemModelMapping(shopItem);
-        }
-
 
         private static ShopItemsModel ShopItemModelMapping(ShopItem shopItem)
         {

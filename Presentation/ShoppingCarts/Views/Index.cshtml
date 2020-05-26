@@ -19,7 +19,7 @@
             <td>@cartItem.Amount</td>
             <td>@cartItem.ShopItem.Price</td>
             <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Add to Cart</a></td>
-            <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Remove item</a></td>
+            <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="RemoveFromCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Remove item</a></td>
 
         </tr>
     }

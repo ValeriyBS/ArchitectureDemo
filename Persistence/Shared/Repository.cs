@@ -29,7 +29,7 @@ namespace Persistence.Shared
         }
 
 
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             _databaseContext.Set<TEntity>().Remove(entity);
         }

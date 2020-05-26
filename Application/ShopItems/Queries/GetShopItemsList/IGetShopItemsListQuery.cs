@@ -6,9 +6,8 @@ namespace Application.ShopItems.Queries.GetShopItemsList
     {
         List<ShopItemsModel> Execute();
 
-        List<ShopItemsModel> Execute(int categoryId);
+        ShopItemsModel Execute(int categoryIdItemId);
 
-        List<ShopItemsModel> Execute(string categoryName);
 
 
     }

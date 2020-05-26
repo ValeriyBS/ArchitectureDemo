@@ -48,5 +48,28 @@ namespace Persistence.ShoppingCartItems
 
             _databaseContext.Save();
         }
+
+        public override void Remove(ShoppingCartItem shoppingCartItem)
+        {
+            if (shoppingCartItem is null) throw new ArgumentNullException(nameof(shoppingCartItem));
+            var shopItem = _databaseContext.ShopItems.Find(shoppingCartItem.ShopItemId);
+
+            var shoppingCartItemToRemove = _databaseContext.ShoppingCartItems
+                .SingleOrDefault(i =>
+                    i.ShoppingCartId == shoppingCartItem.ShoppingCartId &&
+                    i.ShopItemId == shopItem.Id);
+
+            if (shoppingCartItemToRemove.Amount <= 1)
+            {
+                _databaseContext.ShoppingCartItems.Remove(shoppingCartItemToRemove);
+            }
+            else
+            {
+                shoppingCartItemToRemove.Amount--;
+                _databaseContext.ShoppingCartItems.Update(shoppingCartItemToRemove);
+            }
+
+            _databaseContext.Save();
+        }
     }
 }
