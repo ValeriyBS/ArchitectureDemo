@@ -6,7 +6,8 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Description</th>
+        <th>Amount</th>
+        <th>Price</th>
     </tr>
     </thead>
     <tbody>
@@ -17,6 +18,9 @@
             <td>@cartItem.ShopItem.Name</td>
             <td>@cartItem.Amount</td>
             <td>@cartItem.ShopItem.Price</td>
+            <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Add to Cart</a></td>
+            <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Remove item</a></td>
+
         </tr>
     }
     </tbody>

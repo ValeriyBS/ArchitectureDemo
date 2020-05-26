@@ -1,6 +1,11 @@
 ﻿
+using System;
+using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using Application.Interfaces.Persistence;
+using Domain.ShopItems;
 using Domain.ShoppingCartItems;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Shared;
 
 namespace Persistence.ShoppingCartItems
@@ -14,9 +19,34 @@ namespace Persistence.ShoppingCartItems
             _databaseContext = databaseContext;
         }
 
-        public void Save()
+        public override void Add(ShoppingCartItem shoppingCartItem)
         {
-           _databaseContext.Save();
+            if (shoppingCartItem is null) throw new ArgumentNullException(nameof(shoppingCartItem));
+
+            var shopItem = _databaseContext.ShopItems.Find(shoppingCartItem.ShopItemId);
+
+            var shoppingCartItemToAdd = _databaseContext.ShoppingCartItems
+            .SingleOrDefault(i =>
+                i.ShoppingCartId == shoppingCartItem.ShoppingCartId &&
+                i.ShopItemId == shopItem.Id);
+
+            if (shoppingCartItemToAdd is null)
+            {
+                _databaseContext.ShoppingCartItems.Add(new ShoppingCartItem()
+                {
+                    ShopItem = shopItem,
+                    ShopItemId = shopItem.Id,
+                    Amount = 1,
+                    ShoppingCartId = shoppingCartItem.ShoppingCartId
+                });
+            }
+            else
+            {
+                shoppingCartItemToAdd.Amount++;
+                _databaseContext.ShoppingCartItems.Update(shoppingCartItemToAdd);
+            }
+
+            _databaseContext.Save();
         }
     }
 }

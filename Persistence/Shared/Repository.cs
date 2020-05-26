@@ -23,7 +23,7 @@ namespace Persistence.Shared
             return _databaseContext.Set<TEntity>().Single(t => t.Id == id);
         }
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             _databaseContext.Set<TEntity>().Add(entity);
         }

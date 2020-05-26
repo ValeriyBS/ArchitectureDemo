@@ -14,24 +14,15 @@ namespace Application.ShoppingCartItems.Commands
             _shoppingCartItemRepository = shoppingCartItemRepository;
         }
 
-        public void Execute(ShoppingCartItem shoppingCartItem)
+        public void Execute(int shopItemId, string sessionId)
         {
-            var nonNullShoppingCartItem = shoppingCartItem ?? throw new ArgumentNullException(nameof(shoppingCartItem));
+            if (string.IsNullOrWhiteSpace(sessionId)) throw new ArgumentException(nameof(sessionId));
 
-            var existingShoppingCartItem = _shoppingCartItemRepository
-            .GetAll()
-            .Where(i => i.ShoppingCartId == nonNullShoppingCartItem.ShoppingCartId)
-            .SingleOrDefault(i=>i.ShopItem.Id == nonNullShoppingCartItem.ShopItem.Id);
-
-
-            if (existingShoppingCartItem is null)
-                _shoppingCartItemRepository.Add(nonNullShoppingCartItem);
-            else
-                existingShoppingCartItem
-                    .Amount++;
-
-
-            _shoppingCartItemRepository.Save();
+            _shoppingCartItemRepository.Add(new ShoppingCartItem()
+            {
+                ShopItemId = shopItemId,
+                ShoppingCartId = sessionId
+            });
         }
     }
 }

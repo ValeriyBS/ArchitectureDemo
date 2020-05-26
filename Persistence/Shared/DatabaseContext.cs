@@ -9,6 +9,8 @@ using Domain.ShopItems;
 using Domain.ShoppingCartItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Persistence.Shared
 {
@@ -38,6 +40,17 @@ namespace Persistence.Shared
             SaveChanges();
         }
 
+        private ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                builder.AddConsole()
+                    .AddFilter(DbLoggerCategory.Database.Command.Name,
+                        LogLevel.Information));
+            return serviceCollection.BuildServiceProvider()
+                .GetService<ILoggerFactory>();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (optionsBuilder.IsConfigured) return;
@@ -47,7 +60,9 @@ namespace Persistence.Shared
                 .Build();
 
             optionsBuilder
-                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                .EnableSensitiveDataLogging(true)
+                .UseLoggerFactory(GetLoggerFactory());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

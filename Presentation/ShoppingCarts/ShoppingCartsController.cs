@@ -59,21 +59,7 @@ namespace Presentation.ShoppingCarts
 
             if (shopItemModel is null) return RedirectToAction("Index");
 
-            var shopItem = new ShopItem()
-            {
-                Id= shopItemModel.Id,
-                Name = shopItemModel.Name,
-                Category = shopItemModel.Category,
-                CategoryId = shopItemModel.CategoryId,
-                Price = shopItemModel.Price
-            };
-
-
-            _addShoppingCartItemCommand.Execute(new ShoppingCartItem()
-            {
-                ShopItem = shopItem,
-                ShoppingCartId = _getShoppingCart.SessionId
-            });
+            _addShoppingCartItemCommand.Execute(shopItemId,_getShoppingCart.SessionId);
             return RedirectToAction("Index");
         }
     }
