@@ -20,6 +20,7 @@ namespace Presentation.ShoppingCarts
         private readonly IGetShopItemsListQuery _getShopItemsList;
         private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
         private readonly IAddShoppingCartItemCommand _addShoppingCartItemCommand;
+        private readonly IRemoveShoppingCartItemCommand _removeShoppingCartItemCommand;
 
 
         private ShoppingCartModel _shoppingCartModel;
@@ -29,12 +30,14 @@ namespace Presentation.ShoppingCarts
         public ShoppingCartsController(GetShoppingCart getShoppingCart,
             IGetShopItemsListQuery getShopItemsList,
             IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery,
-            IAddShoppingCartItemCommand addShoppingCartItemCommand)
+            IAddShoppingCartItemCommand addShoppingCartItemCommand,
+            IRemoveShoppingCartItemCommand removeShoppingCartItemCommand)
         {
             _getShoppingCart = getShoppingCart;
             _getShopItemsList = getShopItemsList;
             _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
             _addShoppingCartItemCommand = addShoppingCartItemCommand;
+            _removeShoppingCartItemCommand = removeShoppingCartItemCommand;
             _shoppingCartModel = new ShoppingCartModel(_getShoppingCart.SessionId);
            // _shoppingCart = shoppingCartFactory.Create(_getShoppingCart.SessionId);
 
@@ -62,5 +65,16 @@ namespace Presentation.ShoppingCarts
             _addShoppingCartItemCommand.Execute(shopItemId,_getShoppingCart.SessionId);
             return RedirectToAction("Index");
         }
+
+        public IActionResult RemoveFromCart(int shopItemId)
+        {
+            var shopItemModel = _getShopItemsList.Execute(shopItemId).FirstOrDefault();
+
+            if (shopItemModel is null) return RedirectToAction("Index");
+
+            _removeShoppingCartItemCommand.Execute(shopItemId, _getShoppingCart.SessionId);
+            return RedirectToAction("Index");
+        }
+
     }
 }
