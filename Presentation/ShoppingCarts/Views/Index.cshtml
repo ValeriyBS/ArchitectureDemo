@@ -2,42 +2,63 @@
 
 @if (Model.ShoppingCartItemsCount != 0)
 {
-    <div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var cartItem in Model.ShoppingCartItems)
-            {
-                <tr>
-                    <td>@cartItem.Id</td>
-                    <td>@cartItem.ShopItem.Name</td>
-                    <td>@cartItem.Amount</td>
-                    <td>@cartItem.ShopItem.Price.ToString("C")</td>
-                    <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Add to Cart</a></td>
-                    <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="RemoveFromCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Remove item</a></td>
-                </tr>
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"> </th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Available</th>
+                                <th> </th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th> </th>
+                                <th scope="col" class="text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
+                            @foreach (var cartItem in Model.ShoppingCartItems)
+                            {
+                            <tr>
+                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /></td>
+                                <td>@cartItem.ShopItem.Name</td>
+                                <td>In stock</td>
+                                <td class="text-center"><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="RemoveFromCart" asp-route-shopItemId="@cartItem.ShopItem.Id">-</a></td>
+                                <td class="text-center">@cartItem.Amount</td>
+                                <td class="text-center"><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">+</a></td>
+                                <td class="text-right">@((cartItem.ShopItem.Price * cartItem.Amount).ToString("C"))</td>
 
-            }
+                            </tr>
+                            }
 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><strong>Total</strong></td>
-                <td class="text-right"><strong>@Model.ShoppingCartTotal.ToString("C") </strong></td>
-            </tr>
-            </tbody>
-
-        </table>
+                        <tr>
+                            
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><strong>Total</strong></td>
+                            <td class="text-right"><strong>@Model.ShoppingCartTotal.ToString("C")</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <a asp-controller="ShopItems" asp-action="Index" class="btn btn-lg btn-block btn-primary">Continue Shopping</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <a  class="btn btn-lg btn-block btn-success text-uppercase">CheckOut</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 }
 else
