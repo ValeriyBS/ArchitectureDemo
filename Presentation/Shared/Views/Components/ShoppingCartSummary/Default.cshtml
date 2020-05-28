@@ -1,0 +1,11 @@
+﻿@model ShoppingCartModel
+
+@if (Model.ShoppingCartItemsCount>0)
+{
+    <li>
+        <a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="Index">
+            <i aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">@Model.ShoppingCartItemsCount</span>
+        </a>
+    </li>
+}
+

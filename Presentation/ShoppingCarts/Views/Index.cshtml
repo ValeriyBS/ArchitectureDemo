@@ -1,28 +1,47 @@
 ﻿@model ShoppingCartModel
-<h4>@Model.CartId</h4>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var cartItem in Model.ShoppingCartItems)
-    {
-        <tr>
-            <td>@cartItem.Id</td>
-            <td>@cartItem.ShopItem.Name</td>
-            <td>@cartItem.Amount</td>
-            <td>@cartItem.ShopItem.Price</td>
-            <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Add to Cart</a></td>
-            <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="RemoveFromCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Remove item</a></td>
+@if (Model.ShoppingCartItemsCount != 0)
+{
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var cartItem in Model.ShoppingCartItems)
+            {
+                <tr>
+                    <td>@cartItem.Id</td>
+                    <td>@cartItem.ShopItem.Name</td>
+                    <td>@cartItem.Amount</td>
+                    <td>@cartItem.ShopItem.Price.ToString("C")</td>
+                    <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Add to Cart</a></td>
+                    <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="RemoveFromCart" asp-route-shopItemId="@cartItem.ShopItem.Id">Remove item</a></td>
+                </tr>
 
-        </tr>
-    }
-    </tbody>
 
-</table>
+            }
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><strong>Total</strong></td>
+                <td class="text-right"><strong>@Model.ShoppingCartTotal.ToString("C") </strong></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+}
+else
+{
+    <h4>Shopping cart is empty</h4>
+}
+

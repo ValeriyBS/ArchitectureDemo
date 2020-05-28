@@ -18,7 +18,7 @@
                 <td>@shopItemsModel.Name</td>
                 <td>@shopItemsModel.ShortDescription</td>
                 <td>@shopItemsModel.LongDescription</td>
-                <td>@shopItemsModel.Price</td>
+                <td>@shopItemsModel.Price.ToString("C")</td>
                 <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@shopItemsModel.Id">Add to Cart</a></td>
             </tr>
         }

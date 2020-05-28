@@ -1,11 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
 using Application.Interfaces.Persistence;
-using Domain.ShopItems;
 using Domain.ShoppingCartItems;
-using Microsoft.EntityFrameworkCore;
 using Persistence.Shared;
 
 namespace Persistence.ShoppingCartItems
@@ -26,13 +22,13 @@ namespace Persistence.ShoppingCartItems
             var shopItem = _databaseContext.ShopItems.Find(shoppingCartItem.ShopItemId);
 
             var shoppingCartItemToAdd = _databaseContext.ShoppingCartItems
-            .SingleOrDefault(i =>
-                i.ShoppingCartId == shoppingCartItem.ShoppingCartId &&
-                i.ShopItemId == shopItem.Id);
+                .SingleOrDefault(i =>
+                    i.ShoppingCartId == shoppingCartItem.ShoppingCartId &&
+                    i.ShopItemId == shopItem.Id);
 
             if (shoppingCartItemToAdd is null)
             {
-                _databaseContext.ShoppingCartItems.Add(new ShoppingCartItem()
+                _databaseContext.ShoppingCartItems.Add(new ShoppingCartItem
                 {
                     ShopItem = shopItem,
                     ShopItemId = shopItem.Id,

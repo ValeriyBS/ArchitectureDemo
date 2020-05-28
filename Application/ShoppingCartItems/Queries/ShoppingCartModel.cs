@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Domain.ShoppingCartItems;
 
 namespace Application.ShoppingCartItems.Queries
@@ -15,6 +14,9 @@ namespace Application.ShoppingCartItems.Queries
         public string CartId { get; }
         public List<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
 
-        public decimal ShoppingCartTotal { get; set; }
+
+        public decimal ShoppingCartTotal => ShoppingCartItems.Sum(i => i.Amount * i.ShopItem.Price);
+
+        public int ShoppingCartItemsCount => ShoppingCartItems.Sum(i => i.Amount);
     }
 }
