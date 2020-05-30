@@ -19,9 +19,6 @@ namespace Persistence.Shared
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
-        public DatabaseContext()
-        {
-        }
 
         public DbSet<ShopItem> ShopItems { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
@@ -40,30 +37,30 @@ namespace Persistence.Shared
             SaveChanges();
         }
 
-        private ILoggerFactory GetLoggerFactory()
-        {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddLogging(builder =>
-                builder.AddConsole()
-                    .AddFilter(DbLoggerCategory.Database.Command.Name,
-                        LogLevel.Information));
-            return serviceCollection.BuildServiceProvider()
-                .GetService<ILoggerFactory>();
-        }
+        //private ILoggerFactory GetLoggerFactory()
+        //{
+        //    IServiceCollection serviceCollection = new ServiceCollection();
+        //    serviceCollection.AddLogging(builder =>
+        //        builder.AddConsole()
+        //            .AddFilter(DbLoggerCategory.Database.Command.Name,
+        //                LogLevel.Information));
+        //    return serviceCollection.BuildServiceProvider()
+        //        .GetService<ILoggerFactory>();
+        //}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (optionsBuilder.IsConfigured) return;
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (optionsBuilder.IsConfigured) return;
 
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("settings.json")
-                .Build();
+        //    var configuration = new ConfigurationBuilder()
+        //        .AddJsonFile("settings.json")
+        //        .Build();
 
-            optionsBuilder
-                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-                .EnableSensitiveDataLogging(true)
-                .UseLoggerFactory(GetLoggerFactory());
-        }
+        //    optionsBuilder
+        //        .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+        //        .EnableSensitiveDataLogging(true)
+        //        .UseLoggerFactory(GetLoggerFactory());
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

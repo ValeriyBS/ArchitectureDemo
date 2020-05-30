@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain.Categories;
+﻿using Domain.Categories;
 using Domain.Common;
 using Domain.Customers;
 using Domain.OrderDetails;

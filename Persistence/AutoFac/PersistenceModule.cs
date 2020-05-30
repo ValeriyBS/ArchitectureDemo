@@ -1,9 +1,12 @@
 ﻿using Application.Interfaces.Persistence;
 using Autofac;
+using Autofac.Features.AttributeFilters;
 using Common.Dates;
 using Domain.Categories;
 using Domain.ShopItems;
 using Domain.ShoppingCartItems;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Persistence.Categories;
 using Persistence.Shared;
 using Persistence.ShopItems;
@@ -15,7 +18,9 @@ namespace Persistence.AutoFac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<DatabaseContext>().As<IDatabaseContext>().SingleInstance();
+            builder.RegisterType<DatabaseContext>().As<IDatabaseContext>()
+                .WithParameter("options", GetDbContextOptions.Execute())
+                .SingleInstance();
 
             builder.RegisterType<Repository<Category>>().As<IRepository<Category>>().InstancePerDependency();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerDependency();
@@ -28,5 +33,6 @@ namespace Persistence.AutoFac
             builder.RegisterType<ShoppingCartItemRepository>().As<IShoppingCartItemRepository>()
                 .InstancePerDependency();
         }
+
     }
 }
