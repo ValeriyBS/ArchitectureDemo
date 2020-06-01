@@ -11,14 +11,14 @@ namespace Domain.Categories
 
         public string Description { get; set; } = "";
 
-        public List<ShopItem> ShopItems { get; set; } = null!;
+        public List<ShopItem> ShopItems { get; set; } = new List<ShopItem>();
         public int Id { get; set; }
 
         public bool Equals(Category? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Name == other.Name && Description == other.Description && ShopItems.Equals(other.ShopItems) && Id == other.Id;
+            return Name == other.Name && Description == other.Description  && Id == other.Id;
         }
 
         public override bool Equals(object? obj)

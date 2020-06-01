@@ -1,18 +1,12 @@
-﻿
-
-using System.Collections.Generic;
-using System.Linq;
-using Application.Categories.Queries.GetCategoryList;
+﻿using System.Collections.Generic;
 using Application.ShoppingCartItems.Queries;
-using Application.ShoppingCarts.Factory;
 using Application.ShoppingCarts.Queries;
 using Domain.ShopItems;
 using Domain.ShoppingCartItems;
-using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Xunit;
 
-namespace ApplicationTests.ShoppingCarts.Factory
+namespace Application.Tests.ShoppingCarts.Factory
 {
     public class ShoppingCartFactoryTests
     {

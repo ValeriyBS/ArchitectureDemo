@@ -7,7 +7,7 @@ using Domain.ShoppingCartItems;
 using Moq;
 using Xunit;
 
-namespace ApplicationTests.ShoppingCartItems.Queries
+namespace Application.Tests.ShoppingCartItems.Queries
 {
     public class GetShoppingCartItemsTests
     {

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMoqCore;
-using Domain.Categories;
+﻿using Domain.Categories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using Persistence.Shared;
 using Xunit;
 
-namespace PersistenceTests.Shared
+namespace Persistence.Tests.Shared
 {
     public class RepositoryTests
     {
@@ -18,6 +12,13 @@ namespace PersistenceTests.Shared
         public void TestGetShouldReturnAllEntities()
         {
             //Arrange
+             var expectedCategory = new Category()
+             {
+                 Id = 4,
+                 Name = "Test"
+             };
+
+
             var connectionStringBuilder =
                 new SqliteConnectionStringBuilder {DataSource = ":memory:"};
             var connection = new SqliteConnection(connectionStringBuilder.ToString());
@@ -31,14 +32,11 @@ namespace PersistenceTests.Shared
             context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
-            var category = new Category()
+            context.Categories.Add(new Category()
             {
                 Id = 4,
                 Name = "Test"
-            };
-
-
-            context.Categories.Add(category);
+            });
 
             context.SaveChanges();
          
@@ -52,7 +50,7 @@ namespace PersistenceTests.Shared
 
             //Assert
 
-            Assert.Contains(category,result);
+            Assert.Contains(expectedCategory,result);
 
         }
     }
