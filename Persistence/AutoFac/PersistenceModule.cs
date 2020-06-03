@@ -20,7 +20,7 @@ namespace Persistence.AutoFac
         {
             builder.RegisterType<DatabaseContext>().As<IDatabaseContext>()
                 .WithParameter("options", GetDbContextOptions.Execute())
-                .SingleInstance();
+                .InstancePerDependency();
 
             builder.RegisterType<Repository<Category>>().As<IRepository<Category>>().InstancePerDependency();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerDependency();

@@ -7,17 +7,17 @@ namespace Presentation.Home
 {
     public class HomeController : Controller
     {
-        private readonly IGetCategoryListQuery _getCategoryList;
+        private readonly IGetCategoryListQuery _getCategoryListQuery;
 
-        public HomeController(IGetCategoryListQuery getCategoryList)
+        public HomeController(IGetCategoryListQuery getCategoryListQuery)
         {
-            _getCategoryList = getCategoryList;
+            _getCategoryListQuery = getCategoryListQuery;
         }
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var categories = _getCategoryList.Execute();
+            var categories = _getCategoryListQuery.Execute();
             return View(categories);
         }
     }

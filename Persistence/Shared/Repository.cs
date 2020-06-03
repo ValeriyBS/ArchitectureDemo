@@ -13,14 +13,14 @@ namespace Persistence.Shared
             _databaseContext = databaseContext;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
             return _databaseContext.Set<TEntity>();
         }
 
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
-            return _databaseContext.Set<TEntity>().Single(t => t.Id == id);
+            return _databaseContext.Set<TEntity>().Find(id);
         }
 
         public virtual void Add(TEntity entity)

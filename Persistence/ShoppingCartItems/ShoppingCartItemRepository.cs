@@ -2,6 +2,7 @@
 using System.Linq;
 using Application.Interfaces.Persistence;
 using Domain.ShoppingCartItems;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Shared;
 
 namespace Persistence.ShoppingCartItems
@@ -13,6 +14,11 @@ namespace Persistence.ShoppingCartItems
         public ShoppingCartItemRepository(IDatabaseContext databaseContext) : base(databaseContext)
         {
             _databaseContext = databaseContext;
+        }
+
+        public override IQueryable<ShoppingCartItem> GetAll()
+        {
+            return base.GetAll().Include(s => s.ShopItem);
         }
 
         public override void Add(ShoppingCartItem shoppingCartItem)
@@ -28,7 +34,7 @@ namespace Persistence.ShoppingCartItems
 
             if (shoppingCartItemToAdd is null)
             {
-                _databaseContext.ShoppingCartItems.Add(new ShoppingCartItem
+                base.Add(new ShoppingCartItem
                 {
                     ShopItem = shopItem,
                     ShopItemId = shopItem.Id,

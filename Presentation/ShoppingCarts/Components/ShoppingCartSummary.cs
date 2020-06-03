@@ -1,5 +1,4 @@
-﻿using Application.ShopItems.Queries.GetShopItemsList;
-using Application.ShoppingCartItems.Queries;
+﻿using Application.ShoppingCartItems.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ShoppingCarts.Services.Queries;
 
