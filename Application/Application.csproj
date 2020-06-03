@@ -9,11 +9,10 @@
     <Folder Include="Categories\Commands\" />
     <Folder Include="Orders\Queries\" />
     <Folder Include="ShopItems\Commands\" />
-    <Folder Include="ShoppingCarts\Commands\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,20 +7,21 @@ namespace Presentation.ShoppingCarts.Components
     public class ShoppingCartSummary : ViewComponent
     {
         private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
-        private readonly GetShoppingCart _getShoppingCart;
+        private readonly CartIdProvider _cartIdProvider;
 
-        public ShoppingCartSummary(IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery,
-            GetShoppingCart getShoppingCart)
+        public ShoppingCartSummary(CartIdProvider cartIdProvider,
+            IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery)
         {
             _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
-            _getShoppingCart = getShoppingCart;
+            _cartIdProvider = cartIdProvider;
         }
 
         public IViewComponentResult Invoke()
         {
-            var shoppingCartModel = new ShoppingCartModel(_getShoppingCart.SessionId)
+            var cartId = _cartIdProvider.CartId;
+            var shoppingCartModel = new ShoppingCartModel(cartId)
             {
-                ShoppingCartItems = _getShoppingCartItemsListQuery.Execute(_getShoppingCart.SessionId)
+                ShoppingCartItems = _getShoppingCartItemsListQuery.Execute(cartId)
             };
             return View(shoppingCartModel);
         }

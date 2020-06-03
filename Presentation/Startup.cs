@@ -1,12 +1,9 @@
-using Application.AutoFac;
-using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Persistence.AutoFac;
 using Presentation.ShoppingCarts.Services.Queries;
 
 namespace Presentation
@@ -44,15 +41,15 @@ namespace Presentation
             // Persistence startup
             Persistence.Startup.ConfigureServices(services, Configuration.GetConnectionString("DefaultConnection"));
 
-            //Session Id service provider 
-            services.AddScoped(GetShoppingCart.Execute);
-
             //Application startup
             Application.Startup.ConfigureServices(services);
 
+            services.AddScoped(CartIdProvider.Execute);
+
             services.AddHttpContextAccessor();
-            services.AddControllersWithViews();
             services.AddSession();
+            services.AddControllersWithViews();
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

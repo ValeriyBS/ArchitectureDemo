@@ -1,6 +1,7 @@
 ﻿using Application.ShopItems.Queries.GetShopItemsList;
 using Application.ShoppingCartItems.Commands;
 using Application.ShoppingCartItems.Queries;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ShoppingCarts.Services.Queries;
 
@@ -10,38 +11,35 @@ namespace Presentation.ShoppingCarts
     {
         private readonly IAddShoppingCartItemCommand _addShoppingCartItemCommand;
         private readonly IGetShopItemsListQuery _getShopItemsListQuery;
-        private readonly GetShoppingCart _getShoppingCart;
+        private readonly CartIdProvider _cartIdProvider;
         private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
         private readonly IRemoveShoppingCartItemCommand _removeShoppingCartItemCommand;
 
-
-        private ShoppingCartModel _shoppingCartModel;
-
-        public ShoppingCartsController(GetShoppingCart getShoppingCart,
+        public ShoppingCartsController(CartIdProvider cartIdProvider,
             IGetShopItemsListQuery getShopItemsListQuery,
             IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery,
             IAddShoppingCartItemCommand addShoppingCartItemCommand,
             IRemoveShoppingCartItemCommand removeShoppingCartItemCommand)
         {
-            _getShoppingCart = getShoppingCart;
+            //_cartIdProvider = cartIdProvider;
             _getShopItemsListQuery = getShopItemsListQuery;
             _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
             _addShoppingCartItemCommand = addShoppingCartItemCommand;
             _removeShoppingCartItemCommand = removeShoppingCartItemCommand;
-            _shoppingCartModel = new ShoppingCartModel(_getShoppingCart.SessionId);
+            _cartIdProvider = cartIdProvider;
         }
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var shoppingCartItems = _getShoppingCartItemsListQuery.Execute(_getShoppingCart.SessionId);
+            var shoppingCartItems = _getShoppingCartItemsListQuery.Execute(_cartIdProvider.CartId);
 
-            _shoppingCartModel = new ShoppingCartModel(_getShoppingCart.SessionId)
+            var shoppingCartModel = new ShoppingCartModel(_cartIdProvider.CartId)
             {
                 ShoppingCartItems = shoppingCartItems
             };
 
-            return View(_shoppingCartModel);
+            return View(shoppingCartModel);
         }
 
         public IActionResult AddToCart(int shopItemId)
@@ -50,7 +48,7 @@ namespace Presentation.ShoppingCarts
 
             if (shopItemModel.Id == 0) return RedirectToAction("Index");
 
-            _addShoppingCartItemCommand.Execute(shopItemId, _getShoppingCart.SessionId);
+            _addShoppingCartItemCommand.Execute(shopItemId, _cartIdProvider.CartId);
             return RedirectToAction("Index");
         }
 
@@ -60,7 +58,7 @@ namespace Presentation.ShoppingCarts
 
             if (shopItemModel.Id == 0) return RedirectToAction("Index");
 
-            _removeShoppingCartItemCommand.Execute(shopItemId, _getShoppingCart.SessionId);
+            _removeShoppingCartItemCommand.Execute(shopItemId, _cartIdProvider.CartId);
             return RedirectToAction("Index");
         }
     }
