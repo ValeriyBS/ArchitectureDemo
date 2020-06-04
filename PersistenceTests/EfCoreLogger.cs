@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace Persistence.Tests
@@ -19,7 +17,7 @@ namespace Persistence.Tests
 
         public IDisposable BeginScope<TState>(TState state)
         {
-            return null;
+            return null!;
         }
 
         public bool IsEnabled(LogLevel logLevel)

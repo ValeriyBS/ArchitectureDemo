@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using Domain.Categories;
 using Domain.ShopItems;
@@ -6,8 +6,6 @@ using Domain.ShoppingCartItems;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
-using Moq;
 using Persistence.Shared;
 using Persistence.ShoppingCartItems;
 using Xunit;
@@ -34,15 +32,12 @@ namespace Persistence.Tests.ShoppingCartItems
                 Id = 1,
                 Amount = 1,
                 ShopItemId = 1,
-                ShopItem = new ShopItem()
-                {
-                    Id = 1,
-                    Name = "ItemName"
-                },
                 ShoppingCartId = "UniqueId"
             };
 
             const int expectedShopItemId = 999;
+
+            var uniqueId = Guid.NewGuid().ToString();
 
 
             var connectionStringBuilder =
@@ -80,28 +75,99 @@ namespace Persistence.Tests.ShoppingCartItems
             {
                     Amount = 1,
                     ShopItemId = 999,
-                    ShoppingCartId = "UniqueId"
+                    ShoppingCartId = uniqueId
             });
 
             context.SaveChanges();
 
-            var shoppingCartItemRepository = new ShoppingCartItemRepository(context);
-
-
+            var sut = new ShoppingCartItemRepository(context);
 
             //Act
 
-            var result = shoppingCartItemRepository.GetAll();
+            var result = sut.GetAll();
 
-            var resultShopItemId = result.FirstOrDefault(s => s.ShoppingCartId == "UniqueId")?.ShopItemId;
+            var resultShopItemId = result.FirstOrDefault(s => s.ShoppingCartId == uniqueId)?.ShopItemId;
 
             //Assert
 
             Assert.Contains(expectedShoppingCartItem, result);
 
             Assert.Equal(expectedShopItemId,resultShopItemId);
+        }
+
+        [Fact]
+        public void AddShouldIncreaseTheAmountIfEntityExists()
+        {
+            //Arrange
+            const int expectedShoppingCartItemsCount = 1;
+            const int expectedShoppingCartItemsAmount = 2;
+            var uniqueId = Guid.NewGuid().ToString();
+
+            var connectionStringBuilder =
+                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseLoggerFactory(new LoggerFactory(
+                    new[] { new LogToActionLoggerProvider((log) =>
+                    {
+                        _output.WriteLine(log);
+                    }) }))
+                .UseSqlite(connection)
+                .Options;
+
+            using var context = new DatabaseContext(options);
+
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            context.Categories.Add(new Category()
+            {
+                Id = 999,
+                Name = "TestCategory"
+            });
+
+            context.ShopItems.Add(new ShopItem()
+            {
+                CategoryId = 999,
+                Id = 999,
+                Name = "TestShopItem"
+            });
+
+            context.SaveChanges();
 
 
+            var shoppingCartItem = new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 999,
+                ShopItem = new ShopItem()
+                {
+                    Id = 999,
+                    Name = "TestItem",
+                    CategoryId = 999
+                },
+                ShoppingCartId = uniqueId,
+                Amount = 1
+            };
+
+           
+
+            var sut = new ShoppingCartItemRepository(context);
+
+            //Act
+
+            sut.Add(shoppingCartItem);
+            sut.Add(shoppingCartItem);
+
+
+            var result = sut.GetAll().Where(s=>s.ShoppingCartId == uniqueId);
+
+            //Assert
+
+            Assert.Equal(expectedShoppingCartItemsCount,result.Count());
+
+            Assert.Equal(expectedShoppingCartItemsAmount,result.ToList()[0].Amount);
         }
     }
 

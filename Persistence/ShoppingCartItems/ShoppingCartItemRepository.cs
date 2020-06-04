@@ -23,9 +23,12 @@ namespace Persistence.ShoppingCartItems
 
         public override void Add(ShoppingCartItem shoppingCartItem)
         {
-            if (shoppingCartItem is null) throw new ArgumentNullException(nameof(shoppingCartItem));
+            if (shoppingCartItem?.ShopItem is null) throw new ArgumentNullException(nameof(shoppingCartItem.ShopItemId));
+            if (shoppingCartItem?.ShopItemId is null) throw new ArgumentNullException(nameof(shoppingCartItem.ShoppingCartId));
 
             var shopItem = _databaseContext.ShopItems.Find(shoppingCartItem.ShopItemId);
+
+            if (shopItem is null) throw new ArgumentException("Item not found with ShopItemId");
 
             var shoppingCartItemToAdd = _databaseContext.ShoppingCartItems
                 .SingleOrDefault(i =>
