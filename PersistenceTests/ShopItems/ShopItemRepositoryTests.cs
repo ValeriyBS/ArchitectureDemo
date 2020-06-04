@@ -1,19 +1,21 @@
-﻿using Moq;
+﻿
+using Moq;
 using Persistence.Categories;
 using Persistence.Shared;
+using Persistence.ShopItems;
 using Xunit;
 
-namespace Persistence.Tests.Categories
+namespace Persistence.Tests.ShopItems
 {
-    public class CategoryRepositoryTests
+    public class ShopItemRepositoryTests
     {
         [Fact]
         public void TestConstructorShouldCreateRepository()
         {
             //Arrange
-            var mockCategoryRepository = new Mock<IDatabaseContext>();
+            var mockShopItemRepository = new Mock<IDatabaseContext>();
             //Act
-            var sut = new CategoryRepository(mockCategoryRepository.Object);
+            var sut = new ShopItemRepository(mockShopItemRepository.Object);
             //Assert
             Assert.NotNull(sut);
         }
