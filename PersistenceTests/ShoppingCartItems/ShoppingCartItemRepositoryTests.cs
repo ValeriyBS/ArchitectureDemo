@@ -16,29 +16,11 @@ namespace Persistence.Tests.ShoppingCartItems
     public class ShoppingCartItemRepositoryTests
     {
         private readonly ITestOutputHelper _output;
+        private readonly DatabaseContext _context;
 
         public ShoppingCartItemRepositoryTests(ITestOutputHelper output)
         {
             _output = output;
-        }
-
-
-        [Fact]
-        public void TestGetAllShouldReturnAllShoppingCartItemsIncludingShopItemProperty()
-        {
-            //Arrange
-            var expectedShoppingCartItem = new ShoppingCartItem()
-            {
-                Id = 1,
-                Amount = 1,
-                ShopItemId = 1,
-                ShoppingCartId = "UniqueId"
-            };
-
-            const int expectedShopItemId = 999;
-
-            var uniqueId = Guid.NewGuid().ToString();
-
 
             var connectionStringBuilder =
                 new SqliteConnectionStringBuilder { DataSource = ":memory:" };
@@ -53,34 +35,63 @@ namespace Persistence.Tests.ShoppingCartItems
                 .UseSqlite(connection)
                 .Options;
 
-            using var context = new DatabaseContext(options);
+            _context = new DatabaseContext(options);
 
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
+            _context.Database.OpenConnection();
+            _context.Database.EnsureCreated();
 
-            context.Categories.Add(new Category()
+            _context.Categories.Add(new Category()
             {
                 Id = 999,
                 Name = "TestCategory"
             });
 
-            context.ShopItems.Add(new ShopItem()
+            _context.ShopItems.Add(new ShopItem()
             {
                 CategoryId = 999,
                 Id = 999,
                 Name = "TestShopItem"
             });
 
-            context.ShoppingCartItems.Add(new ShoppingCartItem()
+            _context.SaveChanges();
+
+            
+        }
+
+
+        [Fact]
+        public void TestGetAllShouldReturnAllShoppingCartItemsIncludingShopItemProperty()
+        {
+            //Arrange
+            var uniqueId = Guid.NewGuid().ToString();
+
+            var expectedShoppingCartItem = new ShoppingCartItem()
             {
+                Id = 999,
+                Amount = 1,
+                ShopItemId = 1,
+                ShopItem = new ShopItem()
+                {
+                    CategoryId = 999,
+                    Id = 999,
+                    Name = "TestShopItem"
+                },
+                ShoppingCartId = uniqueId
+            };
+
+            const int expectedShopItemId = 999;
+
+            _context.ShoppingCartItems.Add(new ShoppingCartItem()
+            {
+                    Id = 999,
                     Amount = 1,
                     ShopItemId = 999,
                     ShoppingCartId = uniqueId
             });
 
-            context.SaveChanges();
+            _context.SaveChanges();
 
-            var sut = new ShoppingCartItemRepository(context);
+            var sut = new ShoppingCartItemRepository(_context);
 
             //Act
 
@@ -103,40 +114,6 @@ namespace Persistence.Tests.ShoppingCartItems
             const int expectedShoppingCartItemsAmount = 2;
             var uniqueId = Guid.NewGuid().ToString();
 
-            var connectionStringBuilder =
-                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
-            var connection = new SqliteConnection(connectionStringBuilder.ToString());
-
-            var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseLoggerFactory(new LoggerFactory(
-                    new[] { new LogToActionLoggerProvider((log) =>
-                    {
-                        _output.WriteLine(log);
-                    }) }))
-                .UseSqlite(connection)
-                .Options;
-
-            using var context = new DatabaseContext(options);
-
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
-
-            context.Categories.Add(new Category()
-            {
-                Id = 999,
-                Name = "TestCategory"
-            });
-
-            context.ShopItems.Add(new ShopItem()
-            {
-                CategoryId = 999,
-                Id = 999,
-                Name = "TestShopItem"
-            });
-
-            context.SaveChanges();
-
-
             var shoppingCartItem = new ShoppingCartItem()
             {
                 Id = 999,
@@ -153,7 +130,7 @@ namespace Persistence.Tests.ShoppingCartItems
 
            
 
-            var sut = new ShoppingCartItemRepository(context);
+            var sut = new ShoppingCartItemRepository(_context);
 
             //Act
 
@@ -176,35 +153,6 @@ namespace Persistence.Tests.ShoppingCartItems
             //Arrange
             var uniqueId = Guid.NewGuid().ToString();
 
-            var connectionStringBuilder =
-                new SqliteConnectionStringBuilder {DataSource = ":memory:"};
-            var connection = new SqliteConnection(connectionStringBuilder.ToString());
-
-            var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseLoggerFactory(new LoggerFactory(
-                    new[] {new LogToActionLoggerProvider((log) => { _output.WriteLine(log); })}))
-                .UseSqlite(connection)
-                .Options;
-
-            using var context = new DatabaseContext(options);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
-
-            context.Categories.Add(new Category()
-            {
-                Id = 999,
-                Name = "TestCategory"
-            });
-
-            context.ShopItems.Add(new ShopItem()
-            {
-                CategoryId = 999,
-                Id = 999,
-                Name = "TestShopItem"
-            });
-
-            context.SaveChanges();
-
             var shoppingCartItem = new ShoppingCartItem()
             {
                 Id = 999,
@@ -214,7 +162,7 @@ namespace Persistence.Tests.ShoppingCartItems
                 Amount = 1
             };
 
-            var sut = new ShoppingCartItemRepository(context);
+            var sut = new ShoppingCartItemRepository(_context);
             //Act
             Assert.Throws<ArgumentNullException>(
                 //Assert
@@ -222,38 +170,9 @@ namespace Persistence.Tests.ShoppingCartItems
         }
 
         [Fact]
-        public void TestAddShouldThrowsArgumentNullExceptionWhenShoppingCartIdisNull()
+        public void TestAddShouldThrowsArgumentNullExceptionWhenShoppingCartIdIsNull()
         {
             //Arrange
-
-            var connectionStringBuilder =
-                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
-            var connection = new SqliteConnection(connectionStringBuilder.ToString());
-
-            var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseLoggerFactory(new LoggerFactory(
-                    new[] { new LogToActionLoggerProvider((log) => { _output.WriteLine(log); }) }))
-                .UseSqlite(connection)
-                .Options;
-
-            using var context = new DatabaseContext(options);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
-
-            context.Categories.Add(new Category()
-            {
-                Id = 999,
-                Name = "TestCategory"
-            });
-
-            context.ShopItems.Add(new ShopItem()
-            {
-                CategoryId = 999,
-                Id = 999,
-                Name = "TestShopItem"
-            });
-
-            context.SaveChanges();
 
             var shoppingCartItem = new ShoppingCartItem()
             {
@@ -269,7 +188,7 @@ namespace Persistence.Tests.ShoppingCartItems
                 Amount = 1
             };
 
-            var sut = new ShoppingCartItemRepository(context);
+            var sut = new ShoppingCartItemRepository(_context);
             //Act
             Assert.Throws<ArgumentNullException>(
                 //Assert
@@ -281,36 +200,7 @@ namespace Persistence.Tests.ShoppingCartItems
         {
             //Arrange
             var uniqueId = Guid.NewGuid().ToString();
-            var expectedExceptionMessage = "Shop Item not found with ShopItemId";
-
-            var connectionStringBuilder =
-                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
-            var connection = new SqliteConnection(connectionStringBuilder.ToString());
-
-            var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseLoggerFactory(new LoggerFactory(
-                    new[] { new LogToActionLoggerProvider((log) => { _output.WriteLine(log); }) }))
-                .UseSqlite(connection)
-                .Options;
-
-            using var context = new DatabaseContext(options);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
-
-            context.Categories.Add(new Category()
-            {
-                Id = 999,
-                Name = "TestCategory"
-            });
-
-            context.ShopItems.Add(new ShopItem()
-            {
-                CategoryId = 999,
-                Id = 999,
-                Name = "TestShopItem"
-            });
-
-            context.SaveChanges();
+            const string expectedExceptionMessage = "Shop Item not found with ShopItemId";
 
             var shoppingCartItem = new ShoppingCartItem()
             {
@@ -326,7 +216,7 @@ namespace Persistence.Tests.ShoppingCartItems
                 Amount = 1
             };
 
-            var sut = new ShoppingCartItemRepository(context);
+            var sut = new ShoppingCartItemRepository(_context);
             //Act
             var exception = Assert.Throws<ArgumentException>(
                 //Assert
@@ -336,8 +226,89 @@ namespace Persistence.Tests.ShoppingCartItems
 
         }
 
+        [Fact]
+        public void TestRemoveShouldRemoveEntityIfOnlyOneExists()
+        {
+            //Arrange
+            var uniqueId = Guid.NewGuid().ToString();
+            var expectedShoppingCartItem = new ShoppingCartItem()
+            {
+                ShopItemId = 999,
+                ShoppingCartId = uniqueId
+            };
+
+            _context.ShoppingCartItems.Add(new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 999,
+                ShoppingCartId = uniqueId,
+                Amount = 1
+            });
+
+            _context.SaveChanges();
+
+            var sut = new ShoppingCartItemRepository(_context);
+
+            //Act
+
+            sut.Remove(new ShoppingCartItem()
+            {
+                ShopItemId = 999,
+                ShoppingCartId = uniqueId
+            });
+
+            var result = sut.GetAll();
+
+            //Assert
+
+            Assert.DoesNotContain(expectedShoppingCartItem,result);
+        }
+
+        [Fact]
+        public void TestRemoveShouldReduceAmountIfMoreThanOneExists()
+        {
+            //Arrange
+            const int expectedShoppingCartItemsAmount = 5;
+
+            var uniqueId = Guid.NewGuid().ToString();
+
+            var expectedShoppingCartItem = new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 999,
+                ShoppingCartId = uniqueId
+            };
+
+            var shoppingCartItem = new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 999,
+                ShoppingCartId = uniqueId,
+                Amount = 6
+            };
+
+            _context.ShoppingCartItems.Add(shoppingCartItem);
+
+            _context.SaveChanges();
+
+            var sut = new ShoppingCartItemRepository(_context);
+
+            //Act
+
+            sut.Remove(new ShoppingCartItem()
+            {
+                ShopItemId = 999,
+                ShoppingCartId = uniqueId
+            });
+
+            var result = sut.GetAll();
 
 
+            //Assert
+
+            Assert.Contains(expectedShoppingCartItem, result);
+
+            Assert.Equal(expectedShoppingCartItemsAmount, result.First().Amount);
+        }
     }
-
 }
