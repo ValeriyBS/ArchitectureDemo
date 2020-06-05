@@ -9,7 +9,7 @@ namespace Persistence.Tests.Shared
     public class RepositoryTests
     {
         [Fact]
-        public void TestGetShouldReturnAllEntities()
+        public void TestGetAllShouldReturnAllEntities()
         {
             //Arrange
              var expectedCategory = new Category()

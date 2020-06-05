@@ -96,7 +96,7 @@ namespace Persistence.Tests.ShoppingCartItems
         }
 
         [Fact]
-        public void AddShouldIncreaseTheAmountIfEntityExists()
+        public void TestAddShouldIncreaseTheAmountIfEntityExists()
         {
             //Arrange
             const int expectedShoppingCartItemsCount = 1;
@@ -167,8 +167,177 @@ namespace Persistence.Tests.ShoppingCartItems
 
             Assert.Equal(expectedShoppingCartItemsCount,result.Count());
 
-            Assert.Equal(expectedShoppingCartItemsAmount,result.ToList()[0].Amount);
+            Assert.Equal(expectedShoppingCartItemsAmount, result.First().Amount);
         }
+
+        [Fact]
+        public void TestAddShouldThrowsArgumentNullExceptionWhenShopItemIsNull()
+        {
+            //Arrange
+            var uniqueId = Guid.NewGuid().ToString();
+
+            var connectionStringBuilder =
+                new SqliteConnectionStringBuilder {DataSource = ":memory:"};
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseLoggerFactory(new LoggerFactory(
+                    new[] {new LogToActionLoggerProvider((log) => { _output.WriteLine(log); })}))
+                .UseSqlite(connection)
+                .Options;
+
+            using var context = new DatabaseContext(options);
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            context.Categories.Add(new Category()
+            {
+                Id = 999,
+                Name = "TestCategory"
+            });
+
+            context.ShopItems.Add(new ShopItem()
+            {
+                CategoryId = 999,
+                Id = 999,
+                Name = "TestShopItem"
+            });
+
+            context.SaveChanges();
+
+            var shoppingCartItem = new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 999,
+                ShopItem = null!,
+                ShoppingCartId = uniqueId,
+                Amount = 1
+            };
+
+            var sut = new ShoppingCartItemRepository(context);
+            //Act
+            Assert.Throws<ArgumentNullException>(
+                //Assert
+                () => sut.Add(shoppingCartItem));
+        }
+
+        [Fact]
+        public void TestAddShouldThrowsArgumentNullExceptionWhenShoppingCartIdisNull()
+        {
+            //Arrange
+
+            var connectionStringBuilder =
+                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseLoggerFactory(new LoggerFactory(
+                    new[] { new LogToActionLoggerProvider((log) => { _output.WriteLine(log); }) }))
+                .UseSqlite(connection)
+                .Options;
+
+            using var context = new DatabaseContext(options);
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            context.Categories.Add(new Category()
+            {
+                Id = 999,
+                Name = "TestCategory"
+            });
+
+            context.ShopItems.Add(new ShopItem()
+            {
+                CategoryId = 999,
+                Id = 999,
+                Name = "TestShopItem"
+            });
+
+            context.SaveChanges();
+
+            var shoppingCartItem = new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 999,
+                ShopItem = new ShopItem()
+                {
+                    Id = 999,
+                    Name = "TestItem",
+                    CategoryId = 999
+                },
+                ShoppingCartId = null!,
+                Amount = 1
+            };
+
+            var sut = new ShoppingCartItemRepository(context);
+            //Act
+            Assert.Throws<ArgumentNullException>(
+                //Assert
+                () => sut.Add(shoppingCartItem));
+        }
+
+        [Fact]
+        public void TestAddShouldThrowsArgumentExceptionWhenShopItemWithShopItemIdNotFound()
+        {
+            //Arrange
+            var uniqueId = Guid.NewGuid().ToString();
+            var expectedExceptionMessage = "Shop Item not found with ShopItemId";
+
+            var connectionStringBuilder =
+                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseLoggerFactory(new LoggerFactory(
+                    new[] { new LogToActionLoggerProvider((log) => { _output.WriteLine(log); }) }))
+                .UseSqlite(connection)
+                .Options;
+
+            using var context = new DatabaseContext(options);
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+
+            context.Categories.Add(new Category()
+            {
+                Id = 999,
+                Name = "TestCategory"
+            });
+
+            context.ShopItems.Add(new ShopItem()
+            {
+                CategoryId = 999,
+                Id = 999,
+                Name = "TestShopItem"
+            });
+
+            context.SaveChanges();
+
+            var shoppingCartItem = new ShoppingCartItem()
+            {
+                Id = 999,
+                ShopItemId = 99,
+                ShopItem = new ShopItem()
+                {
+                    Id = 999,
+                    Name = "TestItem",
+                    CategoryId = 999
+                },
+                ShoppingCartId = uniqueId,
+                Amount = 1
+            };
+
+            var sut = new ShoppingCartItemRepository(context);
+            //Act
+            var exception = Assert.Throws<ArgumentException>(
+                //Assert
+                () => sut.Add(shoppingCartItem));
+
+            Assert.Equal(expectedExceptionMessage,exception.Message);
+
+        }
+
+
+
     }
 
 }
