@@ -64,6 +64,8 @@ namespace Persistence.ShoppingCartItems
                     i.ShoppingCartId == shoppingCartItem.ShoppingCartId &&
                     i.ShopItemId == shopItem.Id);
 
+            if (shoppingCartItemToRemove is null) return; 
+
             if (shoppingCartItemToRemove.Amount <= 1)
             {
                 _databaseContext.ShoppingCartItems.Remove(shoppingCartItemToRemove);

@@ -6,7 +6,7 @@ namespace Domain.ShoppingCartItems
 {
     public class ShoppingCartItem : IEntity, IEquatable<ShoppingCartItem>
     {
-        public ShopItem ShopItem { get; set; } = null!;
+        public ShopItem ShopItem { get; set; } = new ShopItem();
 
         public int ShopItemId { get; set; }
 

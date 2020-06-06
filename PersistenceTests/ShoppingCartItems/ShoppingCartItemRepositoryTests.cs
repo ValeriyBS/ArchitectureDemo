@@ -269,7 +269,6 @@ namespace Persistence.Tests.ShoppingCartItems
         {
             //Arrange
             const int expectedShoppingCartItemsAmount = 5;
-
             var uniqueId = Guid.NewGuid().ToString();
 
             var expectedShoppingCartItem = new ShoppingCartItem()
@@ -309,6 +308,22 @@ namespace Persistence.Tests.ShoppingCartItems
             Assert.Contains(expectedShoppingCartItem, result);
 
             Assert.Equal(expectedShoppingCartItemsAmount, result.First().Amount);
+        }
+
+        [Fact]
+        public void TestRemoveShouldThrowArgumentNullExceptionIfShoppingCartItemIsNull()
+        {
+            //Arrange
+
+            var sut = new ShoppingCartItemRepository(_context);
+
+            //Act
+
+            Assert.Throws<ArgumentNullException>(
+
+                //Assert
+
+                () => sut.Remove(null!));
         }
     }
 }
