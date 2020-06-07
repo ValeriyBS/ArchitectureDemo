@@ -71,7 +71,7 @@ namespace Persistence.Shared
             modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids", Description = "Fancy items for kids" });
 
 
-            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            modelBuilder.Entity<ShopItem>().HasData(new
             {
                 Id = 1,
                 CategoryId = 1,
@@ -85,7 +85,7 @@ namespace Persistence.Shared
                 Notes = "It is a fine item to have!"
             });
 
-            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            modelBuilder.Entity<ShopItem>().HasData(new
             {
                 Id = 2,
                 CategoryId = 1,
@@ -99,7 +99,7 @@ namespace Persistence.Shared
                 Notes = "It is a fine item to have!"
             });
 
-            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            modelBuilder.Entity<ShopItem>().HasData(new
             {
                 Id = 3,
                 CategoryId = 2,
@@ -113,7 +113,7 @@ namespace Persistence.Shared
                 Notes = "It is a fine item to have!"
             });
 
-            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            modelBuilder.Entity<ShopItem>().HasData(new
             {
                 Id = 4,
                 CategoryId = 2,
@@ -127,7 +127,7 @@ namespace Persistence.Shared
                 Notes = "It is a fine item to have!"
             });
 
-            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            modelBuilder.Entity<ShopItem>().HasData(new
             {
                 Id = 5,
                 CategoryId = 3,
@@ -141,7 +141,7 @@ namespace Persistence.Shared
                 Notes = "It is a fine item to have!"
             });
 
-            modelBuilder.Entity<ShopItem>().HasData(new ShopItem
+            modelBuilder.Entity<ShopItem>().HasData(new
             {
                 Id = 6,
                 CategoryId = 3,

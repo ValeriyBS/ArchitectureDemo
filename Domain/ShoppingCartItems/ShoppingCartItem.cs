@@ -20,7 +20,7 @@ namespace Domain.ShoppingCartItems
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return ShoppingCartId == other.ShoppingCartId && Id == other.Id;
+            return ShopItem.Equals(other.ShopItem) && ShopItemId == other.ShopItemId && Amount == other.Amount && ShoppingCartId == other.ShoppingCartId && Id == other.Id;
         }
 
         public override bool Equals(object? obj)
@@ -33,7 +33,7 @@ namespace Domain.ShoppingCartItems
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ShoppingCartId, Id);
+            return HashCode.Combine(ShopItem, ShopItemId, Amount, ShoppingCartId, Id);
         }
 
         public static bool operator ==(ShoppingCartItem? left, ShoppingCartItem? right)

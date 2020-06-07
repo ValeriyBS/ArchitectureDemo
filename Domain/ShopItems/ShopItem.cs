@@ -14,7 +14,7 @@ namespace Domain.ShopItems
         public string ImageThumbnailUrl { get; set; } = "";
         public bool InStock { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
+        public Category Category { get; set; } = new Category();
         public string Notes { get; set; } = "";
         public int Id { get; set; }
 
