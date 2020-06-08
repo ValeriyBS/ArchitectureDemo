@@ -2,7 +2,7 @@
 
 namespace Application.ShopItems.Queries.GetShopItemsList
 {
-    public class ShopItemsModel
+    public class ShopItemModel
     {
         public string Name { get; set; } = "";
         public string ShortDescription { get; set; } = "";

@@ -4,9 +4,9 @@ namespace Application.ShopItems.Queries.GetShopItemsList
 {
     public interface IGetShopItemsListQuery
     {
-        List<ShopItemsModel> Execute();
+        List<ShopItemModel> Execute();
 
-        ShopItemsModel Execute(int categoryIdItemId);
+        ShopItemModel Execute(int categoryIdItemId);
 
 
 

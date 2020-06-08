@@ -4,6 +4,6 @@ namespace Application.ShopItems.Queries.GetShopItemsList
 {
     public interface IGetShopItemsListByCategoryQuery
     {
-        List<ShopItemsModel> Execute(int categoryId);
+        List<ShopItemModel> Execute(int categoryId);
     }
 }

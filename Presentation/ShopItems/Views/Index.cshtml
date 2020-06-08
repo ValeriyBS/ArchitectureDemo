@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShopItemsModel>
+﻿@model IEnumerable<ShopItemModel>
 <h2>Items by category</h2>
 <table class="table table-striped">
     <thead>
@@ -11,15 +11,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var shopItemsModel in Model)
+        @foreach (var shopItemModel in Model)
         {
             <tr>
-                <td>@shopItemsModel.Id</td>
-                <td>@shopItemsModel.Name</td>
-                <td>@shopItemsModel.ShortDescription</td>
-                <td>@shopItemsModel.LongDescription</td>
-                <td>@shopItemsModel.Price.ToString("C")</td>
-                <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@shopItemsModel.Id">Add to Cart</a></td>
+                <td>@shopItemModel.Id</td>
+                <td>@shopItemModel.Name</td>
+                <td>@shopItemModel.ShortDescription</td>
+                <td>@shopItemModel.LongDescription</td>
+                <td>@shopItemModel.Price.ToString("C")</td>
+                <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@shopItemModel.Id">Add to Cart</a></td>
             </tr>
         }
     </tbody>
