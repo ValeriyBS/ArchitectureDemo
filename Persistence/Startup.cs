@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Persistence;
+﻿using System.Diagnostics.CodeAnalysis;
+using Application.Interfaces.Persistence;
 using Domain.Categories;
 using Domain.ShopItems;
 using Domain.ShoppingCartItems;
@@ -11,6 +12,7 @@ using Persistence.ShoppingCartItems;
 
 namespace Persistence
 {
+    [ExcludeFromCodeCoverage]
     public static class Startup
     {
         public static void ConfigureServices(

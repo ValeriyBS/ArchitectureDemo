@@ -8,6 +8,17 @@ namespace Persistence.Tests.Shared
 {
     public class RepositoryTests
     {
+        private readonly DbContextOptions<DatabaseContext> _options;
+        public RepositoryTests()
+        {
+            var connectionStringBuilder =
+                new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            _options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseSqlite(connection)
+                .Options;
+        }
         [Fact]
         public void TestGetAllShouldReturnAllEntities()
         {
@@ -18,40 +29,123 @@ namespace Persistence.Tests.Shared
                  Name = "Test"
              };
 
+             using (var context = new DatabaseContext(_options))
+             {
+                 context.Database.OpenConnection();
+                 context.Database.EnsureCreated();
 
-            var connectionStringBuilder =
-                new SqliteConnectionStringBuilder {DataSource = ":memory:"};
-            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+                 context.Categories.Add(new Category()
+                 {
+                     Id = 4,
+                     Name = "Test"
+                 });
 
-            var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseSqlite(connection)
-                .Options;
-
-
-            using var context = new DatabaseContext(options);
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
-
-            context.Categories.Add(new Category()
-            {
-                Id = 4,
-                Name = "Test"
-            });
-
-            context.SaveChanges();
-         
-            var categoryRepository = new Repository<Category>(context);
-           
+                 context.SaveChanges();
+             }
 
 
-            //Act
+             using (var context = new DatabaseContext(_options))
+             {
+                 var categoryRepository = new Repository<Category>(context);
 
-            var result = categoryRepository.GetAll();
+                 //Act
 
-            //Assert
+                 var result = categoryRepository.GetAll();
 
-            Assert.Contains(expectedCategory,result);
+                 //Assert
+
+                 Assert.Contains(expectedCategory, result);
+             }
 
         }
+
+        [Fact]
+        public void GetShouldReturnEntityWithProvidedId()
+        {
+            //Arrange
+            const int testCategoryId = 5;
+            const int expectedCategoryId = 5;
+
+            var expectedCategory = new Category()
+            {
+                Id = expectedCategoryId,
+                Name = "Test"
+            };
+
+            using (var context = new DatabaseContext(_options))
+            {
+                context.Database.OpenConnection();
+                context.Database.EnsureCreated();
+
+                context.Categories.Add(new Category()
+                {
+                    Id = testCategoryId,
+                    Name = "Test"
+                });
+
+                context.SaveChanges();
+            }
+
+            using (var context = new DatabaseContext(_options))
+            {
+                var categoryRepository = new Repository<Category>(context);
+
+                //Act
+
+                var result = categoryRepository.Get(testCategoryId);
+
+                //Assert
+
+                Assert.Equal(expectedCategory, result);
+            }
+        }
+
+        [Fact]
+        public void RemoveShouldRemoveEntityWithProvidedId()
+        {
+            //Arrange
+            const int testCategoryId = 5;
+            const int expectedCategoryId = 5;
+
+            var expectedCategory = new Category()
+            {
+                Id = expectedCategoryId,
+                Name = "Test"
+            };
+
+            using (var context = new DatabaseContext(_options))
+            {
+                context.Database.OpenConnection();
+                context.Database.EnsureCreated();
+
+                context.Categories.Add(new Category()
+                {
+                    Id = testCategoryId,
+                    Name = "Test"
+                });
+
+                context.SaveChanges();
+            }
+
+            using (var context = new DatabaseContext(_options))
+            {
+                var categoryRepository = new Repository<Category>(context);
+
+                //Act
+                var categoryToRemove = categoryRepository.Get(testCategoryId);
+                categoryRepository.Remove(categoryToRemove);
+                context.SaveChanges();
+
+
+                var result = categoryRepository.GetAll();
+
+
+                //Assert
+
+                Assert.DoesNotContain(expectedCategory, result);
+            }
+        }
+
+
     }
 }

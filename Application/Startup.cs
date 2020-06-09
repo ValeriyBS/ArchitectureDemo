@@ -1,4 +1,5 @@
-﻿using Application.Categories.Queries.GetCategoryList;
+﻿using System.Diagnostics.CodeAnalysis;
+using Application.Categories.Queries.GetCategoryList;
 using Application.ShopItems.Queries.GetShopItemsList;
 using Application.ShoppingCartItems.Commands;
 using Application.ShoppingCartItems.Queries;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
 {
+    [ExcludeFromCodeCoverage]
     public static class Startup
     {
         public static void ConfigureServices(
