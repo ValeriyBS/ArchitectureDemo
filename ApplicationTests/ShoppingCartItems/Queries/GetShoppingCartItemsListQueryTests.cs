@@ -9,9 +9,9 @@ using Xunit;
 
 namespace Application.Tests.ShoppingCartItems.Queries
 {
-    public class GetShoppingCartItemsTests
+    public class GetShoppingCartItemsListQueryTests
     {
-        public GetShoppingCartItemsTests()
+        public GetShoppingCartItemsListQueryTests()
         {
             _shoppingCartItem1 = new ShoppingCartItem
             {
@@ -63,7 +63,7 @@ namespace Application.Tests.ShoppingCartItems.Queries
         private readonly ShoppingCartItem _shoppingCartItem2;
 
         [Fact]
-        public void ExecuteShouldReturnNoItemsIfNoShoppingCartIdMatchesFound()
+        public void TestExecuteShouldReturnNoItemsIfNoShoppingCartIdMatchesFound()
         {
             //arrange
             const string testCartId = "NoMatchesId";
@@ -76,16 +76,16 @@ namespace Application.Tests.ShoppingCartItems.Queries
                 .Returns(_shoppingCartItems.AsQueryable);
 
             var sut = new GetShoppingCartItemsListQuery(mockShoppingCartItemRepository.Object);
+
             //act
-
             var results = sut.Execute(testCartId);
-            //assert
 
+            //assert
             Assert.Empty(results);
         }
 
         [Fact]
-        public void ExecuteShouldReturnShoppingItems()
+        public void TestExecuteShouldReturnShoppingItems()
         {
             //arrange
             const string testCartId = "TestCartId";
@@ -103,86 +103,12 @@ namespace Application.Tests.ShoppingCartItems.Queries
             mockShoppingCartItemRepository.Setup(s => s.GetAll()).Returns(_shoppingCartItems.AsQueryable);
 
             var sut = new GetShoppingCartItemsListQuery(mockShoppingCartItemRepository.Object);
+
             //act
-
             var results = sut.Execute(testCartId);
-            //assert
 
+            //assert
             Assert.Equal(expectedShoppingCartItems, results);
         }
-
-
-        //[Fact]
-        //public void ExecuteShouldReturnShoppingItems1()
-        //{
-        //    //arrange
-        //    const string testCartId = "TestCartId";
-
-        //    var mockShoppingCartItemRepository = new AutoMoqer();
-
-        //    var shoppingCartItem1 = new ShoppingCartItem()
-        //    {
-        //        Id = 1,
-        //        Amount = 1,
-        //        ShopItem = new ShopItem()
-        //        {
-        //            Id = 1,
-        //            Name = "Item1"
-        //        },
-        //        ShoppingCartId = "TestCartId"
-        //    };
-
-        //    var shoppingCartItem2 = new ShoppingCartItem()
-        //    {
-        //        Id = 2,
-        //        Amount = 2,
-        //        ShopItem = new ShopItem()
-        //        {
-        //            Id = 2,
-        //            Name = "Item2"
-        //        },
-        //        ShoppingCartId = "TestCartId"
-        //    };
-
-        //    var shoppingCartItem3 = new ShoppingCartItem()
-        //    {
-        //        Id = 3,
-        //        Amount = 1,
-        //        ShopItem = new ShopItem()
-        //        {
-        //            Id = 3,
-        //            Name = "Item3"
-        //        },
-        //        ShoppingCartId = "DifferentTestCardId"
-        //    };
-
-
-        //    var shoppingCartItems = new List<ShoppingCartItem>()
-        //    {
-        //        shoppingCartItem1,
-        //        shoppingCartItem2,
-        //        shoppingCartItem3
-        //    };
-
-        //    var expectedShoppingCartItems = new List<ShoppingCartItem>()
-        //   {
-        //       shoppingCartItem1,
-        //       shoppingCartItem2
-        //   };
-
-
-        //    mockShoppingCartItemRepository.GetMock<IShoppingCartItemRepository>().Setup(s => s.GetAll()).Returns(shoppingCartItems.AsQueryable);
-
-        //    var mockrepo = mockShoppingCartItemRepository.Create<ShoppingCartItemRepository>();
-
-        //    var sut = new ShoppingCartItemRepository(mockrepo.);
-        //    //act
-
-        //    //var results = sut.
-        //    //assert
-
-        //    //Assert.Equal(expectedShoppingCartItems, results);
-
-        //}
     }
 }

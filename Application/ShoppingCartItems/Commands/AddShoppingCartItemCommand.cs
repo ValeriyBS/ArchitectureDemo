@@ -14,14 +14,14 @@ namespace Application.ShoppingCartItems.Commands
             _shoppingCartItemRepository = shoppingCartItemRepository;
         }
 
-        public void Execute(int shopItemId, string sessionId)
+        public void Execute(int shopItemId, string cartId)
         {
-            if (string.IsNullOrWhiteSpace(sessionId)) throw new ArgumentException(nameof(sessionId));
+            if (string.IsNullOrWhiteSpace(cartId)) throw new ArgumentNullException(nameof(cartId));
 
             _shoppingCartItemRepository.Add(new ShoppingCartItem()
             {
                 ShopItemId = shopItemId,
-                ShoppingCartId = sessionId
+                ShoppingCartId = cartId
             });
         }
     }

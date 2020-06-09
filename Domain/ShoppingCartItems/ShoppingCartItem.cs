@@ -20,14 +20,15 @@ namespace Domain.ShoppingCartItems
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return ShopItem.Equals(other.ShopItem) && ShopItemId == other.ShopItemId && Amount == other.Amount && ShoppingCartId == other.ShoppingCartId && Id == other.Id;
+            return ShopItem.Equals(other.ShopItem) && ShopItemId == other.ShopItemId && Amount == other.Amount &&
+                   ShoppingCartId == other.ShoppingCartId && Id == other.Id;
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((ShoppingCartItem) obj);
         }
 
