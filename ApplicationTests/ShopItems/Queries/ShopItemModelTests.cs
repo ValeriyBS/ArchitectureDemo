@@ -1,6 +1,7 @@
 ﻿
 using Application.ShopItems.Queries.GetShopItemsList;
 using Domain.Categories;
+using Domain.ShopItems;
 using Xunit;
 
 namespace Application.Tests.ShopItems.Queries
