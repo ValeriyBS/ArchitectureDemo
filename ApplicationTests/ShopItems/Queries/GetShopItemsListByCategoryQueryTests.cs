@@ -20,19 +20,18 @@ namespace Application.Tests.ShopItems.Queries
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile(new ShopItemProfile()); });
             _mapper = mapperConfiguration.CreateMapper();
 
-            _fixture = new Fixture();
+            var fixture = new Fixture();
 
             // client has a circular reference from AutoFixture point of view
-            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-            _shopItems = _fixture.CreateMany<ShopItem>(5).ToList();
+            _shopItems = fixture.CreateMany<ShopItem>(5).ToList();
 
         }
 
         private readonly IMapper _mapper;
         private readonly List<ShopItem> _shopItems;
-        private readonly Fixture _fixture;
 
         [Fact]
         public void TestExecuteShouldReturnListOfShopItemModelWithSpecifiedCategory()

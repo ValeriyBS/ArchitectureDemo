@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Application.ShoppingCartItems.Queries;
-using Domain.ShopItems;
+using AutoFixture;
 using Domain.ShoppingCartItems;
 using Xunit;
 
@@ -10,37 +11,28 @@ namespace Application.Tests.ShoppingCartItems.Queries
     {
         public ShoppingCartModelTests()
         {
+            var fixture = new Fixture();
+
+            // client has a circular reference from AutoFixture point of view
+            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            _shoppingCartItems = fixture.CreateMany<ShoppingCartItem>(3).ToList();
+
             _sut = new ShoppingCartModel("testCartId")
             {
-                ShoppingCartItems = new List<ShoppingCartItem>
-                {
-                    new ShoppingCartItem
-                    {
-                        Amount = 2,
-                        ShopItem = new ShopItem
-                        {
-                            Price = 1.1m
-                        }
-                    },
-                    new ShoppingCartItem
-                    {
-                        Amount = 3,
-                        ShopItem = new ShopItem
-                        {
-                            Price = 1.2m
-                        }
-                    }
-                }
+                ShoppingCartItems = _shoppingCartItems
             };
         }
 
         private readonly ShoppingCartModel _sut;
+        private readonly List<ShoppingCartItem> _shoppingCartItems;
 
         [Fact]
         public void TestShoppingCartItemsCountReturnsNumberOfShoppingCartItems()
         {
             //Arrange
-            const int expectedShoppingCartItemsNumber = 5;
+            var expectedShoppingCartItemsNumber = _shoppingCartItems.Sum(i => i.Amount);
 
             //Act
             var result = _sut.ShoppingCartItemsCount;
@@ -66,7 +58,7 @@ namespace Application.Tests.ShoppingCartItems.Queries
         public void TestShoppingCartTotalReturnsSumOfItemsPrice()
         {
             //Arrange
-            const decimal expectedShoppingCartTotal = 5.8m;
+            var expectedShoppingCartTotal = _shoppingCartItems.Sum(i => i.ShopItem.Price * i.Amount);
 
             //Act
             var result = _sut.ShoppingCartTotal;

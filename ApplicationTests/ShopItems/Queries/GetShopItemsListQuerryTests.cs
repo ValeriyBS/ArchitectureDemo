@@ -2,6 +2,7 @@
 using System.Linq;
 using Application.Interfaces.Persistence;
 using Application.ShopItems.Queries.GetShopItemsList;
+using AutoFixture;
 using AutoMapper;
 using Domain.ShopItems;
 using Moq;
@@ -16,11 +17,13 @@ namespace Application.Tests.ShopItems.Queries
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile(new ShopItemProfile()); });
             _mapper = mapperConfiguration.CreateMapper();
 
-            _shopItems = new List<ShopItem>
-            {
-                new ShopItem {Id = 1, Name = "tesItemName1"},
-                new ShopItem {Id = 2, Name = "testItemName2"}
-            };
+            var fixture = new Fixture();
+
+            // client has a circular reference from AutoFixture point of view
+            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            _shopItems = fixture.CreateMany<ShopItem>(3).ToList();
         }
 
         private readonly IMapper _mapper;
@@ -53,6 +56,8 @@ namespace Application.Tests.ShopItems.Queries
         {
             //Arrange
             const int itemId = 2;
+
+            _shopItems.Add(new ShopItem { Id = 2, Name = "testItemName2" });
 
             var expectedResult = _mapper.Map<ShopItemModel>(_shopItems.SingleOrDefault(s => s.Id == itemId));
 
