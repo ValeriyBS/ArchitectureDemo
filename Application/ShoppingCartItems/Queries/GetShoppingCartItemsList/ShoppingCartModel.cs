@@ -2,7 +2,7 @@
 using System.Linq;
 using Domain.ShoppingCartItems;
 
-namespace Application.ShoppingCartItems.Queries
+namespace Application.ShoppingCartItems.Queries.GetShoppingCartItemsList
 {
     public class ShoppingCartModel
     {

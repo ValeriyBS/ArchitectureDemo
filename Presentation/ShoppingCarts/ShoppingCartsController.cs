@@ -1,6 +1,9 @@
 ﻿using Application.ShopItems.Queries.GetShopItemsList;
 using Application.ShoppingCartItems.Commands;
+using Application.ShoppingCartItems.Commands.AddShoppingCartItem;
+using Application.ShoppingCartItems.Commands.RemoveShoppingCartItem;
 using Application.ShoppingCartItems.Queries;
+using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ShoppingCarts.Services.Queries;

@@ -2,8 +2,9 @@
 using System.Runtime.CompilerServices;
 using AutoMapper;
 using Domain.ShopItems;
+
 [assembly:InternalsVisibleTo("Application.Tests")]
-namespace Application.ShopItems.Queries.GetShopItemsList
+namespace Application.ShopItems.Queries
 {
     [ExcludeFromCodeCoverage]
     internal class ShopItemProfile : Profile

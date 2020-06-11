@@ -1,11 +1,11 @@
 ﻿using System;
 using Application.Interfaces.Persistence;
-using Application.ShoppingCartItems.Commands;
+using Application.ShoppingCartItems.Commands.AddShoppingCartItem;
 using Domain.ShoppingCartItems;
 using Moq;
 using Xunit;
 
-namespace Application.Tests.ShoppingCartItems.Commands
+namespace Application.Tests.ShoppingCartItems.Commands.AddShoppingCartItem
 {
     public class AddShoppingCartItemCommandTests
     {

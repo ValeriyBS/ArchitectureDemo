@@ -2,7 +2,7 @@
 using Application.Interfaces.Persistence;
 using Domain.ShoppingCartItems;
 
-namespace Application.ShoppingCartItems.Commands
+namespace Application.ShoppingCartItems.Commands.RemoveShoppingCartItem
 {
     public class RemoveShoppingCartItemCommand : IRemoveShoppingCartItemCommand
     {

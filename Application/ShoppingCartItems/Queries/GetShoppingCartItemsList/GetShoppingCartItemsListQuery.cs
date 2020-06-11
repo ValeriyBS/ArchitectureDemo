@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Application.Interfaces.Persistence;
 using Domain.ShoppingCartItems;
 
-namespace Application.ShoppingCartItems.Queries
+namespace Application.ShoppingCartItems.Queries.GetShoppingCartItemsList
 {
     public class GetShoppingCartItemsListQuery : IGetShoppingCartItemsListQuery
     {

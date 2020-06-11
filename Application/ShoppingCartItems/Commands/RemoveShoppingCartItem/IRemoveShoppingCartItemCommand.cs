@@ -1,4 +1,4 @@
-﻿namespace Application.ShoppingCartItems.Commands
+﻿namespace Application.ShoppingCartItems.Commands.RemoveShoppingCartItem
 {
     public interface IRemoveShoppingCartItemCommand
     {

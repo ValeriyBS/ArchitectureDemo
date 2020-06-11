@@ -1,11 +1,11 @@
 ﻿using System;
 using Application.Interfaces.Persistence;
-using Application.ShoppingCartItems.Commands;
+using Application.ShoppingCartItems.Commands.RemoveShoppingCartItem;
 using Domain.ShoppingCartItems;
 using Moq;
 using Xunit;
 
-namespace Application.Tests.ShoppingCartItems.Commands
+namespace Application.Tests.ShoppingCartItems.Commands.RemoveShoppingCartItem
 {
     public class RemoveShoppingCartItemCommandTests
     {

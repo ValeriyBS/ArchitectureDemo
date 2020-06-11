@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces.Persistence;
-using Application.ShoppingCartItems.Queries;
+using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using AutoFixture;
 using Domain.ShoppingCartItems;
 using Moq;
 using Xunit;
 
-namespace Application.Tests.ShoppingCartItems.Queries
+namespace Application.Tests.ShoppingCartItems.Queries.GetShoppingCartItemsList
 {
     public class GetShoppingCartItemsListQueryTests
     {

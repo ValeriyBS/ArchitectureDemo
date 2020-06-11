@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Application.Interfaces.Persistence;
 using Domain.ShoppingCartItems;
 
-namespace Application.ShoppingCartItems.Commands
+namespace Application.ShoppingCartItems.Commands.AddShoppingCartItem
 {
     public class AddShoppingCartItemCommand : IAddShoppingCartItemCommand
     {

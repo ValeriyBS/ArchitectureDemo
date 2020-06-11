@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces.Persistence;
+using Application.ShopItems.Queries;
 using Application.ShopItems.Queries.GetShopItemsList;
 using AutoFixture;
 using AutoMapper;
@@ -8,7 +9,7 @@ using Domain.ShopItems;
 using Moq;
 using Xunit;
 
-namespace Application.Tests.ShopItems.Queries
+namespace Application.Tests.ShopItems.Queries.GetShopItemsList
 {
     public class GetShopItemsListQueryTests
     {

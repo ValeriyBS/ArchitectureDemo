@@ -1,8 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Application.Categories.Queries.GetCategoryList;
 using Application.ShopItems.Queries.GetShopItemsList;
+using Application.ShopItems.Queries.GetShopItemsListByCategory;
 using Application.ShoppingCartItems.Commands;
+using Application.ShoppingCartItems.Commands.AddShoppingCartItem;
+using Application.ShoppingCartItems.Commands.RemoveShoppingCartItem;
 using Application.ShoppingCartItems.Queries;
+using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 

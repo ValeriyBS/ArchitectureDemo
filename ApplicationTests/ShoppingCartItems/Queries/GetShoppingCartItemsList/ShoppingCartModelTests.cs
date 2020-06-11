@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Application.ShoppingCartItems.Queries;
+using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using AutoFixture;
 using Domain.ShoppingCartItems;
 using Xunit;
 
-namespace Application.Tests.ShoppingCartItems.Queries
+namespace Application.Tests.ShoppingCartItems.Queries.GetShoppingCartItemsList
 {
     public class ShoppingCartModelTests
     {

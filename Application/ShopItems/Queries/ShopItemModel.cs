@@ -1,7 +1,7 @@
 ﻿using System;
 using Domain.Categories;
 
-namespace Application.ShopItems.Queries.GetShopItemsList
+namespace Application.ShopItems.Queries
 {
     public class ShopItemModel// : IEquatable<ShopItemModel>
     {

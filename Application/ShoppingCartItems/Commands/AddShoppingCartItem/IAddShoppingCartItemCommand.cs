@@ -1,6 +1,4 @@
-﻿using Domain.ShoppingCartItems;
-
-namespace Application.ShoppingCartItems.Commands
+﻿namespace Application.ShoppingCartItems.Commands.AddShoppingCartItem
 {
     public interface IAddShoppingCartItemCommand
     {
