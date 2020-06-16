@@ -1,19 +1,12 @@
-﻿
-using System.Linq;
-using Application.ShopItems.Queries;
-using Application.ShopItems.Queries.GetShopItemsList;
+﻿using Application.ShopItems.Queries;
 using AutoFixture;
 using Domain.Categories;
-using Domain.ShopItems;
-using Domain.ShoppingCartItems;
 using Xunit;
 
 namespace Application.Tests.ShopItems.Queries
 {
-    public class ShopItemModelTests
+    public sealed partial class ShopItemModelTests
     {
-        
-
         public ShopItemModelTests()
         {
             _fixture = new Fixture();
@@ -23,7 +16,7 @@ namespace Application.Tests.ShopItems.Queries
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
             _shopItemModel = new ShopItemModel();
-            _category = new Category()
+            _category = new Category
             {
                 Id = 1
             };
@@ -43,37 +36,48 @@ namespace Application.Tests.ShopItems.Queries
         private const string Notes = "testNotes";
         private const decimal Price = 1.0m;
 
-       [Fact]
-        public void TestSetAndGetName()
+        [Theory]
+        [ClassData(typeof(ShopItemModelTestsData))]
+        public void TestEqualsShouldReturnPredictedResultWhenComparingDifferentSetsOfObjects(ShopItemModel a,
+            ShopItemModel b, bool expectedResult)
         {
             //Arrange
+
             //Act
-            _shopItemModel.Name = Name;
+            var result = a.Equals(b);
 
             //Assert
-            Assert.Equal(Name,_shopItemModel.Name);
+            Assert.Equal(expectedResult, result);
         }
 
         [Fact]
-        public void TestSetAndGetId()
+        public void TestEqualsOperatorShouldReturnTrueWhenComparingEqualObjects()
         {
             //Arrange
+            _fixture.Freeze<ShopItemModel>();
+            var shopItemModel1 = _fixture.Create<ShopItemModel>();
+            var shopItemModel2 = _fixture.Create<ShopItemModel>();
+
             //Act
-            _shopItemModel.Id = Id;
+            var result = shopItemModel1 == shopItemModel2;
 
             //Assert
-            Assert.Equal(Id,_shopItemModel.Id);
+            Assert.True(result);
         }
 
+
         [Fact]
-        public void TestSetAndGetCategoryId()
+        public void TestNotEqualsOperatorShouldReturnTrueWhenComparingNonEqualObjects()
         {
             //Arrange
+            var shopItemModel1 = _fixture.Create<ShopItemModel>();
+            var shopItemModel2 = _fixture.Create<ShopItemModel>();
+
             //Act
-            _shopItemModel.CategoryId = CategoryId;
+            var result = shopItemModel1 != shopItemModel2;
 
             //Assert
-            Assert.Equal(CategoryId,_shopItemModel.CategoryId);
+            Assert.True(result);
         }
 
         [Fact]
@@ -84,7 +88,29 @@ namespace Application.Tests.ShopItems.Queries
             _shopItemModel.Category = _category;
 
             //Assert
-            Assert.Equal(_category,_shopItemModel.Category);
+            Assert.Equal(_category, _shopItemModel.Category);
+        }
+
+        [Fact]
+        public void TestSetAndGetCategoryId()
+        {
+            //Arrange
+            //Act
+            _shopItemModel.CategoryId = CategoryId;
+
+            //Assert
+            Assert.Equal(CategoryId, _shopItemModel.CategoryId);
+        }
+
+        [Fact]
+        public void TestSetAndGetId()
+        {
+            //Arrange
+            //Act
+            _shopItemModel.Id = Id;
+
+            //Assert
+            Assert.Equal(Id, _shopItemModel.Id);
         }
 
         [Fact]
@@ -132,14 +158,14 @@ namespace Application.Tests.ShopItems.Queries
         }
 
         [Fact]
-        public void TestSetAndGetShortDescription()
+        public void TestSetAndGetName()
         {
             //Arrange
             //Act
-            _shopItemModel.ShortDescription = ShortDescription;
+            _shopItemModel.Name = Name;
 
             //Assert
-            Assert.Equal(ShortDescription, _shopItemModel.ShortDescription);
+            Assert.Equal(Name, _shopItemModel.Name);
         }
 
         [Fact]
@@ -165,48 +191,14 @@ namespace Application.Tests.ShopItems.Queries
         }
 
         [Fact]
-        public void TestEqualsOperatorReturnsTrueWhenComparingEqualObjects()
+        public void TestSetAndGetShortDescription()
         {
             //Arrange
-            _fixture.Freeze<ShopItemModel>();
-            var shopItemModel1 = _fixture.Create<ShopItemModel>();
-            var shopItemModel2 = _fixture.Create<ShopItemModel>();
-
             //Act
-            var result = shopItemModel1 == shopItemModel2;
+            _shopItemModel.ShortDescription = ShortDescription;
 
             //Assert
-            Assert.True(result);
+            Assert.Equal(ShortDescription, _shopItemModel.ShortDescription);
         }
-
-        [Fact]
-        public void TestEqualsReturnsTrueWhenComparingEqualObjects()
-        {
-            //Arrange
-            _fixture.Freeze<ShopItemModel>();
-            var shopItemModel1 = _fixture.Create<ShopItemModel>();
-            var shopItemModel2 = _fixture.Create<ShopItemModel>();
-
-            //Act
-            var result = shopItemModel1.Equals(shopItemModel2);
-
-            //Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void TestNotEqualsOperatorReturnsTrueWhenComparingNonEqualObjects()
-        {
-            //Arrange
-            var shopItemModel1 = _fixture.Create<ShopItemModel>();
-            var shopItemModel2 = _fixture.Create<ShopItemModel>();
-
-            //Act
-            var result = shopItemModel1 != shopItemModel2;
-
-            //Assert
-            Assert.True(result);
-        }
-
     }
 }

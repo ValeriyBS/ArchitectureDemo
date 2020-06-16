@@ -60,11 +60,11 @@ namespace Application.Tests.ShopItems.Queries.GetShopItemsList
 
             _shopItems.Add(new ShopItem { Id = 2, Name = "testItemName2" });
 
-            var expectedResult = _mapper.Map<ShopItemModel>(_shopItems.SingleOrDefault(s => s.Id == itemId));
+            var expectedResult = _mapper.Map<ShopItemModel>(_shopItems.FirstOrDefault(s => s.Id == itemId));
 
             var mockShopItemRepository = new Mock<IShopItemRepository>();
 
-            mockShopItemRepository.Setup(s => s.Get(itemId)).Returns(_shopItems.SingleOrDefault(s => s.Id == itemId));
+            mockShopItemRepository.Setup(s => s.Get(itemId)).Returns(_shopItems.FirstOrDefault(s => s.Id == itemId));
 
             var sut = new GetShopItemsListQuery(mockShopItemRepository.Object, _mapper);
 

@@ -3,7 +3,7 @@ using Domain.Categories;
 
 namespace Application.ShopItems.Queries
 {
-    public class ShopItemModel// : IEquatable<ShopItemModel>
+    public class ShopItemModel // : IEquatable<ShopItemModel>
     {
         public string Name { get; set; } = "";
         public string ShortDescription { get; set; } = "";
@@ -17,7 +17,7 @@ namespace Application.ShopItems.Queries
         public string Notes { get; set; } = "";
         public int Id { get; set; }
 
-        public bool Equals(ShopItemModel? other)
+        public bool Equals(ShopItemModel other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

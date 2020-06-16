@@ -29,7 +29,7 @@ namespace Application.Tests.ShoppingCartItems.Queries.GetShoppingCartItemsList
         private readonly List<ShoppingCartItem> _shoppingCartItems;
 
         [Fact]
-        public void TestShoppingCartItemsCountReturnsNumberOfShoppingCartItems()
+        public void TestShoppingCartItemsCountShouldReturnNumberOfShoppingCartItems()
         {
             //Arrange
             var expectedShoppingCartItemsNumber = _shoppingCartItems.Sum(i => i.Amount);
@@ -55,7 +55,7 @@ namespace Application.Tests.ShoppingCartItems.Queries.GetShoppingCartItemsList
         }
 
         [Fact]
-        public void TestShoppingCartTotalReturnsSumOfItemsPrice()
+        public void TestShoppingCartTotalShouldReturnSumOfItemsPrice()
         {
             //Arrange
             var expectedShoppingCartTotal = _shoppingCartItems.Sum(i => i.ShopItem.Price * i.Amount);
