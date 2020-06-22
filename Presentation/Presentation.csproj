@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="Category\Models\" />
     <Folder Include="Home\Models\" />
+    <Folder Include="Orders\Services\" />
     <Folder Include="Pages\Home\" />
     <Folder Include="ShopItems\Models\" />
     <Folder Include="ShoppingCarts\Models\" />

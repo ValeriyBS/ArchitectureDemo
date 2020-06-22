@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.ShopItems.Queries.GetShopItemsList;
+﻿using Application.ShopItems.Queries.GetShopItemsList;
 using Application.ShopItems.Queries.GetShopItemsListByCategory;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +8,8 @@ namespace Presentation.ShopItems
 {
     public class ShopItemsController : Controller
     {
-        private readonly IGetShopItemsListQuery _getShopItemsListQuery;
         private readonly IGetShopItemsListByCategoryQuery _getShopItemsListByCategoryQuery;
+        private readonly IGetShopItemsListQuery _getShopItemsListQuery;
 
         public ShopItemsController(IGetShopItemsListQuery getShopItemsListQuery,
             IGetShopItemsListByCategoryQuery getShopItemsListByCategoryQuery)
@@ -21,11 +17,11 @@ namespace Presentation.ShopItems
             _getShopItemsListQuery = getShopItemsListQuery;
             _getShopItemsListByCategoryQuery = getShopItemsListByCategoryQuery;
         }
+
         // GET: /<controller>/
         public IActionResult Index(int id)
         {
-            return id>0 ? View(_getShopItemsListByCategoryQuery.Execute(id)) : View(_getShopItemsListQuery.Execute());
+            return id > 0 ? View(_getShopItemsListByCategoryQuery.Execute(id)) : View(_getShopItemsListQuery.Execute());
         }
-
     }
 }

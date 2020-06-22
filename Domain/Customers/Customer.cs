@@ -26,7 +26,7 @@ namespace Domain.Customers
         [Required(ErrorMessage = "Please enter your zip code")]
         [Display(Name = "Zip code")]
         [StringLength(10, MinimumLength = 4)]
-        public string ZipCode { get; set; } = "";
+        public string PostCode { get; set; } = "";
 
         [Required(ErrorMessage = "Please enter your city")]
         [StringLength(50)]
