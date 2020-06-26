@@ -1,11 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Application.Categories.Queries.GetCategoryList;
+using Application.Orders.Commands.CreateOrder;
+using Application.Orders.Commands.CreateOrder.Factory;
+using Application.Orders.Commands.CreateOrder.Repository;
 using Application.ShopItems.Queries.GetShopItemsList;
 using Application.ShopItems.Queries.GetShopItemsListByCategory;
-using Application.ShoppingCartItems.Commands;
 using Application.ShoppingCartItems.Commands.AddShoppingCartItem;
 using Application.ShoppingCartItems.Commands.RemoveShoppingCartItem;
-using Application.ShoppingCartItems.Queries;
 using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,9 @@ namespace Application
             services.AddScoped<IGetShoppingCartItemsListQuery, GetShoppingCartItemsListQuery>();
             services.AddScoped<IAddShoppingCartItemCommand, AddShoppingCartItemCommand>();
             services.AddScoped<IRemoveShoppingCartItemCommand, RemoveShoppingCartItemCommand>();
+            services.AddScoped<IOrderRepositoryFacade, OrderRepositoryFacade>();
+            services.AddScoped<IOrderFactory, OrderFactory>();
+            services.AddScoped<ICreateOrderCommand, CreateOrderCommand>();
         }
     }
 }

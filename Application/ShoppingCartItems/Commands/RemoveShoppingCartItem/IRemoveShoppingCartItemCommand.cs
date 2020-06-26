@@ -2,6 +2,6 @@
 {
     public interface IRemoveShoppingCartItemCommand
     {
-        void Execute(int shopItemId, string sessionId);
+        void Execute(int shopItemId, string cartId);
     }
 }

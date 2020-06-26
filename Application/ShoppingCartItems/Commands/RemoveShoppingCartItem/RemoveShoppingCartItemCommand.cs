@@ -12,14 +12,14 @@ namespace Application.ShoppingCartItems.Commands.RemoveShoppingCartItem
         {
             _shoppingCartItemRepository = shoppingCartItemRepository;
         }
-        public void Execute(int shopItemId, string sessionId)
+        public void Execute(int shopItemId, string cartId)
         {
-            if(sessionId is null) throw new ArgumentNullException(nameof(sessionId));
+            if(cartId is null) throw new ArgumentNullException(nameof(cartId));
 
             _shoppingCartItemRepository.Remove(new ShoppingCartItem()
             {
                 ShopItemId = shopItemId,
-                ShoppingCartId = sessionId
+                ShoppingCartId = cartId
             });
         }
     }

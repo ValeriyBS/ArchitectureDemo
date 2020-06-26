@@ -13,9 +13,9 @@ namespace Domain.Orders
 
         public Customer Customer { get; set; } = null!;
 
-        [ScaffoldColumn(false)] public decimal OrderTotal { get; set; }
+        public decimal OrderTotal { get; set; }
 
-        [ScaffoldColumn(false)] public DateTime OrderPlaced { get; set; }
+        public DateTime OrderPlaced { get; set; }
 
         public int Id { get; set; }
     }

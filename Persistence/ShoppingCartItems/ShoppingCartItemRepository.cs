@@ -78,5 +78,15 @@ namespace Persistence.ShoppingCartItems
 
             _databaseContext.Save();
         }
+
+        public void Clear(string cartId)
+        {
+            if (cartId is null) throw new ArgumentNullException(nameof(cartId));
+
+            var shoppingCartItemsToRemove = _databaseContext.ShoppingCartItems.Where(i => i.ShoppingCartId == cartId);
+
+            _databaseContext.ShoppingCartItems.RemoveRange(shoppingCartItemsToRemove);
+
+        }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Categories;
 
 namespace Application.Categories.Queries.GetCategoryList
@@ -10,7 +7,7 @@ namespace Application.Categories.Queries.GetCategoryList
     {
         public CategoryProfile()
         {
-            CreateMap<Category,CategoryModel>();
+            CreateMap<Category, CategoryModel>();
         }
     }
 }

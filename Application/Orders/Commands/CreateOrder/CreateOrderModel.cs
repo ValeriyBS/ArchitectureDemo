@@ -2,8 +2,13 @@
 {
     public class CreateOrderModel
     {
-        public int CustomerId { get; set; }
+        public CreateOrderModel(int customerId, string cartId)
+        {
+            CustomerId = customerId;
+            ShoppingCartId = cartId;
+        }
+        public int CustomerId { get;}
 
-        public int ShoppingCartId { get; set; }
+        public string ShoppingCartId { get;}
     }
 }

@@ -1,6 +1,4 @@
-﻿
-using Moq;
-using Persistence.Categories;
+﻿using Moq;
 using Persistence.Shared;
 using Persistence.ShopItems;
 using Xunit;

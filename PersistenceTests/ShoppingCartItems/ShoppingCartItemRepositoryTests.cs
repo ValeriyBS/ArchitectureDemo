@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoFixture;
 using Domain.Categories;
 using Domain.ShopItems;
 using Domain.ShoppingCartItems;
@@ -87,7 +88,6 @@ namespace Persistence.Tests.ShoppingCartItems
             var sut = new ShoppingCartItemRepository(context);
 
             //Act
-
             sut.Add(shoppingCartItem);
             sut.Add(shoppingCartItem);
 
@@ -95,7 +95,6 @@ namespace Persistence.Tests.ShoppingCartItems
             var result = sut.GetAll().Where(s => s.ShoppingCartId == uniqueId);
 
             //Assert
-
             Assert.Equal(expectedShoppingCartItemsCount, result.Count());
 
             Assert.Equal(expectedShoppingCartItemsAmount, result.First().Amount);
@@ -125,8 +124,10 @@ namespace Persistence.Tests.ShoppingCartItems
             var mockDatabaseContext = new DatabaseContext(_options);
 
             var sut = new ShoppingCartItemRepository(mockDatabaseContext);
+
             //Act
             var exception = Assert.Throws<ArgumentException>(
+
                 //Assert
                 () => sut.Add(shoppingCartItem));
 
@@ -153,6 +154,7 @@ namespace Persistence.Tests.ShoppingCartItems
             var sut = new ShoppingCartItemRepository(mockDatabaseContext.Object);
             //Act
             Assert.Throws<ArgumentNullException>(
+
                 //Assert
                 () => sut.Add(shoppingCartItem));
         }
@@ -161,7 +163,6 @@ namespace Persistence.Tests.ShoppingCartItems
         public void TestAddShouldThrowsArgumentNullExceptionWhenShoppingCartIdIsNull()
         {
             //Arrange
-
             var shoppingCartItem = new ShoppingCartItem
             {
                 Id = 999,
@@ -181,6 +182,7 @@ namespace Persistence.Tests.ShoppingCartItems
             var sut = new ShoppingCartItemRepository(mockDatabaseContext.Object);
             //Act
             Assert.Throws<ArgumentNullException>(
+
                 //Assert
                 () => sut.Add(shoppingCartItem));
         }
@@ -226,11 +228,9 @@ namespace Persistence.Tests.ShoppingCartItems
                 var sut = new ShoppingCartItemRepository(context);
 
                 //Act
-
                 var result = sut.GetAll();
 
                 //Assert
-
                 Assert.Contains(expectedShoppingCartItem, result);
             }
         }
@@ -269,7 +269,6 @@ namespace Persistence.Tests.ShoppingCartItems
                 var sut = new ShoppingCartItemRepository(context);
 
                 //Act
-
                 sut.Remove(new ShoppingCartItem
                 {
                     ShopItemId = 999,
@@ -280,7 +279,6 @@ namespace Persistence.Tests.ShoppingCartItems
 
 
                 //Assert
-
                 Assert.Contains(expectedShoppingCartItem, result);
             }
         }
@@ -311,7 +309,6 @@ namespace Persistence.Tests.ShoppingCartItems
                 var sut = new ShoppingCartItemRepository(context);
 
                 //Act
-
                 sut.Remove(new ShoppingCartItem
                 {
                     ShopItemId = 999,
@@ -321,7 +318,6 @@ namespace Persistence.Tests.ShoppingCartItems
                 var result = sut.GetAll();
 
                 //Assert
-
                 Assert.Empty(result);
             }
         }
@@ -348,7 +344,6 @@ namespace Persistence.Tests.ShoppingCartItems
             var sut = new ShoppingCartItemRepository(mockDatabaseContext.Object);
 
             //Act
-
             sut.Remove(new ShoppingCartItem
             {
                 ShopItemId = 999,
@@ -357,7 +352,6 @@ namespace Persistence.Tests.ShoppingCartItems
 
 
             //Assert
-
             mockDatabaseContext.Verify(d => d.ShoppingCartItems, Times.Once);
         }
 
@@ -375,6 +369,87 @@ namespace Persistence.Tests.ShoppingCartItems
             Assert.Throws<ArgumentNullException>(
                 //Assert
                 () => sut.Remove(null!));
+        }
+
+        [Fact]
+        public void TestClearShouldEmptyCart()
+        {
+            //Arrange
+            var uniqueId = Guid.NewGuid().ToString();
+            var testClearId = Guid.NewGuid().ToString();
+            const int expectedShoppingCartItems = 1;
+
+            var fixture = new Fixture();
+
+            // client has a circular reference from AutoFixture point of view
+            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            using (var context = new DatabaseContext(_options))
+            {
+                var shopItems = fixture
+                    .Build<ShopItem>()
+                    .With(p => p.CategoryId, 999)
+                    .CreateMany<ShopItem>(3).ToList();
+                context.ShopItems.AddRange(shopItems);
+
+                foreach (var item in shopItems)
+                {
+                    context.Add(new ShoppingCartItem
+                    {
+                        Id = item.Id,
+                        ShopItem = item,
+                        ShoppingCartId = testClearId,
+                        Amount = 1
+                    });
+                }
+
+                var shopItem = context.ShopItems.Find(999);
+                context.ShoppingCartItems.Add(new ShoppingCartItem
+                {
+                    Id = 999,
+                    ShopItem = shopItem,
+                    ShoppingCartId = uniqueId,
+                    Amount = 1
+                });
+
+                context.SaveChanges();
+            }
+
+
+            using (var context = new DatabaseContext(_options))
+            {
+                var sut = new ShoppingCartItemRepository(context);
+
+                //Act
+
+                sut.Clear(testClearId);
+                context.SaveChanges();
+
+                var result = sut.GetAll();
+
+                //Assert
+
+                Assert.Equal(expectedShoppingCartItems,result.Count());
+
+                Assert.NotNull(result.FirstOrDefault(i=>i.ShoppingCartId== uniqueId));
+
+                Assert.Null(result.FirstOrDefault(i => i.ShoppingCartId == testClearId));
+            }
+        }
+
+        [Fact]
+        public void TestClearShouldThrowArgumentNullExceptionWhenCartIdNull()
+        {
+            //Arrange
+            using var context = new DatabaseContext(_options);
+            var sut = new ShoppingCartItemRepository(context);
+            //Act
+
+            Assert.Throws<ArgumentNullException>(
+
+            //Assert
+            () => sut.Clear(null!));
         }
     }
 }

@@ -158,7 +158,7 @@ namespace Persistence.Shared
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
                 Id = 1, FirstName = "Gordon", LastName = "Freeman", Email = "Gordon.Freeman@Gmail.com",
-                City = "Washington", Country = "USA", State = "Washington"
+                City = "Washington", Country = "USA", County = "Washington"
             });
 
 

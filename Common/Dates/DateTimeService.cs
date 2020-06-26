@@ -8,7 +8,7 @@ namespace Common.Dates
     {
         public DateTime GetDateTime()
         {
-            return DateTime.UtcNow;
+            return DateTime.Now;
         }
     }
 }
