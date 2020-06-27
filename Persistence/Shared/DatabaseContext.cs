@@ -64,8 +64,9 @@ namespace Persistence.Shared
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Customer>().HasKey(c => c.Email);
+
             modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "Men", Description = "Fancy items for men"});
             modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women", Description = "Fancy items for Women" });
             modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids", Description = "Fancy items for kids" });
@@ -155,7 +156,8 @@ namespace Persistence.Shared
                 Notes = "It is a fine item to have!"
             });
 
-            modelBuilder.Entity<Customer>().HasData(new Customer
+            modelBuilder.Entity<Customer>()
+                .HasData(new Customer
             {
                 Id = 1, FirstName = "Gordon", LastName = "Freeman", Email = "Gordon.Freeman@Gmail.com",
                 City = "Washington", Country = "USA", County = "Washington"

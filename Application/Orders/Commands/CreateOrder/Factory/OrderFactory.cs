@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using AutoMapper;
-using Common.Dates;
 using Domain.Customers;
 using Domain.OrderDetails;
 using Domain.Orders;
-using Domain.ShopItems;
 using Domain.ShoppingCartItems;
 
 namespace Application.Orders.Commands.CreateOrder.Factory
@@ -20,11 +17,12 @@ namespace Application.Orders.Commands.CreateOrder.Factory
         {
             _mapper = mapper;
         }
+
         public Order Create(DateTime dateTime, Customer customer, IList<ShoppingCartItem> shopItems)
         {
-            if(customer is null) throw new ArgumentNullException(nameof(customer));
-            if(shopItems is null) throw new ArgumentNullException(nameof(shopItems));
-            if(shopItems.Count == 0) throw new ArgumentException("Shop items list is empty");
+            if (customer is null) throw new ArgumentNullException(nameof(customer));
+            if (shopItems is null) throw new ArgumentNullException(nameof(shopItems));
+            if (shopItems.Count == 0) throw new ArgumentException("Shop items list is empty");
 
             var order = new Order
             {
@@ -42,6 +40,5 @@ namespace Application.Orders.Commands.CreateOrder.Factory
 
             return order;
         }
-
     }
 }

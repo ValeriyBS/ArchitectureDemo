@@ -1,9 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using Domain.OrderDetails;
 using Domain.ShoppingCartItems;
 
 namespace Application.Orders.Commands.CreateOrder.Factory
 {
+    [ExcludeFromCodeCoverage]
     internal class OrderDetailProfile : Profile
     {
         public OrderDetailProfile()

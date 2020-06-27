@@ -37,12 +37,13 @@ namespace Presentation
                 //o.AreaViewLocationFormats.Add("/Areas/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
             });
 
-            
+            // Common module startup
+            Common.Startup.ConfigureServices(services);
 
-            // Persistence startup
+            // Persistence module startup
             Persistence.Startup.ConfigureServices(services, Configuration.GetConnectionString("DefaultConnection"));
 
-            //Application startup
+            //Application module startup
             Application.Startup.ConfigureServices(services);
 
             services.AddScoped(CartIdProvider.Execute);

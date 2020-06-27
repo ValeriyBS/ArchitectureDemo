@@ -44,6 +44,12 @@
     <Compile Remove="Migrations\20200607134719_initial.Designer.cs" />
     <Compile Remove="Migrations\20200607134855_inital.cs" />
     <Compile Remove="Migrations\20200607134855_inital.Designer.cs" />
+    <Compile Remove="Migrations\20200621143712_initial.cs" />
+    <Compile Remove="Migrations\20200621143712_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200627123817_initial.cs" />
+    <Compile Remove="Migrations\20200627123817_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200627124121_propertiesAdded.cs" />
+    <Compile Remove="Migrations\20200627124121_propertiesAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +58,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.5" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.4" />

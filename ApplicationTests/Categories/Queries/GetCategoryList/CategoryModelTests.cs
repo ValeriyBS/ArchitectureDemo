@@ -8,10 +8,11 @@ namespace Application.Tests.Categories.Queries.GetCategoryList
     {
         public CategoryModelTests()
         {
-            _categoryModel = new Fixture().Create<CategoryModel>();
-            _id = _categoryModel.Id;
-            _name = _categoryModel.Name;
-            _description = _categoryModel.Description;
+            var fixture = new Fixture();
+            _categoryModel = new CategoryModel();
+            _id = fixture.Create<int>();
+            _name = fixture.Create<string>();
+            _description = fixture.Create<string>();
         }
 
         private readonly CategoryModel _categoryModel;

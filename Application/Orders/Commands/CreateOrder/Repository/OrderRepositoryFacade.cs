@@ -32,9 +32,11 @@ namespace Application.Orders.Commands.CreateOrder.Repository
                 .ToList();
         }
 
-        public Customer GetCustomer(int customerId)
+        public Customer GetCustomerByEmail(string customerEmail)
         {
-            return _customerRepository.Get(customerId);
+            return _customerRepository
+                .GetAll()
+                .SingleOrDefault(c => c.Email == customerEmail);
         }
 
         public void AddOrder(Order order)

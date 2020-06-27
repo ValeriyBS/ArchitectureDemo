@@ -26,7 +26,7 @@ namespace Application.Orders.Commands.CreateOrder
         public void Execute(CreateOrderModel model)
         {
             var dateTime = _dateTimeService.GetDateTime();
-            var customer = _orderRepositoryFacade.GetCustomer(model.CustomerId);
+            var customer = _orderRepositoryFacade.GetCustomerByEmail(model.CustomerEmail);
             var shopItems = _orderRepositoryFacade.GetCartItems(model.ShoppingCartId);
 
             var order = _orderFactory.Create(dateTime, customer, shopItems);

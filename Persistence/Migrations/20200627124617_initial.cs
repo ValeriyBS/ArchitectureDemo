@@ -15,8 +15,8 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 510, DateTimeKind.Utc).AddTicks(9032)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 517, DateTimeKind.Utc).AddTicks(2989))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 856, DateTimeKind.Utc).AddTicks(8074)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 860, DateTimeKind.Utc).AddTicks(8022))
                 },
                 constraints: table =>
                 {
@@ -27,24 +27,23 @@ namespace Persistence.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    AddressLine1 = table.Column<string>(maxLength: 100, nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    AddressLine1 = table.Column<string>(nullable: false),
                     AddressLine2 = table.Column<string>(nullable: false),
-                    PostCode = table.Column<string>(maxLength: 10, nullable: false),
-                    City = table.Column<string>(maxLength: 50, nullable: false),
-                    State = table.Column<string>(maxLength: 10, nullable: false),
-                    Country = table.Column<string>(maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 25, nullable: false),
-                    Email = table.Column<string>(maxLength: 50, nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 517, DateTimeKind.Utc).AddTicks(5096)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 517, DateTimeKind.Utc).AddTicks(6115))
+                    PostCode = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    County = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 860, DateTimeKind.Utc).AddTicks(9249)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(27))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Email);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,8 +61,8 @@ namespace Persistence.Migrations
                     InStock = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     Notes = table.Column<string>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 518, DateTimeKind.Utc).AddTicks(4321)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 518, DateTimeKind.Utc).AddTicks(5911))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(4238)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(5115))
                 },
                 constraints: table =>
                 {
@@ -82,20 +81,20 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(nullable: false),
+                    CustomerEmail = table.Column<string>(nullable: false),
                     OrderTotal = table.Column<decimal>(nullable: false),
                     OrderPlaced = table.Column<DateTime>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 518, DateTimeKind.Utc).AddTicks(624)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 518, DateTimeKind.Utc).AddTicks(2767))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(2461)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(3339))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
-                        column: x => x.CustomerId,
+                        name: "FK_Orders_Customers_CustomerEmail",
+                        column: x => x.CustomerEmail,
                         principalTable: "Customers",
-                        principalColumn: "Id",
+                        principalColumn: "Email",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -108,8 +107,8 @@ namespace Persistence.Migrations
                     ShopItemId = table.Column<int>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     ShoppingCartId = table.Column<string>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 518, DateTimeKind.Utc).AddTicks(6645)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 518, DateTimeKind.Utc).AddTicks(7488))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(5840)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(6509))
                 },
                 constraints: table =>
                 {
@@ -132,8 +131,8 @@ namespace Persistence.Migrations
                     ShopItemId = table.Column<int>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 517, DateTimeKind.Utc).AddTicks(7352)),
-                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 21, 14, 37, 12, 517, DateTimeKind.Utc).AddTicks(8664))
+                    Created = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(917)),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(1688))
                 },
                 constraints: table =>
                 {
@@ -164,8 +163,8 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "Id", "AddressLine1", "AddressLine2", "City", "Country", "Email", "FirstName", "LastName", "PhoneNumber", "PostCode", "State" },
-                values: new object[] { 1, "", "", "Washington", "USA", "Gordon.Freeman@Gmail.com", "Gordon", "Freeman", "", "", "Washington" });
+                columns: new[] { "Email", "AddressLine1", "AddressLine2", "City", "Country", "County", "FirstName", "Id", "LastName", "PhoneNumber", "PostCode" },
+                values: new object[] { "Gordon.Freeman@Gmail.com", "", "", "Washington", "USA", "Washington", "Gordon", 1, "Freeman", "", "" });
 
             migrationBuilder.InsertData(
                 table: "ShopItems",
@@ -191,9 +190,9 @@ namespace Persistence.Migrations
                 column: "ShopItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
+                name: "IX_Orders_CustomerEmail",
                 table: "Orders",
-                column: "CustomerId");
+                column: "CustomerEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShopItems_CategoryId",

@@ -16,8 +16,7 @@ namespace Application
     [ExcludeFromCodeCoverage]
     public static class Startup
     {
-        public static void ConfigureServices(
-            IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IGetCategoryListQuery, GetCategoryListQuery>();
