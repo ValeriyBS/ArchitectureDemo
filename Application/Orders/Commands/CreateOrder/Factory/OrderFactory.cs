@@ -28,6 +28,7 @@ namespace Application.Orders.Commands.CreateOrder.Factory
             {
                 Customer = customer,
                 OrderPlaced = dateTime,
+                OrderDetails = new List<OrderDetail>(),
                 OrderTotal = shopItems.Sum(i => i.ShopItem.Price)
             };
 

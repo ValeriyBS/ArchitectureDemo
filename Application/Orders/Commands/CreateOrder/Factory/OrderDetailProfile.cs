@@ -5,7 +5,6 @@ using Domain.ShoppingCartItems;
 
 namespace Application.Orders.Commands.CreateOrder.Factory
 {
-    [ExcludeFromCodeCoverage]
     internal class OrderDetailProfile : Profile
     {
         public OrderDetailProfile()
