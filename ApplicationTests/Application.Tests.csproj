@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Categories\Commands\" />
-    <Folder Include="Orders\Commands\CreateOrder\Repository\" />
     <Folder Include="ShopItems\Commands\" />
   </ItemGroup>
 

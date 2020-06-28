@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Application.Interfaces.Persistence;
 using Domain.Customers;
 using Domain.Orders;
@@ -11,9 +9,9 @@ namespace Application.Orders.Commands.CreateOrder.Repository
 {
     public class OrderRepositoryFacade : IOrderRepositoryFacade
     {
+        private readonly ICustomerRepository _customerRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IShoppingCartItemRepository _shoppingCartItemRepository;
-        private readonly ICustomerRepository _customerRepository;
 
         public OrderRepositoryFacade(IOrderRepository orderRepository,
             IShoppingCartItemRepository shoppingCartItemRepository,
