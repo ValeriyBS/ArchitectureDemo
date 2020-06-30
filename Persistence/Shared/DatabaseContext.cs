@@ -9,13 +9,15 @@ using Domain.ShopItems;
 using Domain.ShoppingCartItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Persistence.Shared
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        public DatabaseContext()
+        {
+        }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
@@ -48,28 +50,29 @@ namespace Persistence.Shared
         //        .GetService<ILoggerFactory>();
         //}
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (optionsBuilder.IsConfigured) return;
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (optionsBuilder.IsConfigured) return;
 
-        //    var configuration = new ConfigurationBuilder()
-        //        .AddJsonFile("settings.json")
-        //        .Build();
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("settings.json")
+                .Build();
 
-        //    optionsBuilder
-        //        .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-        //        .EnableSensitiveDataLogging(true)
-        //        .UseLoggerFactory(GetLoggerFactory());
-        //}
+            optionsBuilder
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Customer>().HasKey(c => c.Email);
 
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "Men", Description = "Fancy items for men"});
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "Women", Description = "Fancy items for Women" });
-            modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "Kids", Description = "Fancy items for kids" });
+            modelBuilder.Entity<Category>().HasData(new Category
+                {Id = 1, Name = "Men", Description = "Fancy items for men"});
+            modelBuilder.Entity<Category>().HasData(new Category
+                {Id = 2, Name = "Women", Description = "Fancy items for Women"});
+            modelBuilder.Entity<Category>().HasData(new Category
+                {Id = 3, Name = "Kids", Description = "Fancy items for kids"});
 
 
             modelBuilder.Entity<ShopItem>().HasData(new
@@ -158,16 +161,17 @@ namespace Persistence.Shared
 
             modelBuilder.Entity<Customer>()
                 .HasData(new Customer
-            {
-                Id = 1, FirstName = "Gordon", LastName = "Freeman", Email = "Gordon.Freeman@Gmail.com",
-                City = "Washington", Country = "USA", County = "Washington"
-            });
+                {
+                    Id = 1, FirstName = "Gordon", LastName = "Freeman", Email = "Gordon.Freeman@Gmail.com",
+                    City = "Washington", Country = "USA", County = "Washington"
+                });
 
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 modelBuilder.Entity(entityType.Name).Property<DateTime>("Created").HasDefaultValue(DateTime.UtcNow);
-                modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified").HasDefaultValue(DateTime.UtcNow);
+                modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified")
+                    .HasDefaultValue(DateTime.UtcNow);
             }
         }
 
@@ -176,15 +180,13 @@ namespace Persistence.Shared
         {
             var timestamp = DateTime.UtcNow;
             foreach (var entry in ChangeTracker.Entries()
-                .Where(e=>e.State == EntityState.Added || e.State == EntityState.Modified))
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
                 entry.Property("LastModified").CurrentValue = timestamp;
 
-                if (entry.State == EntityState.Modified)
-                {
-                    entry.Property("Created").CurrentValue = timestamp;
-                }
+                if (entry.State == EntityState.Modified) entry.Property("Created").CurrentValue = timestamp;
             }
+
             return base.SaveChanges();
         }
     }

@@ -6,6 +6,7 @@ using Domain.Orders;
 using Domain.ShopItems;
 using Domain.ShoppingCartItems;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Persistence.Shared
 {
@@ -26,5 +27,7 @@ namespace Persistence.Shared
         DbSet<T> Set<T>() where T : class, IEntity;
 
         void Save();
+
+        ChangeTracker ChangeTracker { get; }
     }
 }

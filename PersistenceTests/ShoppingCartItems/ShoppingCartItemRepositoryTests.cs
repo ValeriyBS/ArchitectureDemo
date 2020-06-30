@@ -390,7 +390,7 @@ namespace Persistence.Tests.ShoppingCartItems
                 var shopItems = fixture
                     .Build<ShopItem>()
                     .With(p => p.CategoryId, 999)
-                    .CreateMany<ShopItem>(3).ToList();
+                    .CreateMany().ToList();
                 context.ShopItems.AddRange(shopItems);
 
                 foreach (var item in shopItems)

@@ -36,7 +36,7 @@ namespace Presentation.Orders
 
             if (!shoppingCartItems.Any()) ModelState.AddModelError("", "You cart is empty.Add some goods first");
 
-            var orderModel = new CreateOrderModel("Gordon.Freeman@gmail.com", _cartIdProvider.CartId);
+            var orderModel = new CreateOrderModel(viewModel.Email, _cartIdProvider.CartId);
 
             _createOrderCommand.Execute(orderModel);
 

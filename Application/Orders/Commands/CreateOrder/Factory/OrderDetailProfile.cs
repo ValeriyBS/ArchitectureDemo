@@ -12,7 +12,8 @@ namespace Application.Orders.Commands.CreateOrder.Factory
             CreateMap<ShoppingCartItem, OrderDetail>()
                 .ForMember(o => o.Price,
                     m => m
-                        .MapFrom(c => c.ShopItem.Price));
+                        .MapFrom(c => c.ShopItem.Price))
+                .ForMember(dest=>dest.Id,act=>act.Ignore());
         }
     }
 }
