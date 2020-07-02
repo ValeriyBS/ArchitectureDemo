@@ -20,7 +20,8 @@ namespace Application.ShopItems.Queries.GetShopItemsListByCategory
 
         public List<ShopItemModel> Execute(int categoryId)
         {
-            return _shopItemRepository.GetAll().Where(c => c.CategoryId == categoryId)
+            return _shopItemRepository.GetAll()
+                .Where(c => c.CategoryId == categoryId)
                 .Select(s => _mapper.Map<ShopItemModel>(s))
                 .ToList();
         }

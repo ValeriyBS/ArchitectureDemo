@@ -1,10 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Presentation.Areas.Identity;
+using Presentation.Areas.Identity.Data;
 using Presentation.ShoppingCarts.Services.Queries;
 
 namespace Presentation
@@ -28,6 +33,9 @@ namespace Presentation
                 o.ViewLocationFormats.Clear();
                 o.ViewLocationFormats.Add("/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
+                o.AreaPageViewLocationFormats.Clear();
+                o.AreaPageViewLocationFormats.Add("/Shared/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
+                //o.AreaPageViewLocationFormats.Add("/Shared/Views/Components/{0}" + RazorViewEngine.ViewExtension);
                 //o.ViewLocationFormats.Add("/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
 
                 // Untested. You could remove this if you don't care about areas.
@@ -46,14 +54,20 @@ namespace Presentation
             //Application module startup
             Application.Startup.ConfigureServices(services);
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("ApplicationConnection")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped(CartIdProvider.Execute);
+            services.AddScoped<IEmailSender,EmailSender>();
 
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
-
+            services.AddRazorPages();
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,28 +75,19 @@ namespace Presentation
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSession();
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
-                app.UseHttpsRedirection();
-                app.UseStaticFiles();
-                app.UseSession();
-
-                app.UseRouting();
-                //app.UseAuthentication();
-                //app.UseAuthorization();
-
-                //app.UseStaticFiles();// points to for static files wwwroot
-
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllerRoute("default",
-                        "{controller=Home}/{action=Index}/{Id?}");
-                    //endpoints.MapRazorPages();
-                });
+                endpoints.MapControllerRoute("default",
+                    "{controller=Home}/{action=Index}/{Id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
