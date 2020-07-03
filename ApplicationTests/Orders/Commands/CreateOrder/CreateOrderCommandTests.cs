@@ -38,7 +38,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder
             _mocker = new AutoMoqer();
 
             _mocker.GetMock<IOrderRepositoryFacade>()
-                .Setup(o => o.GetCustomerByEmail(CustomerEmail))
+                .Setup(o => o.GetCustomer(CustomerEmail))
                 .Returns(_customer);
 
             _mocker.GetMock<IOrderRepositoryFacade>()
@@ -107,7 +107,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder
             _sut.Execute(_createOrderModel);
             //Assert
             _mocker.GetMock<IOrderRepositoryFacade>()
-                .Verify(o => o.GetCustomerByEmail(CustomerEmail), Times.Once);
+                .Verify(o => o.GetCustomer(CustomerEmail), Times.Once);
         }
 
         [Fact]

@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Presentation.Areas.Identity;
 using Presentation.Areas.Identity.Data;
+using Presentation.Orders.Services.Commands.SaveApplicationUser;
+using Presentation.Orders.Services.Queries.GetApplicationUser;
 using Presentation.ShoppingCarts.Services.Queries;
 
 namespace Presentation
@@ -23,8 +24,6 @@ namespace Presentation
 
         private IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<RazorViewEngineOptions>(o =>
@@ -57,10 +56,15 @@ namespace Presentation
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ApplicationConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddScoped(CartIdProvider.Execute);
-            services.AddScoped<IEmailSender,EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IGetApplicationUserDetails, GetApplicationUserDetails>();
+            services.AddScoped<IGetApplicationUserId, GetApplicationUserId>();
+            services.AddScoped<ISaveApplicationUserDetails, SaveApplicationUserDetails>();
 
             services.AddHttpContextAccessor();
             services.AddSession();

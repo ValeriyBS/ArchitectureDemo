@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.OrderDetails;
 using Domain.ShoppingCartItems;
 
@@ -13,7 +12,7 @@ namespace Application.Orders.Commands.CreateOrder.Factory
                 .ForMember(o => o.Price,
                     m => m
                         .MapFrom(c => c.ShopItem.Price))
-                .ForMember(dest=>dest.Id,act=>act.Ignore());
+                .ForMember(dest => dest.Id, act => act.Ignore());
         }
     }
 }

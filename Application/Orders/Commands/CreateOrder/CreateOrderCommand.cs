@@ -35,22 +35,11 @@ namespace Application.Orders.Commands.CreateOrder
         public void Execute(CreateOrderModel model)
         {
             var dateTime = _dateTimeService.GetDateTime();
-            var customer = _orderRepositoryFacade.GetCustomerByEmail(model.CustomerEmail);
+            var customer = _orderRepositoryFacade.GetCustomer(model.CustomerId) 
+                           ?? new Customer() {Email = model.CustomerId};
             var shopItems = _orderRepositoryFacade.GetCartItems(model.ShoppingCartId);
 
             var order = _orderFactory.Create(dateTime, customer, shopItems);
-
-            //var order = new Order()
-            //{
-            //    OrderDetails = new List<OrderDetail>()
-            //    {
-            //        new OrderDetail(){ShopItemId = 1, Price =1},
-            //        new OrderDetail(){ShopItemId = 2, Price = 2}
-            //    },
-            //    Customer = new Customer() { FirstName = "Gordon", LastName = "Freeman" },
-            //    OrderPlaced = DateTime.UtcNow,
-            //    OrderTotal = 1010
-            //};
 
             _orderRepositoryFacade.AddOrder(order);
 

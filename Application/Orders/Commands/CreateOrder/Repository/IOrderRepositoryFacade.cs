@@ -8,7 +8,7 @@ namespace Application.Orders.Commands.CreateOrder.Repository
     public interface IOrderRepositoryFacade
     {
         IList<ShoppingCartItem> GetCartItems(string cartId);
-        Customer GetCustomerByEmail(string customerEmail);
+        Customer GetCustomer(string customerId);
         void AddOrder(Order order);
     }
 }

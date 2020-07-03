@@ -45,7 +45,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder
             //Arrange
             //Act
             //Assert
-            Assert.Equal(_customerEmail, _createOrderModel.CustomerEmail);
+            Assert.Equal(_customerEmail, _createOrderModel.CustomerId);
         }
 
         [Fact]

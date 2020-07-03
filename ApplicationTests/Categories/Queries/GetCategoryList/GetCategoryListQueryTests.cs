@@ -9,7 +9,6 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoMapper;
 using Domain.Categories;
-using Domain.ShopItems;
 using Moq;
 using Xunit;
 

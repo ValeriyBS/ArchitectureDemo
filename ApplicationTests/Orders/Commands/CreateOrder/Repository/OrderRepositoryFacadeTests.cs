@@ -85,7 +85,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder.Repository
                 .Returns(customers.AsQueryable);
 
             //Act
-            var result = _sut.GetCustomerByEmail(customerEmail);
+            var result = _sut.GetCustomer(customerEmail);
 
             //Assert
             Assert.Equal(expectedCustomer, result);

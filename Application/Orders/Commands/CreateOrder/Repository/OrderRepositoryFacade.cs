@@ -30,11 +30,11 @@ namespace Application.Orders.Commands.CreateOrder.Repository
                 .ToList();
         }
 
-        public Customer GetCustomerByEmail(string customerEmail)
+        public Customer GetCustomer(string customerId)
         {
-            return _customerRepository
-                .GetAll()
-                .SingleOrDefault(c => c.Email == customerEmail);
+            return _customerRepository.GetAll()
+                .SingleOrDefault(c => c.Email == customerId);
+            //Todo change email to Id in the domain model and database
         }
 
         public void AddOrder(Order order)
