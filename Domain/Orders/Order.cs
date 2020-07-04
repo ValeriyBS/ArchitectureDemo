@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using Domain.Common;
 using Domain.Customers;
 using Domain.OrderDetails;

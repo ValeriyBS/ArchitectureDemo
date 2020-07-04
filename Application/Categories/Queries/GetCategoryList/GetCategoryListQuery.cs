@@ -16,6 +16,7 @@ namespace Application.Categories.Queries.GetCategoryList
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
+
         public List<CategoryModel> Execute()
         {
             var categories = _categoryRepository.GetAll()

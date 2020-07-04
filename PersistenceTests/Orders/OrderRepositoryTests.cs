@@ -98,7 +98,7 @@ namespace Persistence.Tests.Orders
         }
 
         [Fact]
-        public void TestAddShouldAddOrderToTheDatabase1()
+        public void TestAddShouldAddOrderToTheDatabaseInDisconnectedScenario()
         {
             //Arrange
             using (var context = new DatabaseContext(_options))
@@ -143,6 +143,53 @@ namespace Persistence.Tests.Orders
 
                 //Assert
                 Assert.NotNull(result.FirstOrDefault(o => o.OrderTotal == 1010));
+            }
+        }
+
+        [Fact]
+        public void TestGetByUserIdShouldReturnCorrectListOfOrders()
+        {
+            //Arrange
+            using (var context = new DatabaseContext(_options))
+            {
+                var order = new Order()
+                {
+                    OrderDetails = new List<OrderDetail>()
+                    {
+                        new OrderDetail(){ShopItemId = 1, Price =1},
+                        new OrderDetail(){ShopItemId = 2, Price = 2}
+                    },
+                    Customer = new Customer() { FirstName = "Gordon", LastName = "Freeman" ,Email = "testEmail"},
+                    OrderPlaced = DateTime.UtcNow,
+                    OrderTotal = 1010
+                };
+                var order1 = new Order()
+                {
+                    OrderDetails = new List<OrderDetail>()
+                    {
+                        new OrderDetail(){ShopItemId = 1, Price =1},
+                        new OrderDetail(){ShopItemId = 2, Price = 2}
+                    },
+                    Customer = new Customer() { FirstName = "Gordon", LastName = "Freeman", Email = "testEmail1" },
+                    OrderPlaced = DateTime.UtcNow,
+                    OrderTotal = 1010
+                };
+
+                context.Orders.AddRange(order,order1);
+
+                context.SaveChanges();
+            }
+
+            using (var context = new DatabaseContext(_options))
+            {
+                var sut = new OrderRepository(context);
+
+                //Act
+                var result = sut.GetByUserId("testEmail");
+                //Assert
+                Assert.Equal(1,result.Count);
+                Assert.Equal("testEmail",result.FirstOrDefault().Customer.Email);
+
             }
         }
     }
