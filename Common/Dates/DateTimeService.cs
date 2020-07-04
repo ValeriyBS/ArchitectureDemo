@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Common.Dates
 {
     public class DateTimeService : IDateTimeService
     {
-        public DateTime GetDateTime()
+        public DateTime GetDateTimeUtc()
         {
-            return DateTime.Now;
+            return DateTime.UtcNow;
+        }
+
+        public DateTime UtcToLocal(DateTime dateTime)
+        {
+            return DateTime.SpecifyKind(dateTime, DateTimeKind.Utc).ToLocalTime();
         }
     }
 }

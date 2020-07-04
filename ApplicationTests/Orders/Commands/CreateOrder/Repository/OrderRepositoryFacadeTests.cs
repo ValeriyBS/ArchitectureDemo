@@ -73,7 +73,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder.Repository
             var customerEmail = _fixture.Create<string>();
             var expectedCustomer = _fixture
                 .Build<Customer>()
-                .With(c => c.Email, customerEmail)
+                .With(c => c.UserId, customerEmail)
                 .Create();
 
             var customers = _fixture.CreateMany<Customer>().ToList();

@@ -20,7 +20,9 @@ namespace Persistence.Orders
         {
             var orders = _databaseContext.Orders
                 .Include(o => o.Customer)
-                .Where(c => c.Customer.Email == userId)
+                .Include(o=>o.OrderDetails)
+                .ThenInclude(o=>o.ShopItem)
+                .Where(c => c.Customer.UserId == userId)
                 .ToList();
             return orders;
         }

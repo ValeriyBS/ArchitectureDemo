@@ -6,50 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200514174440_Initial.cs" />
-    <Compile Remove="Migrations\20200514174440_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200515072846_Initial.cs" />
-    <Compile Remove="Migrations\20200515072846_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200515091818_Initial.cs" />
-    <Compile Remove="Migrations\20200515091818_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200515102443_ItemsSeed.cs" />
-    <Compile Remove="Migrations\20200515102443_ItemsSeed.Designer.cs" />
-    <Compile Remove="Migrations\20200515103300_ItemsSeed.cs" />
-    <Compile Remove="Migrations\20200515103300_ItemsSeed.Designer.cs" />
-    <Compile Remove="Migrations\20200515105701_ItemsSeed.cs" />
-    <Compile Remove="Migrations\20200515105701_ItemsSeed.Designer.cs" />
-    <Compile Remove="Migrations\20200517140248_initial.cs" />
-    <Compile Remove="Migrations\20200517140248_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200517140603_initial.cs" />
-    <Compile Remove="Migrations\20200517140603_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200517140819_initial.cs" />
-    <Compile Remove="Migrations\20200517140819_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200517141225_initial.cs" />
-    <Compile Remove="Migrations\20200517141225_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200517171135_initial.cs" />
-    <Compile Remove="Migrations\20200517171135_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200517171821_initial.cs" />
-    <Compile Remove="Migrations\20200517171821_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200518070037_Initial.cs" />
-    <Compile Remove="Migrations\20200518070037_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200518145624_Initial.cs" />
-    <Compile Remove="Migrations\20200518145624_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200520160925_initial.cs" />
-    <Compile Remove="Migrations\20200520160925_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200520163802_initial.cs" />
-    <Compile Remove="Migrations\20200520163802_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200526062459_initial.cs" />
-    <Compile Remove="Migrations\20200526062459_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200607134719_initial.cs" />
-    <Compile Remove="Migrations\20200607134719_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200607134855_inital.cs" />
-    <Compile Remove="Migrations\20200607134855_inital.Designer.cs" />
-    <Compile Remove="Migrations\20200621143712_initial.cs" />
-    <Compile Remove="Migrations\20200621143712_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200627123817_initial.cs" />
-    <Compile Remove="Migrations\20200627123817_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200627124121_propertiesAdded.cs" />
-    <Compile Remove="Migrations\20200627124121_propertiesAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

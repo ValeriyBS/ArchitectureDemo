@@ -4,6 +4,7 @@ using System.Linq;
 using Domain.Customers;
 using Domain.OrderDetails;
 using Domain.Orders;
+using Domain.ShopItems;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,8 +18,6 @@ namespace Persistence.Tests.Orders
 {
     public class OrderRepositoryTests
     {
-        private readonly DbContextOptions<DatabaseContext> _options;
-
         public OrderRepositoryTests(ITestOutputHelper output)
         {
             var connectionStringBuilder =
@@ -43,16 +42,7 @@ namespace Persistence.Tests.Orders
             context.SaveChanges();
         }
 
-        [Fact]
-        public void TestConstructorShouldCreateRepository()
-        {
-            //Arrange
-            var mockOrderRepository = new Mock<IDatabaseContext>();
-            //Act
-            var sut = new OrderRepository(mockOrderRepository.Object);
-            //Assert
-            Assert.NotNull(sut);
-        }
+        private readonly DbContextOptions<DatabaseContext> _options;
 
 
         [Fact]
@@ -61,14 +51,14 @@ namespace Persistence.Tests.Orders
             //Arrange
             using (var context = new DatabaseContext(_options))
             {
-                var order = new Order()
+                var order = new Order
                 {
-                    OrderDetails = new List<OrderDetail>()
+                    OrderDetails = new List<OrderDetail>
                     {
-                        new OrderDetail(){ShopItemId = 1, Price =1},
-                        new OrderDetail(){ShopItemId = 2, Price = 2}
+                        new OrderDetail {ShopItemId = 1, Price = 1},
+                        new OrderDetail {ShopItemId = 2, Price = 2}
                     },
-                    Customer = new Customer(){FirstName = "Gordon",LastName = "Freeman"},
+                    Customer = new Customer {UserId = "userId"},
                     OrderPlaced = DateTime.UtcNow,
                     OrderTotal = 1010
                 };
@@ -85,15 +75,15 @@ namespace Persistence.Tests.Orders
 
                 context.SaveChanges();
             }
+
             //Act
             using (var context = new DatabaseContext(_options))
             {
                 var result = context.Orders
-                    .Include(o=>o.OrderDetails).
-                    Include(o=>o.Customer);
+                    .Include(o => o.OrderDetails).Include(o => o.Customer);
 
                 //Assert
-                Assert.NotNull(result.FirstOrDefault(o=>o.OrderTotal == 1010));
+                Assert.NotNull(result.FirstOrDefault(o => o.OrderTotal == 1010));
             }
         }
 
@@ -103,14 +93,14 @@ namespace Persistence.Tests.Orders
             //Arrange
             using (var context = new DatabaseContext(_options))
             {
-                var order = new Order()
+                var order = new Order
                 {
-                    OrderDetails = new List<OrderDetail>()
+                    OrderDetails = new List<OrderDetail>
                     {
-                        new OrderDetail(){ShopItemId = 1, Price =1},
-                        new OrderDetail(){ShopItemId = 2, Price = 2}
+                        new OrderDetail {ShopItemId = 1, Price = 1},
+                        new OrderDetail {ShopItemId = 2, Price = 2}
                     },
-                    Customer = new Customer() { FirstName = "Gordon", LastName = "Freeman" },
+                    Customer = new Customer {UserId = "userId"},
                     OrderPlaced = DateTime.UtcNow,
                     OrderTotal = 1010
                 };
@@ -133,49 +123,64 @@ namespace Persistence.Tests.Orders
             }
 
 
-
             //Act
             using (var context = new DatabaseContext(_options))
             {
                 var result = context.Orders
-                    .Include(o => o.OrderDetails).
-                    Include(o => o.Customer);
+                    .Include(o => o.OrderDetails).Include(o => o.Customer);
 
                 //Assert
-                Assert.NotNull(result.FirstOrDefault(o => o.OrderTotal == 1010));
+                Assert.Null(result.FirstOrDefault(o => o.OrderTotal == 1010));
             }
         }
 
         [Fact]
-        public void TestGetByUserIdShouldReturnCorrectListOfOrders()
+        public void TestConstructorShouldCreateRepository()
         {
             //Arrange
+            var mockOrderRepository = new Mock<IDatabaseContext>();
+            //Act
+            var sut = new OrderRepository(mockOrderRepository.Object);
+            //Assert
+            Assert.NotNull(sut);
+        }
+
+        [Fact]
+        public void TestGetByUserIdShouldReturnCompleteOrdersGraphList()
+        {
+            //Arrange
+            const int expectedOrdersCount = 1;
+            const int expectedOrderDetailsCount = 2;
+            const string expectedUserId = "testUserId";
+            const string expectedFirstItemName = "Item1";
+            const string expectedSecondItemName = "Item2";
+
             using (var context = new DatabaseContext(_options))
             {
-                var order = new Order()
+                var order = new Order
                 {
-                    OrderDetails = new List<OrderDetail>()
+                    OrderDetails = new List<OrderDetail>
                     {
-                        new OrderDetail(){ShopItemId = 1, Price =1},
-                        new OrderDetail(){ShopItemId = 2, Price = 2}
+                        new OrderDetail {Price = 1, ShopItem = new ShopItem(){Name = "Item1"}},
+                        new OrderDetail {Price = 2, ShopItem = new ShopItem(){Name = "Item2"}}
                     },
-                    Customer = new Customer() { FirstName = "Gordon", LastName = "Freeman" ,Email = "testEmail"},
+                    Customer = new Customer {UserId = "testUserId"},
                     OrderPlaced = DateTime.UtcNow,
                     OrderTotal = 1010
                 };
-                var order1 = new Order()
+                var order1 = new Order
                 {
-                    OrderDetails = new List<OrderDetail>()
+                    OrderDetails = new List<OrderDetail>
                     {
-                        new OrderDetail(){ShopItemId = 1, Price =1},
-                        new OrderDetail(){ShopItemId = 2, Price = 2}
+                        new OrderDetail {Price = 3, ShopItem = new ShopItem(){Name = "Item3"}},
+                        new OrderDetail {Price = 4, ShopItem = new ShopItem(){Name = "Item4"}}
                     },
-                    Customer = new Customer() { FirstName = "Gordon", LastName = "Freeman", Email = "testEmail1" },
+                    Customer = new Customer {UserId = "testUserId1"},
                     OrderPlaced = DateTime.UtcNow,
                     OrderTotal = 1010
                 };
 
-                context.Orders.AddRange(order,order1);
+                context.Orders.AddRange(order, order1);
 
                 context.SaveChanges();
             }
@@ -185,11 +190,14 @@ namespace Persistence.Tests.Orders
                 var sut = new OrderRepository(context);
 
                 //Act
-                var result = sut.GetByUserId("testEmail");
+                var orders = sut.GetByUserId("testUserId");
+                var result = orders.FirstOrDefault();
                 //Assert
-                Assert.Equal(1,result.Count);
-                Assert.Equal("testEmail",result.FirstOrDefault().Customer.Email);
-
+                Assert.Equal(expectedOrdersCount, orders.Count);
+                Assert.Equal(expectedUserId, result.Customer.UserId);
+                Assert.Equal(expectedOrderDetailsCount, result.OrderDetails.Count);
+                Assert.Equal(expectedFirstItemName,result.OrderDetails[0].ShopItem.Name);
+                Assert.Equal(expectedSecondItemName, result.OrderDetails[1].ShopItem.Name);
             }
         }
     }

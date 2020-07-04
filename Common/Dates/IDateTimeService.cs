@@ -4,6 +4,8 @@ namespace Common.Dates
 {
     public interface IDateTimeService
     {
-        DateTime GetDateTime();
+        DateTime GetDateTimeUtc();
+
+        DateTime UtcToLocal(DateTime dateTime);
     }
 }

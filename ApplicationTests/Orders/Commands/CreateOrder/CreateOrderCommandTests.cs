@@ -46,7 +46,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder
                 .Returns(_shoppingCartItems);
 
             _mocker.GetMock<IDateTimeService>()
-                .Setup(d => d.GetDateTime())
+                .Setup(d => d.GetDateTimeUtc())
                 .Returns(_dateTime);
 
             _mocker.GetMock<IOrderFactory>()
@@ -118,7 +118,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder
             _sut.Execute(_createOrderModel);
             //Assert
             _mocker.GetMock<IDateTimeService>()
-                .Verify(o => o.GetDateTime(), Times.Once);
+                .Verify(o => o.GetDateTimeUtc(), Times.Once);
         }
 
         [Fact]

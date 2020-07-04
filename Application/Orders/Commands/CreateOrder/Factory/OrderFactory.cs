@@ -29,7 +29,7 @@ namespace Application.Orders.Commands.CreateOrder.Factory
                 Customer = customer,
                 OrderPlaced = dateTime,
                 OrderDetails = new List<OrderDetail>(),
-                OrderTotal = shopItems.Sum(i => i.ShopItem.Price)
+                OrderTotal = shopItems.Sum(i => i.ShopItem.Price * i.Amount)
             };
 
             foreach (var item in shopItems)

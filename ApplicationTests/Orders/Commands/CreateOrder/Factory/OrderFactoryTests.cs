@@ -33,20 +33,20 @@ namespace Application.Tests.Orders.Commands.CreateOrder.Factory
 
             _customer = fixture.Create<Customer>();
             _dateTime = new DateTime(2020, 06, 27);
-            _shoppingCartItems = fixture.CreateMany<ShoppingCartItem>(cartItemCount).ToList();
+            _shoppingCartItems = fixture.CreateMany<ShoppingCartItem>(CartItemCount).ToList();
         }
 
         private readonly Customer _customer;
         private readonly DateTime _dateTime;
         private readonly List<ShoppingCartItem> _shoppingCartItems;
         private readonly OrderFactory _sut;
-        private const int cartItemCount = 3;
+        private const int CartItemCount = 2;
 
         [Fact]
         public void TestCreateShouldReturnOrder()
         {
             //Arrange
-            var expectedOrderTotal = _shoppingCartItems.Sum(i => i.ShopItem.Price);
+            var expectedOrderTotal = _shoppingCartItems.Sum(i => i.ShopItem.Price * i.Amount);
 
             //Act
             var result = _sut.Create(_dateTime, _customer, _shoppingCartItems);
@@ -60,7 +60,7 @@ namespace Application.Tests.Orders.Commands.CreateOrder.Factory
 
             Assert.Equal(expectedOrderTotal, result.OrderTotal);
 
-            Assert.Equal(cartItemCount,result.OrderDetails.Count);
+            Assert.Equal(CartItemCount,result.OrderDetails.Count);
         }
 
         [Fact]

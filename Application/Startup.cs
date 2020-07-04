@@ -3,6 +3,7 @@ using Application.Categories.Queries.GetCategoryList;
 using Application.Orders.Commands.CreateOrder;
 using Application.Orders.Commands.CreateOrder.Factory;
 using Application.Orders.Commands.CreateOrder.Repository;
+using Application.Orders.Queries.GetUserOrdersList;
 using Application.ShopItems.Queries.GetShopItemsList;
 using Application.ShopItems.Queries.GetShopItemsListByCategory;
 using Application.ShoppingCartItems.Commands.AddShoppingCartItem;
@@ -30,6 +31,7 @@ namespace Application
             services.AddScoped<IOrderFactory, OrderFactory>();
             services.AddScoped<ICreateOrderCommand, CreateOrderCommand>();
             services.AddScoped<IClearShoppingCartCommand, ClearShoppingCartCommand>();
+            services.AddScoped<IGetUserOrdersListQuery,GetUserOrdersListQuery>();
         }
     }
 }

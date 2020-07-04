@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Application.Orders.Commands.CreateOrder;
+using Application.Orders.Queries.GetUserOrdersList;
 using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
+using Common.Dates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Orders.Models;
 using Presentation.Orders.Services.Commands.SaveApplicationUser;
-using Presentation.Orders.Services.Queries;
 using Presentation.Orders.Services.Queries.GetApplicationUser;
 using Presentation.ShoppingCarts.Services.Queries;
 
@@ -21,13 +22,17 @@ namespace Presentation.Orders
         private readonly IGetApplicationUserDetails _getApplicationUserDetails;
         private readonly IGetApplicationUserId _getApplicationUserId;
         private readonly ISaveApplicationUserDetails _saveApplicationUserDetails;
+        private readonly IGetUserOrdersListQuery _getUserOrdersListQuery;
+        private readonly IDateTimeService _dateTimeService;
 
         public OrdersController(CartIdProvider cartIdProvider,
             IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery,
             ICreateOrderCommand createOrderCommand,
             IGetApplicationUserDetails getApplicationUserDetails,
             IGetApplicationUserId getApplicationUserId,
-            ISaveApplicationUserDetails saveApplicationUserDetails)
+            ISaveApplicationUserDetails saveApplicationUserDetails,
+            IGetUserOrdersListQuery getUserOrdersListQuery,
+            IDateTimeService dateTimeService)
         {
             _cartIdProvider = cartIdProvider;
             _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
@@ -35,6 +40,8 @@ namespace Presentation.Orders
             _getApplicationUserDetails = getApplicationUserDetails;
             _getApplicationUserId = getApplicationUserId;
             _saveApplicationUserDetails = saveApplicationUserDetails;
+            _getUserOrdersListQuery = getUserOrdersListQuery;
+            _dateTimeService = dateTimeService;
         }
 
         public async Task<IActionResult> Checkout()
@@ -60,13 +67,17 @@ namespace Presentation.Orders
 
             _createOrderCommand.Execute(orderModel);
 
-            return RedirectToAction("CheckoutComplete");
+            return RedirectToAction("CheckoutComplete",new {userId});
         }
 
 
-        public IActionResult CheckoutComplete()
+        public IActionResult CheckoutComplete(string userId)
         {
-            return View();
+            var order = _getUserOrdersListQuery.Execute(userId).Last();
+
+            order.OrderPlaced = _dateTimeService.UtcToLocal(order.OrderPlaced);
+
+            return View(order);
         }
     }
 }

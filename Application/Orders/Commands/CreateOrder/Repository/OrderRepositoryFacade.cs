@@ -33,7 +33,7 @@ namespace Application.Orders.Commands.CreateOrder.Repository
         public Customer GetCustomer(string customerId)
         {
             return _customerRepository.GetAll()
-                .SingleOrDefault(c => c.Email == customerId);
+                .SingleOrDefault(c => c.UserId == customerId);
             //Todo change email to Id in the domain model and database
         }
 

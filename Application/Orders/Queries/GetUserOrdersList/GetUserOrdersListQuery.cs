@@ -5,7 +5,7 @@ using Domain.Orders;
 
 namespace Application.Orders.Queries.GetUserOrdersList
 {
-    public class GetUserOrdersListQuery
+    public class GetUserOrdersListQuery : IGetUserOrdersListQuery
     {
         private readonly IOrderRepository _orderRepository;
 

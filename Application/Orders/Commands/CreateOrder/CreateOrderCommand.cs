@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Application.Interfaces.Persistence;
+﻿using Application.Interfaces.Persistence;
 using Application.Orders.Commands.CreateOrder.Factory;
 using Application.Orders.Commands.CreateOrder.Repository;
 using Application.ShoppingCartItems.Commands.ClearShoppingCart;
 using Common.Dates;
 using Domain.Customers;
-using Domain.OrderDetails;
-using Domain.Orders;
 
 namespace Application.Orders.Commands.CreateOrder
 {
     public class CreateOrderCommand : ICreateOrderCommand
     {
+        private readonly IClearShoppingCartCommand _clearShoppingCartCommand;
         private readonly IDateTimeService _dateTimeService;
         private readonly IOrderFactory _orderFactory;
-        private readonly IClearShoppingCartCommand _clearShoppingCartCommand;
         private readonly IOrderRepositoryFacade _orderRepositoryFacade;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -34,9 +30,9 @@ namespace Application.Orders.Commands.CreateOrder
 
         public void Execute(CreateOrderModel model)
         {
-            var dateTime = _dateTimeService.GetDateTime();
-            var customer = _orderRepositoryFacade.GetCustomer(model.CustomerId) 
-                           ?? new Customer() {Email = model.CustomerId};
+            var dateTime = _dateTimeService.GetDateTimeUtc();
+            var customer = _orderRepositoryFacade.GetCustomer(model.CustomerId)
+                           ?? new Customer {UserId = model.CustomerId};
             var shopItems = _orderRepositoryFacade.GetCartItems(model.ShoppingCartId);
 
             var order = _orderFactory.Create(dateTime, customer, shopItems);

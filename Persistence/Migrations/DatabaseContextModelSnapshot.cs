@@ -15,7 +15,7 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,7 +29,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 856, DateTimeKind.Utc).AddTicks(8074));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 871, DateTimeKind.Utc).AddTicks(7094));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -38,7 +38,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 860, DateTimeKind.Utc).AddTicks(8022));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(1476));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -71,77 +71,28 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Customers.Customer", b =>
                 {
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("County")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 860, DateTimeKind.Utc).AddTicks(9249));
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(2686));
 
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(27));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(3354));
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Email");
+                    b.HasKey("Id");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "Gordon.Freeman@Gmail.com",
-                            AddressLine1 = "",
-                            AddressLine2 = "",
-                            City = "Washington",
-                            Country = "USA",
-                            County = "Washington",
-                            FirstName = "Gordon",
-                            Id = 1,
-                            LastName = "Freeman",
-                            PhoneNumber = "",
-                            PostCode = ""
-                        });
                 });
 
             modelBuilder.Entity("Domain.OrderDetails.OrderDetail", b =>
@@ -157,12 +108,12 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(917));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(4142));
 
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(1688));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(4863));
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -192,16 +143,15 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(2461));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(5614));
 
-                    b.Property<string>("CustomerEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(3339));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(6391));
 
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime2");
@@ -211,7 +161,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerEmail");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -229,7 +179,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(4238));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(7582));
 
                     b.Property<string>("ImageThumbnailUrl")
                         .IsRequired()
@@ -245,7 +195,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(5115));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(8442));
 
                     b.Property<string>("LongDescription")
                         .IsRequired()
@@ -366,12 +316,12 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(5840));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(9197));
 
                     b.Property<DateTime>("LastModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 6, 27, 12, 46, 16, 861, DateTimeKind.Utc).AddTicks(6509));
+                        .HasDefaultValue(new DateTime(2020, 7, 4, 15, 6, 5, 877, DateTimeKind.Utc).AddTicks(9843));
 
                     b.Property<int>("ShopItemId")
                         .HasColumnType("int");
@@ -406,7 +356,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Customers.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerEmail")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
