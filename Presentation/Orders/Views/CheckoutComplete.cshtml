@@ -1,36 +1,4 @@
 ﻿@model Order
+
 <h2>Order Details</h2>
-
-<h4>Order Id: @Model.Id</h4>
-<h4>Order placed: @Model.OrderPlaced</h4>
-
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col" class="text-center">#</th>
-        <th scope="col" class="text-center">Product Name</th>
-        <th scope="col" class="text-center">Amount</th>
-        <th scope="col" class="text-right">Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    @{
-        var i = 1;
-        foreach (var orderDetail in Model.OrderDetails)
-        {
-            <tr>
-                <td class="text-center">@(i++)</td>
-                <td class="text-center">@orderDetail.ShopItem.Name</td>
-                <td class="text-center">@orderDetail.Amount</td>
-                <td class="text-right">@((orderDetail.Price * orderDetail.Amount).ToString("C"))</td>
-            </tr>
-        }
-    }
-    <tr>
-        <td></td>
-        <td></td>
-        <td class="text-center"><strong>Total</strong></td>
-        <td class="text-right"><strong>@Model.OrderTotal.ToString("C")</strong></td>
-    </tr>
-    </tbody>
-</table>
+<partial name="_Order" model="Model"/>

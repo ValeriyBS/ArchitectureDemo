@@ -17,13 +17,13 @@ namespace Presentation.Orders
     public class OrdersController : Controller
     {
         private readonly CartIdProvider _cartIdProvider;
-        private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
         private readonly ICreateOrderCommand _createOrderCommand;
+        private readonly IDateTimeService _dateTimeService;
         private readonly IGetApplicationUserDetails _getApplicationUserDetails;
         private readonly IGetApplicationUserId _getApplicationUserId;
-        private readonly ISaveApplicationUserDetails _saveApplicationUserDetails;
+        private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
         private readonly IGetUserOrdersListQuery _getUserOrdersListQuery;
-        private readonly IDateTimeService _dateTimeService;
+        private readonly ISaveApplicationUserDetails _saveApplicationUserDetails;
 
         public OrdersController(CartIdProvider cartIdProvider,
             IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery,
@@ -61,13 +61,13 @@ namespace Presentation.Orders
 
             var userId = _getApplicationUserId.Execute(HttpContext.User);
 
-            _saveApplicationUserDetails.Execute(userId,viewModel);
+            _saveApplicationUserDetails.Execute(userId, viewModel);
 
             var orderModel = new CreateOrderModel(userId, _cartIdProvider.CartId);
 
             _createOrderCommand.Execute(orderModel);
 
-            return RedirectToAction("CheckoutComplete",new {userId});
+            return RedirectToAction("CheckoutComplete", new {userId});
         }
 
 
@@ -78,6 +78,15 @@ namespace Presentation.Orders
             order.OrderPlaced = _dateTimeService.UtcToLocal(order.OrderPlaced);
 
             return View(order);
+        }
+
+        public IActionResult List()
+        {
+            var userId = _getApplicationUserId.Execute(HttpContext.User);
+
+            var orders = _getUserOrdersListQuery.Execute(userId);
+
+            return View(orders);
         }
     }
 }

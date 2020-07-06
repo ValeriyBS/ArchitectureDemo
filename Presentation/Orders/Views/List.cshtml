@@ -1,0 +1,8 @@
+﻿@model List<Order>
+
+<h2>List of previous orders</h2>
+@foreach (var order in Model)
+{
+    <h2>Order Details</h2>
+    <partial name="_Order" model="order"/>
+}
