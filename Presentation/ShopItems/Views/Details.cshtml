@@ -1,0 +1,13 @@
+﻿@model ShopItemModel
+
+<div class="card w-50">
+    <img class="card-img-top" src="@Model.ImageUrl" alt="">
+    <div class="card-body">
+        <h4 class="card-title">
+            <span class="float-right">@Model.Price.ToString("C")</span>
+            <span>@Model.Name</span>
+        </h4>
+        <p class="card-text">@Model.LongDescription</p>
+        <a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@Model.Id">Add to Cart</a>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 ﻿@model List<Order>
 
-<h2>List of previous orders</h2>
+<h4>List of previous orders</h4>
 @foreach (var order in Model)
 {
-    <h2>Order Details</h2>
+    <h6>Order Details</h6>
     <partial name="_Order" model="order"/>
 }

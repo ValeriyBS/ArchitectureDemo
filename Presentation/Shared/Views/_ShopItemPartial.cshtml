@@ -1,0 +1,16 @@
+﻿@model ShopItemModel
+    <div class="col mb-4 py-2">
+        <div class="card h-100">
+            <img class="card-img-top" src="@Model.ImageThumbnailUrl" alt="">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a asp-controller="ShopItems" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>
+                </h5>
+                <p class="card-text h-50">@Model.ShortDescription</p>
+
+                    <h5 class="float-right">@Model.Price.ToString("C")</h5>
+                    <a class="btn btn-primary btn-sm" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@Model.Id">Add to Cart</a>
+            </div>
+
+        </div>
+    </div>

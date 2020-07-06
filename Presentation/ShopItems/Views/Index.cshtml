@@ -1,26 +1,10 @@
-﻿@model IEnumerable<Application.ShopItems.Queries.ShopItemModel>
-<h1>Items by category</h1>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>ShortDescription</th>
-            <th>LongDescription</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var shopItemModel in Model)
-        {
-            <tr>
-                <td>@shopItemModel.Id</td>
-                <td>@shopItemModel.Name</td>
-                <td>@shopItemModel.ShortDescription</td>
-                <td>@shopItemModel.LongDescription</td>
-                <td>@shopItemModel.Price.ToString("C")</td>
-                <td><a class="btn btn-primary" asp-controller="ShoppingCarts" asp-action="AddToCart" asp-route-shopItemId="@shopItemModel.Id">Add to Cart</a></td>
-            </tr>
-        }
-    </tbody>
-</table>
+﻿@model IEnumerable<ShopItemModel>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+
+    @foreach (var shopItemModel in Model)
+    {
+        <partial name="_ShopItemPartial" model="shopItemModel" />
+    }
+
+</div>

@@ -23,5 +23,10 @@ namespace Presentation.ShopItems
         {
             return id > 0 ? View(_getShopItemsListByCategoryQuery.Execute(id)) : View(_getShopItemsListQuery.Execute());
         }
+
+        public IActionResult Details(int id)
+        {
+            return View(_getShopItemsListQuery.Execute(id));
+        }
     }
 }
