@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Application.Orders.Commands.CreateOrder;
+using Application.Orders.Commands.CreateOrdersListViewModel.Factory;
 using Application.Orders.Queries.GetUserOrdersList;
 using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using Common.Dates;
@@ -19,6 +20,7 @@ namespace Presentation.Orders
         private readonly CartIdProvider _cartIdProvider;
         private readonly ICreateOrderCommand _createOrderCommand;
         private readonly IDateTimeService _dateTimeService;
+        private readonly IOrdersListViewModelFactory _ordersListViewModelFactory;
         private readonly IGetApplicationUserDetails _getApplicationUserDetails;
         private readonly IGetApplicationUserId _getApplicationUserId;
         private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
@@ -32,7 +34,8 @@ namespace Presentation.Orders
             IGetApplicationUserId getApplicationUserId,
             ISaveApplicationUserDetails saveApplicationUserDetails,
             IGetUserOrdersListQuery getUserOrdersListQuery,
-            IDateTimeService dateTimeService)
+            IDateTimeService dateTimeService,
+            IOrdersListViewModelFactory ordersListViewModelFactory)
         {
             _cartIdProvider = cartIdProvider;
             _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
@@ -42,6 +45,7 @@ namespace Presentation.Orders
             _saveApplicationUserDetails = saveApplicationUserDetails;
             _getUserOrdersListQuery = getUserOrdersListQuery;
             _dateTimeService = dateTimeService;
+            _ordersListViewModelFactory = ordersListViewModelFactory;
         }
 
         public async Task<IActionResult> Checkout()
@@ -80,13 +84,16 @@ namespace Presentation.Orders
             return View(order);
         }
 
-        public IActionResult List()
+
+        public IActionResult List(int pageSize, int pageIndex)
         {
             var userId = _getApplicationUserId.Execute(HttpContext.User);
 
             var orders = _getUserOrdersListQuery.Execute(userId);
 
-            return View(orders);
+            var ordersListViewModel = _ordersListViewModelFactory.Create(orders, pageSize, pageIndex);
+
+            return View(ordersListViewModel);
         }
     }
 }
