@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Persistence;
+﻿using Application.Interfaces.Infrastructure;
+using Application.Interfaces.Persistence;
 using Application.Orders.Commands.CreateOrder.Factory;
 using Application.Orders.Commands.CreateOrder.Repository;
 using Application.ShoppingCartItems.Commands.ClearShoppingCart;
@@ -14,18 +15,21 @@ namespace Application.Orders.Commands.CreateOrder
         private readonly IOrderFactory _orderFactory;
         private readonly IOrderRepositoryFacade _orderRepositoryFacade;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IInventoryService _inventoryService;
 
         public CreateOrderCommand(IDateTimeService dateTimeService,
             IOrderRepositoryFacade orderRepositoryFacade,
             IOrderFactory orderFactory,
             IClearShoppingCartCommand clearShoppingCartCommand,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IInventoryService inventoryService)
         {
             _dateTimeService = dateTimeService;
             _orderRepositoryFacade = orderRepositoryFacade;
             _orderFactory = orderFactory;
             _clearShoppingCartCommand = clearShoppingCartCommand;
             _unitOfWork = unitOfWork;
+            _inventoryService = inventoryService;
         }
 
         public void Execute(CreateOrderModel model)
@@ -43,7 +47,10 @@ namespace Application.Orders.Commands.CreateOrder
 
             _unitOfWork.Save();
 
-            //Todo Notify inventory
+            foreach (var shopItem in shopItems)
+            {
+                _inventoryService.NotifyItemSold(shopItem.Id,shopItem.Amount);
+            }
         }
     }
 }

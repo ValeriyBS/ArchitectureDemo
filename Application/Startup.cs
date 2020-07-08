@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Application.Categories.Queries.GetCategoryList;
+using Application.Interfaces.Infrastructure;
 using Application.Orders.Commands.CreateOrder;
 using Application.Orders.Commands.CreateOrder.Factory;
 using Application.Orders.Commands.CreateOrder.Repository;
@@ -34,6 +35,7 @@ namespace Application
             services.AddScoped<IClearShoppingCartCommand, ClearShoppingCartCommand>();
             services.AddScoped<IGetUserOrdersListQuery,GetUserOrdersListQuery>(); 
             services.AddScoped<IOrdersListViewModelFactory, OrdersListViewModelFactory>();
+            services.AddScoped<IInventoryService, IInventoryService>();
         }
     }
 }

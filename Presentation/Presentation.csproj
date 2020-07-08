@@ -16,13 +16,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Category\Models\" />
     <Folder Include="Home\Models\" />
-    <Folder Include="Pages\Home\" />
     <Folder Include="ShopItems\Models\" />
     <Folder Include="ShoppingCarts\Models\" />
     <Folder Include="wwwroot\css\" />
