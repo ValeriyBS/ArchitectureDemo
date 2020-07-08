@@ -28,20 +28,11 @@ namespace Presentation
         {
             services.Configure<RazorViewEngineOptions>(o =>
             {
-                // {2} is area, {1} is controller,{0} is the action    
                 o.ViewLocationFormats.Clear();
                 o.ViewLocationFormats.Add("/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
                 o.AreaPageViewLocationFormats.Clear();
                 o.AreaPageViewLocationFormats.Add("/Shared/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
-                //o.AreaPageViewLocationFormats.Add("/Shared/Views/Components/{0}" + RazorViewEngine.ViewExtension);
-                //o.ViewLocationFormats.Add("/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
-
-                // Untested. You could remove this if you don't care about areas.
-                //o.AreaViewLocationFormats.Clear();
-                //o.AreaViewLocationFormats.Add("/Areas/{2}/Controllers/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
-                //o.AreaViewLocationFormats.Add("/Areas/{2}/Controllers/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
-                //o.AreaViewLocationFormats.Add("/Areas/Shared/Views/{0}" + RazorViewEngine.ViewExtension);
             });
 
             // Common module startup
@@ -52,6 +43,9 @@ namespace Presentation
 
             //Application module startup
             Application.Startup.ConfigureServices(services);
+
+            //Infrastructure module startup
+            Infrastructure.Startup.ConfigureServices(services);
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -70,8 +64,6 @@ namespace Presentation
             services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
