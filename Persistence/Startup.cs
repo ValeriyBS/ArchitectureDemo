@@ -15,6 +15,7 @@ using Persistence.Orders;
 using Persistence.Shared;
 using Persistence.ShopItems;
 using Persistence.ShoppingCartItems;
+using Scrutor;
 
 namespace Persistence
 {
@@ -27,23 +28,12 @@ namespace Persistence
         {
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connectionString));
-
-            services.AddScoped<IDatabaseContext, DatabaseContext>();
-            services.AddScoped<IRepository<Category>, Repository<Category>>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IRepository<ShopItem>, Repository<ShopItem>>();
-            services.AddScoped<IShopItemRepository, ShopItemRepository>();
-            services.AddScoped<IRepository<ShoppingCartItem>, Repository<ShoppingCartItem>>();
-            services.AddScoped<IShoppingCartItemRepository, ShoppingCartItemRepository>();
-            services.AddScoped<IRepository<Order>, Repository<Order>>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IRepository<OrderDetail>, Repository<OrderDetail>>();
-            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
-            services.AddScoped<IRepository<Customer>, Repository<Customer>>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
+            services.Scan(scan => scan
+                .FromCallingAssembly()
+                .AddClasses()
+                .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
         }
     }
 }

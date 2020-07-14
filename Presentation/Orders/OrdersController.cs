@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Application.Orders.Commands.CreateOrder;
 using Application.Orders.Commands.CreateOrdersListViewModel.Factory;
+using Application.Orders.ExtensionMethods;
 using Application.Orders.Queries.GetUserOrdersList;
 using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using Common.Dates;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Orders.Models;
 using Presentation.Orders.Services.Commands.SaveApplicationUser;
@@ -21,6 +23,7 @@ namespace Presentation.Orders
         private readonly ICreateOrderCommand _createOrderCommand;
         private readonly IDateTimeService _dateTimeService;
         private readonly IOrdersListViewModelFactory _ordersListViewModelFactory;
+        private readonly IEmailSender _emailSender;
         private readonly IGetApplicationUserDetails _getApplicationUserDetails;
         private readonly IGetApplicationUserId _getApplicationUserId;
         private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
@@ -35,7 +38,8 @@ namespace Presentation.Orders
             ISaveApplicationUserDetails saveApplicationUserDetails,
             IGetUserOrdersListQuery getUserOrdersListQuery,
             IDateTimeService dateTimeService,
-            IOrdersListViewModelFactory ordersListViewModelFactory)
+            IOrdersListViewModelFactory ordersListViewModelFactory,
+            IEmailSender emailSender)
         {
             _cartIdProvider = cartIdProvider;
             _getShoppingCartItemsListQuery = getShoppingCartItemsListQuery;
@@ -46,6 +50,7 @@ namespace Presentation.Orders
             _getUserOrdersListQuery = getUserOrdersListQuery;
             _dateTimeService = dateTimeService;
             _ordersListViewModelFactory = ordersListViewModelFactory;
+            _emailSender = emailSender;
         }
 
         public async Task<IActionResult> Checkout()
@@ -71,15 +76,19 @@ namespace Presentation.Orders
 
             _createOrderCommand.Execute(orderModel);
 
-            return RedirectToAction("CheckoutComplete", new {userId});
+            return RedirectToAction("CheckoutComplete", new {userId, userEmail = viewModel.Email});
         }
 
 
-        public IActionResult CheckoutComplete(string userId)
+        public IActionResult CheckoutComplete(string userId, string userEmail)
         {
             var order = _getUserOrdersListQuery.Execute(userId).Last();
 
             order.OrderPlaced = _dateTimeService.UtcToLocal(order.OrderPlaced);
+
+            var htmlMessage = order.ToHtmlMessage();
+
+            _emailSender.SendEmailAsync(userEmail, $"Order ref:{order.Id} confirmation", htmlMessage );
 
             return View(order);
         }

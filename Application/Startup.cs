@@ -13,6 +13,7 @@ using Application.ShoppingCartItems.Commands.RemoveShoppingCartItem;
 using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
 
 namespace Application
 {
@@ -22,18 +23,12 @@ namespace Application
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IGetCategoryListQuery, GetCategoryListQuery>();
-            services.AddScoped<IGetShopItemsListQuery, GetShopItemsListQuery>();
-            services.AddScoped<IGetShopItemsListByCategoryQuery, GetShopItemsListByCategoryQuery>();
-            services.AddScoped<IGetShoppingCartItemsListQuery, GetShoppingCartItemsListQuery>();
-            services.AddScoped<IAddShoppingCartItemCommand, AddShoppingCartItemCommand>();
-            services.AddScoped<IRemoveShoppingCartItemCommand, RemoveShoppingCartItemCommand>();
-            services.AddScoped<IOrderRepositoryFacade, OrderRepositoryFacade>();
-            services.AddScoped<IOrderFactory, OrderFactory>();
-            services.AddScoped<ICreateOrderCommand, CreateOrderCommand>();
-            services.AddScoped<IClearShoppingCartCommand, ClearShoppingCartCommand>();
-            services.AddScoped<IGetUserOrdersListQuery, GetUserOrdersListQuery>();
-            services.AddScoped<IOrdersListViewModelFactory, OrdersListViewModelFactory>();
+            services.Scan(scan => scan
+                .FromCallingAssembly()
+                .AddClasses()
+                .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
         }
     }
 }
