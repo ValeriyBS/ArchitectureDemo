@@ -387,9 +387,11 @@ namespace Persistence.Tests.ShoppingCartItems
 
             using (var context = new DatabaseContext(_options))
             {
+
                 var shopItems = fixture
                     .Build<ShopItem>()
                     .With(p => p.CategoryId, 999)
+                    .Without(p=>p.Id)
                     .CreateMany().ToList();
                 context.ShopItems.AddRange(shopItems);
 
