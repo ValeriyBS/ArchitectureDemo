@@ -3,7 +3,7 @@ using Domain.Categories;
 
 namespace Application.ShopItems.Queries
 {
-    public class ShopItemModel // : IEquatable<ShopItemModel>
+    public class ShopItemModel  : IEquatable<ShopItemModel>
     {
         public string Name { get; set; } = "";
         public string ShortDescription { get; set; } = "";

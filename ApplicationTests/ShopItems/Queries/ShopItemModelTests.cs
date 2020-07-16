@@ -1,4 +1,5 @@
-﻿using Application.ShopItems.Queries;
+﻿using System.Collections.Generic;
+using Application.ShopItems.Queries;
 using AutoFixture;
 using Domain.Categories;
 using Xunit;
@@ -9,22 +10,27 @@ namespace Application.Tests.ShopItems.Queries
     {
         public ShopItemModelTests()
         {
-            _fixture = new Fixture();
+            var fixture = new Fixture();
 
             // client has a circular reference from AutoFixture point of view
-            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
             _shopItemModel = new ShopItemModel();
             _category = new Category
             {
                 Id = 1
             };
+
+            fixture.Freeze<ShopItemModel>();
+            _shopItemModelLeft = fixture.Create<ShopItemModel>();
+            _shopItemModelRight = fixture.Create<ShopItemModel>();
         }
 
         private readonly Category _category;
         private readonly ShopItemModel _shopItemModel;
-        private readonly Fixture _fixture;
+        private readonly ShopItemModel _shopItemModelLeft;
+        private readonly ShopItemModel _shopItemModelRight;
         private const int CategoryId = 1;
         private const int Id = 1;
         private const string ImageThumbnailUrl = "testUrl";
@@ -54,12 +60,8 @@ namespace Application.Tests.ShopItems.Queries
         public void TestEqualsOperatorShouldReturnTrueWhenComparingEqualObjects()
         {
             //Arrange
-            _fixture.Freeze<ShopItemModel>();
-            var shopItemModel1 = _fixture.Create<ShopItemModel>();
-            var shopItemModel2 = _fixture.Create<ShopItemModel>();
-
             //Act
-            var result = shopItemModel1 == shopItemModel2;
+            var result = _shopItemModelLeft == _shopItemModelRight;
 
             //Assert
             Assert.True(result);
@@ -70,14 +72,11 @@ namespace Application.Tests.ShopItems.Queries
         public void TestNotEqualsOperatorShouldReturnTrueWhenComparingNonEqualObjects()
         {
             //Arrange
-            var shopItemModel1 = _fixture.Create<ShopItemModel>();
-            var shopItemModel2 = _fixture.Create<ShopItemModel>();
-
             //Act
-            var result = shopItemModel1 != shopItemModel2;
+            var result = _shopItemModelLeft != _shopItemModelRight;
 
             //Assert
-            Assert.True(result);
+            Assert.False(result);
         }
 
         [Fact]
@@ -199,6 +198,42 @@ namespace Application.Tests.ShopItems.Queries
 
             //Assert
             Assert.Equal(ShortDescription, _shopItemModel.ShortDescription);
+        }
+
+        [Fact]
+        public void TestGetHashCode()
+        {
+            //Arrange
+            var shopItemModelSet = new HashSet<ShopItemModel>(){_shopItemModel};
+
+            //Act
+            var result = shopItemModelSet.Contains(_shopItemModel);
+
+            //Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void TestEqualsSameReferenceObject()
+        {
+            //Arrange
+            var shopItemModelWrapper = (object)_shopItemModel;
+            //Act
+            var result = _shopItemModel.Equals(shopItemModelWrapper);
+
+            //Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void TestEqualsObject()
+        {
+            //Arrange
+            //Act
+            var result = _shopItemModel.Equals(new object());
+
+            //Assert
+            Assert.False(result);
         }
     }
 }
