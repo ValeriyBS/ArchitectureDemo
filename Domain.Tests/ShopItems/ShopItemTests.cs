@@ -2,12 +2,26 @@
 using AutoFixture;
 using Domain.Categories;
 using Domain.ShopItems;
+using Domain.Tests.Shared;
 using Xunit;
 
 namespace Domain.Tests.ShopItems
 {
     public class ShopItemTests
     {
+        public ShopItemTests()
+        {
+            _shopItem = new ShopItem();
+
+            var fixture = new OmitRecursionFixture();
+
+            _category = fixture.Create<Category>();
+
+            fixture.Freeze<ShopItem>();
+            _shopItemLeft = fixture.Create<ShopItem>();
+            _shopItemRight = fixture.Create<ShopItem>();
+        }
+
         private readonly ShopItem _shopItem;
         private readonly Category _category;
         private readonly ShopItem _shopItemLeft;
@@ -23,107 +37,62 @@ namespace Domain.Tests.ShopItems
         private const int CategoryId = 1;
         private const int Id = 2;
 
-        public ShopItemTests()
-        {
-            _shopItem = new ShopItem();
-
-            var fixture = new Fixture();
-            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-            _category = fixture.Create<Category>();
-
-            fixture.Freeze<ShopItem>();
-            _shopItemLeft = fixture.Create<ShopItem>();
-            _shopItemRight = fixture.Create<ShopItem>();
-        }
-
         [Fact]
-        public void TestSetGetName()
+        public void TestEqualsObject()
         {
             //Arrange
             //Act
-            _shopItem.Name = Name;
+            var result = _shopItem.Equals(new object());
 
             //Assert
-            Assert.Equal(Name,_shopItem.Name);
+            Assert.False(result);
         }
 
         [Fact]
-        public void TestSetGetShortDescription()
+        public void TestEqualsSameReferenceObject()
         {
             //Arrange
+            var categoryWrapper = (object) _shopItem;
             //Act
-            _shopItem.ShortDescription = ShortDescription;
+            var result = _shopItem.Equals(categoryWrapper);
 
             //Assert
-            Assert.Equal(ShortDescription, _shopItem.ShortDescription);
+            Assert.True(result);
         }
 
         [Fact]
-        public void TestSetGetLongDescription()
+        public void TestGetHashCode()
         {
             //Arrange
+            var customerSet = new HashSet<ShopItem> {_shopItem};
+
             //Act
-            _shopItem.LongDescription = LongDescription;
+            var result = customerSet.Contains(_shopItem);
 
             //Assert
-            Assert.Equal(LongDescription, _shopItem.LongDescription);
+            Assert.True(result);
         }
 
         [Fact]
-        public void TestSetGetPrice()
+        public void TestOperatorEqualTo()
         {
             //Arrange
             //Act
-            _shopItem.Price = Price;
+            var result = _shopItemLeft == _shopItemRight;
 
             //Assert
-            Assert.Equal(Price, _shopItem.Price);
+            Assert.True(result);
         }
 
         [Fact]
-        public void TestSetGetImageUrl()
+        public void TestOperatorNotEqualTo()
         {
             //Arrange
             //Act
-            _shopItem.ImageUrl = ImageUrl;
+            var result = _shopItemLeft != _shopItemRight;
 
             //Assert
-            Assert.Equal(ImageUrl, _shopItem.ImageUrl);
-        }
-
-        [Fact]
-        public void TestSetGetImageThumbnailUrl()
-        {
-            //Arrange
-            //Act
-            _shopItem.ImageThumbnailUrl = ImageThumbnailUrl;
-
-            //Assert
-            Assert.Equal(ImageThumbnailUrl, _shopItem.ImageThumbnailUrl);
-        }
-
-        [Fact]
-        public void TestSetGetInStock()
-        {
-            //Arrange
-            //Act
-            _shopItem.InStock = InStock;
-
-            //Assert
-            Assert.Equal(InStock, _shopItem.InStock);
-        }
-        
-        [Fact]
-        public void TestSetGetCategoryId()
-        {
-            //Arrange
-            //Act
-            _shopItem.CategoryId = CategoryId;
-
-            //Assert
-            Assert.Equal(CategoryId, _shopItem.CategoryId);
+            Assert.False(result);
         }
 
         [Fact]
@@ -138,14 +107,14 @@ namespace Domain.Tests.ShopItems
         }
 
         [Fact]
-        public void TestSetGetNotes()
+        public void TestSetGetCategoryId()
         {
             //Arrange
             //Act
-            _shopItem.Notes = Notes;
+            _shopItem.CategoryId = CategoryId;
 
             //Assert
-            Assert.Equal(Notes, _shopItem.Notes);
+            Assert.Equal(CategoryId, _shopItem.CategoryId);
         }
 
         [Fact]
@@ -160,63 +129,91 @@ namespace Domain.Tests.ShopItems
         }
 
         [Fact]
-        public void TestOperatorEqualTo()
+        public void TestSetGetImageThumbnailUrl()
         {
             //Arrange
             //Act
-            var result = _shopItemLeft == _shopItemRight;
+            _shopItem.ImageThumbnailUrl = ImageThumbnailUrl;
 
             //Assert
-            Assert.True(result);
-
+            Assert.Equal(ImageThumbnailUrl, _shopItem.ImageThumbnailUrl);
         }
 
         [Fact]
-        public void TestOperatorNotEqualTo()
+        public void TestSetGetImageUrl()
         {
             //Arrange
             //Act
-            var result = _shopItemLeft != _shopItemRight;
+            _shopItem.ImageUrl = ImageUrl;
 
             //Assert
-            Assert.False(result);
-
+            Assert.Equal(ImageUrl, _shopItem.ImageUrl);
         }
 
         [Fact]
-        public void TestGetHashCode()
+        public void TestSetGetInStock()
         {
             //Arrange
-            var customerSet = new HashSet<ShopItem>() { _shopItem };
-
             //Act
-            var result = customerSet.Contains(_shopItem);
+            _shopItem.InStock = InStock;
 
             //Assert
-            Assert.True(result);
+            Assert.Equal(InStock, _shopItem.InStock);
         }
 
         [Fact]
-        public void TestEqualsSameReferenceObject()
+        public void TestSetGetLongDescription()
         {
             //Arrange
-            var categoryWrapper = (object)_shopItem;
             //Act
-            var result = _shopItem.Equals(categoryWrapper);
+            _shopItem.LongDescription = LongDescription;
 
             //Assert
-            Assert.True(result);
+            Assert.Equal(LongDescription, _shopItem.LongDescription);
         }
 
         [Fact]
-        public void TestEqualsObject()
+        public void TestSetGetName()
         {
             //Arrange
             //Act
-            var result = _shopItem.Equals(new object());
+            _shopItem.Name = Name;
 
             //Assert
-            Assert.False(result);
+            Assert.Equal(Name, _shopItem.Name);
+        }
+
+        [Fact]
+        public void TestSetGetNotes()
+        {
+            //Arrange
+            //Act
+            _shopItem.Notes = Notes;
+
+            //Assert
+            Assert.Equal(Notes, _shopItem.Notes);
+        }
+
+        [Fact]
+        public void TestSetGetPrice()
+        {
+            //Arrange
+            //Act
+            _shopItem.Price = Price;
+
+            //Assert
+            Assert.Equal(Price, _shopItem.Price);
+        }
+
+        [Fact]
+        public void TestSetGetShortDescription()
+        {
+            //Arrange
+            //Act
+            _shopItem.ShortDescription = ShortDescription;
+
+            //Assert
+            Assert.Equal(ShortDescription, _shopItem.ShortDescription);
         }
     }
 }

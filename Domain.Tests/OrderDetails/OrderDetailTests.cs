@@ -2,6 +2,7 @@
 using Domain.OrderDetails;
 using Domain.Orders;
 using Domain.ShopItems;
+using Domain.Tests.Shared;
 using Xunit;
 
 namespace Domain.Tests.OrderDetails
@@ -12,9 +13,7 @@ namespace Domain.Tests.OrderDetails
         {
             _orderDetail = new OrderDetail();
 
-            var fixture = new Fixture();
-            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            var fixture = new OmitRecursionFixture();
 
             _shopItem = fixture.Create<ShopItem>();
             _order = fixture.Create<Order>();

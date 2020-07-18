@@ -5,6 +5,7 @@ using AutoFixture;
 using Domain.Customers;
 using Domain.OrderDetails;
 using Domain.Orders;
+using Domain.Tests.Shared;
 using Xunit;
 
 namespace Domain.Tests.Orders
@@ -13,9 +14,7 @@ namespace Domain.Tests.Orders
     {
         public OrderTests()
         {
-            var fixture = new Fixture();
-            fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            var fixture = new OmitRecursionFixture();
 
             _orderDetails = fixture.CreateMany<OrderDetail>().ToList();
 
