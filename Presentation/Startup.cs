@@ -1,4 +1,4 @@
-using AutoMapper;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -12,6 +12,11 @@ using Presentation.Areas.Identity.Data;
 using Presentation.Orders.Services.Commands.SaveApplicationUser;
 using Presentation.Orders.Services.Queries.GetApplicationUser;
 using Presentation.ShoppingCarts.Services.Queries;
+
+[assembly: AspMvcViewLocationFormat(@"~/{1}/Views/{0}.cshtml")]
+[assembly: AspMvcViewLocationFormat(@"~/Shared/Views/{0}.cshtml")]
+[assembly: AspMvcPartialViewLocationFormat(@"~/Shared/Views/{0}.cshtml")]
+
 
 namespace Presentation
 {

@@ -51,7 +51,7 @@ namespace Application.Orders.Commands.CreateOrdersListViewModel.Factory
                     Orders = currentPageOrders,
                     PageSize = pageSize,
                     PageIndex = pageIndex,
-                    numberOfPages = numberOfPages,
+                    NumberOfPages = numberOfPages,
                     HasPrevPage = HasPreviousPage(),
                     HasNextPage = HasNextPage(),
                 };

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces.Persistence;
-using Application.ShopItems.Queries.GetShopItemsList;
 using AutoMapper;
 
 namespace Application.ShopItems.Queries.GetShopItemsListByCategory

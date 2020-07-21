@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Application.ShopItems.Queries.GetShopItemsList;
 
 namespace Application.ShopItems.Queries.GetShopItemsListByCategory
 {

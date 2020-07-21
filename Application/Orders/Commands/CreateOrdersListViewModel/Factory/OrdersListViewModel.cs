@@ -10,7 +10,7 @@ namespace Application.Orders.Commands.CreateOrdersListViewModel.Factory
 
         public int PageIndex { get; set; } = 1;
 
-        public int numberOfPages { get; set; }
+        public int NumberOfPages { get; set; }
 
         public bool HasNextPage { get; set; }
         public bool HasPrevPage { get; set; }

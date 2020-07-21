@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Application.Categories.Queries.GetCategoryList;
+﻿using Application.Categories.Queries.GetCategoryList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Category.Components

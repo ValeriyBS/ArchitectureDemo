@@ -1,10 +1,7 @@
 ﻿using Application.ShopItems.Queries.GetShopItemsList;
-using Application.ShoppingCartItems.Commands;
 using Application.ShoppingCartItems.Commands.AddShoppingCartItem;
 using Application.ShoppingCartItems.Commands.RemoveShoppingCartItem;
-using Application.ShoppingCartItems.Queries;
 using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ShoppingCarts.Services.Queries;
 
@@ -13,8 +10,8 @@ namespace Presentation.ShoppingCarts
     public class ShoppingCartsController : Controller
     {
         private readonly IAddShoppingCartItemCommand _addShoppingCartItemCommand;
-        private readonly IGetShopItemsListQuery _getShopItemsListQuery;
         private readonly CartIdProvider _cartIdProvider;
+        private readonly IGetShopItemsListQuery _getShopItemsListQuery;
         private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
         private readonly IRemoveShoppingCartItemCommand _removeShoppingCartItemCommand;
 

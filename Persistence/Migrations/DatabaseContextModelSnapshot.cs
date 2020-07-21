@@ -9,6 +9,7 @@ namespace Persistence.Migrations
 {
     [ExcludeFromCodeCoverage]
     [DbContext(typeof(DatabaseContext))]
+    // ReSharper disable once UnusedType.Global
     partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
