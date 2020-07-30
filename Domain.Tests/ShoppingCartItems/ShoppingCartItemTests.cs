@@ -2,7 +2,7 @@
 using AutoFixture;
 using Domain.ShopItems;
 using Domain.ShoppingCartItems;
-using Domain.Tests.Shared;
+using Tests.Core.AutoFixture;
 using Xunit;
 
 namespace Domain.Tests.ShoppingCartItems
