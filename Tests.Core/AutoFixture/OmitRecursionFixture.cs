@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 
-namespace Domain.Tests.Shared
+namespace Tests.Core.AutoFixture
 {
     public class OmitRecursionFixture : Fixture
     {

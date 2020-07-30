@@ -2,7 +2,7 @@
 using Domain.OrderDetails;
 using Domain.Orders;
 using Domain.ShopItems;
-using Domain.Tests.Shared;
+using Tests.Core.AutoFixture;
 using Xunit;
 
 namespace Domain.Tests.OrderDetails

@@ -5,7 +5,7 @@ using AutoFixture;
 using Domain.Customers;
 using Domain.OrderDetails;
 using Domain.Orders;
-using Domain.Tests.Shared;
+using Tests.Core.AutoFixture;
 using Xunit;
 
 namespace Domain.Tests.Orders

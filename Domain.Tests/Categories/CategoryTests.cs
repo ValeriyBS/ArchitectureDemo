@@ -3,7 +3,7 @@ using System.Linq;
 using AutoFixture;
 using Domain.Categories;
 using Domain.ShopItems;
-using Domain.Tests.Shared;
+using Tests.Core.AutoFixture;
 using Xunit;
 
 namespace Domain.Tests.Categories
