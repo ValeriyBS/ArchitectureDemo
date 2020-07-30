@@ -34,9 +34,9 @@
 <div class="text-center text-primary">Orders per page</div>
 <div class="row justify-content-center">
     <div>
-        <a class="btn btn-primary" type="button" asp-controller="Orders" asp-action="List" asp-route-pageSize="1" asp-route-pageIndex="@Model.PageIndex">1</a>
-        <a class="btn btn-primary" type="button" asp-controller="Orders" asp-action="List" asp-route-pageSize="3" asp-route-pageIndex="@Model.PageIndex">5</a>
-        <a class="btn btn-primary" type="button"asp-controller="Orders" asp-action="List" asp-route-pageSize="5" asp-route-pageIndex="@Model.PageIndex">10</a>
+        <a class="btn btn-primary" type="button" asp-controller="Orders" asp-action="List" asp-route-pageSize="@(Model.TotalNumberOfOrders/3)" asp-route-pageIndex="@Model.PageIndex">@(Model.TotalNumberOfOrders/3)</a>
+        <a class="btn btn-primary" type="button" asp-controller="Orders" asp-action="List" asp-route-pageSize="@(Model.TotalNumberOfOrders/2)" asp-route-pageIndex="@Model.PageIndex">@(Model.TotalNumberOfOrders/2)</a>
+        <a class="btn btn-primary" type="button" asp-controller="Orders" asp-action="List" asp-route-pageSize="@(Model.TotalNumberOfOrders/1)" asp-route-pageIndex="@Model.PageIndex">@(Model.TotalNumberOfOrders/1)</a>
     </div>
     
 

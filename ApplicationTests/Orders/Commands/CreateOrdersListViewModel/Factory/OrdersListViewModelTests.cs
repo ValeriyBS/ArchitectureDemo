@@ -16,6 +16,8 @@ namespace Application.Tests.Orders.Commands.CreateOrdersListViewModel.Factory
         private const int PageSize = 1;
         private const int PageIndex = 2;
         private const int NumberOfPages = 3;
+        private const int TotalNumberOfOrders = 4;
+        private const int OrdersPageRatio = 5;
         private const bool HasPrevPage = true;
         private const bool HasNextPage = true;
 
@@ -90,6 +92,28 @@ namespace Application.Tests.Orders.Commands.CreateOrdersListViewModel.Factory
 
             //Assert
             Assert.Equal(HasPrevPage, _ordersListViewModel.HasPrevPage);
+        }
+
+        [Fact]
+        public void TestSetGetTotalNumberOfOrders()
+        {
+            //Arrange
+            //Act
+            _ordersListViewModel.TotalNumberOfOrders = TotalNumberOfOrders;
+
+            //Assert
+            Assert.Equal(TotalNumberOfOrders, _ordersListViewModel.TotalNumberOfOrders);
+        }
+
+        [Fact]
+        public void TestSetGetOrdersPageRatio()
+        {
+            //Arrange
+            //Act
+            _ordersListViewModel.OrdersPageRatio = OrdersPageRatio;
+
+            //Assert
+            Assert.Equal(OrdersPageRatio, _ordersListViewModel.OrdersPageRatio);
         }
     }
 }

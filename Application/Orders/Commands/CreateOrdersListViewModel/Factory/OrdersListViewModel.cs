@@ -6,6 +6,11 @@ namespace Application.Orders.Commands.CreateOrdersListViewModel.Factory
     public class OrdersListViewModel
     {
         public IEnumerable<Order> Orders { get; set; } = new List<Order>();
+
+        public int TotalNumberOfOrders { get; set; }
+
+        public int OrdersPageRatio { get; set; }
+
         public int PageSize { get; set; } = 3;
 
         public int PageIndex { get; set; } = 1;
