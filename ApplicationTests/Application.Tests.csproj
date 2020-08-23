@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.12.0" />
-    <PackageReference Include="AutoFixture.AutoMoq" Version="4.12.0" />
-    <PackageReference Include="AutoFixture.SeedExtensions" Version="4.12.0" />
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.12.0" />
+    <PackageReference Include="AutoFixture" Version="4.13.0" />
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.13.0" />
+    <PackageReference Include="AutoFixture.SeedExtensions" Version="4.13.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.13.0" />
     <PackageReference Include="AutoMoqCore" Version="1.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="Moq" Version="4.14.5" />
@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
+    <ProjectReference Include="..\Tests.Core\Tests.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

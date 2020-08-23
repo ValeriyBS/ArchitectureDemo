@@ -65,14 +65,6 @@ namespace Persistence.Tests.Orders
 
                 context.Orders.Add(order);
 
-                var changes = context.ChangeTracker.Entries();
-
-                foreach (var entry in changes)
-                {
-                    var entryName = entry.Entity.GetType().Name;
-                    var entryState = entry.State.ToString();
-                }
-
                 context.SaveChanges();
             }
 
@@ -107,14 +99,6 @@ namespace Persistence.Tests.Orders
 
                 var orderRepository = new OrderRepository(context);
                 orderRepository.Add(order);
-
-                var changes = context.ChangeTracker.Entries();
-
-                foreach (var entry in changes)
-                {
-                    var entryName = entry.Entity.GetType().Name;
-                    var entryState = entry.State.ToString();
-                }
             }
 
             using (var context = new DatabaseContext(_options))
@@ -161,8 +145,8 @@ namespace Persistence.Tests.Orders
                 {
                     OrderDetails = new List<OrderDetail>
                     {
-                        new OrderDetail {Price = 1, ShopItem = new ShopItem(){Name = "Item1"}},
-                        new OrderDetail {Price = 2, ShopItem = new ShopItem(){Name = "Item2"}}
+                        new OrderDetail {Price = 1, ShopItem = new ShopItem {Name = "Item1"}},
+                        new OrderDetail {Price = 2, ShopItem = new ShopItem {Name = "Item2"}}
                     },
                     Customer = new Customer {UserId = "testUserId"},
                     OrderPlaced = DateTime.UtcNow,
@@ -172,8 +156,8 @@ namespace Persistence.Tests.Orders
                 {
                     OrderDetails = new List<OrderDetail>
                     {
-                        new OrderDetail {Price = 3, ShopItem = new ShopItem(){Name = "Item3"}},
-                        new OrderDetail {Price = 4, ShopItem = new ShopItem(){Name = "Item4"}}
+                        new OrderDetail {Price = 3, ShopItem = new ShopItem {Name = "Item3"}},
+                        new OrderDetail {Price = 4, ShopItem = new ShopItem {Name = "Item4"}}
                     },
                     Customer = new Customer {UserId = "testUserId1"},
                     OrderPlaced = DateTime.UtcNow,
@@ -196,7 +180,7 @@ namespace Persistence.Tests.Orders
                 Assert.Equal(expectedOrdersCount, orders.Count);
                 Assert.Equal(expectedUserId, result.Customer.UserId);
                 Assert.Equal(expectedOrderDetailsCount, result.OrderDetails.Count);
-                Assert.Equal(expectedFirstItemName,result.OrderDetails[0].ShopItem.Name);
+                Assert.Equal(expectedFirstItemName, result.OrderDetails[0].ShopItem.Name);
                 Assert.Equal(expectedSecondItemName, result.OrderDetails[1].ShopItem.Name);
             }
         }
