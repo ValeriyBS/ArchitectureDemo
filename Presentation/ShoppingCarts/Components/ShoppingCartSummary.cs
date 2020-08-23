@@ -1,5 +1,4 @@
-﻿using Application.ShoppingCartItems.Queries;
-using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
+﻿using Application.ShoppingCartItems.Queries.GetShoppingCartItemsList;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ShoppingCarts.Services.Queries;
 
@@ -7,8 +6,8 @@ namespace Presentation.ShoppingCarts.Components
 {
     public class ShoppingCartSummary : ViewComponent
     {
-        private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
         private readonly CartIdProvider _cartIdProvider;
+        private readonly IGetShoppingCartItemsListQuery _getShoppingCartItemsListQuery;
 
         public ShoppingCartSummary(CartIdProvider cartIdProvider,
             IGetShoppingCartItemsListQuery getShoppingCartItemsListQuery)

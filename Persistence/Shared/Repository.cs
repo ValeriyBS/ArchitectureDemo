@@ -26,7 +26,7 @@ namespace Persistence.Shared
         public virtual void Add(TEntity entity)
         {
             _databaseContext.Set<TEntity>().Add(entity);
-            var entries = _databaseContext.ChangeTracker.Entries();
+            _databaseContext.ChangeTracker.Entries();
         }
 
 

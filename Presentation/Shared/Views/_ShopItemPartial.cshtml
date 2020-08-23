@@ -1,7 +1,9 @@
 ﻿@model ShopItemModel
     <div class="col mb-4 py-2">
         <div class="card h-100">
+            <a asp-controller="ShopItems" asp-action="Details" asp-route-id="@Model.Id">@Model.Name>
             <img class="card-img-top" src="@Model.ImageThumbnailUrl" alt="">
+            </a>
             <div class="card-body">
                 <h5 class="card-title">
                     <a asp-controller="ShopItems" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>

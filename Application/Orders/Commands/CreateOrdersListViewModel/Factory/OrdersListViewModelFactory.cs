@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Domain.Orders;
+using Microsoft.VisualBasic;
 
 namespace Application.Orders.Commands.CreateOrdersListViewModel.Factory
 {
@@ -8,18 +9,20 @@ namespace Application.Orders.Commands.CreateOrdersListViewModel.Factory
     {
         public OrdersListViewModel Create(IList<Order> orders, int pageSize, int pageIndex)
         {
+            var ordersListViewModel = new OrdersListViewModel(){OrdersPageRatio = 10};
+
             var numberOfPages = GetNumberOfPages();
 
             var currentPageOrders = GetCurrentPageOrdersList();
 
-            var ordersListViewModel = MapDataToOrdersListViewModel();
+            PopulateModelWithData(ref ordersListViewModel);
 
             return ordersListViewModel;
 
 
             int GetNumberOfPages()
             {
-                pageSize = pageSize < 1 ? 1 : pageSize;
+                pageSize = pageSize < 1 ? orders.Count/ ordersListViewModel.OrdersPageRatio: pageSize;
 
                 return orders.Count / pageSize;
             }
@@ -44,17 +47,16 @@ namespace Application.Orders.Commands.CreateOrdersListViewModel.Factory
                 return pageIndex < numberOfPages;
             }
 
-            OrdersListViewModel MapDataToOrdersListViewModel()
+            void PopulateModelWithData(ref OrdersListViewModel model)
             {
-                return new OrdersListViewModel()
-                {
-                    Orders = currentPageOrders,
-                    PageSize = pageSize,
-                    PageIndex = pageIndex,
-                    numberOfPages = numberOfPages,
-                    HasPrevPage = HasPreviousPage(),
-                    HasNextPage = HasNextPage(),
-                };
+
+                model.Orders = currentPageOrders;
+                model.PageSize = pageSize;
+                model.PageIndex = pageIndex;
+                model.TotalNumberOfOrders = orders.Count;
+                model.NumberOfPages = numberOfPages;
+                model.HasPrevPage = HasPreviousPage();
+                model.HasNextPage = HasNextPage();
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 namespace Presentation.Areas.Identity.Components
 {
     public class UserMenu : ViewComponent
