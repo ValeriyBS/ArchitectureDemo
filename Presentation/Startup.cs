@@ -11,6 +11,7 @@ using Presentation.Areas.Identity;
 using Presentation.Areas.Identity.Data;
 using Presentation.Orders.Services.Commands.SaveApplicationUser;
 using Presentation.Orders.Services.Queries.GetApplicationUser;
+using Presentation.Properties;
 using Presentation.ShoppingCarts.Services.Queries;
 
 [assembly: AspMvcViewLocationFormat(@"~/{1}/Views/{0}.cshtml")]
@@ -44,17 +45,18 @@ namespace Presentation
             Common.Startup.ConfigureServices(services);
 
             // Persistence module startup
-            Persistence.Startup.ConfigureServices(services, Configuration.GetConnectionString("DefaultConnection"));
+            //Configuration.GetConnectionString("DefaultConnection")
+            Persistence.Startup.ConfigureServices(services, Configuration[Resources.ConnectionStringKey.Replace("__", ":")]);
 
             //Application module startup
             Application.Startup.ConfigureServices(services);
 
             //Infrastructure module startup
             Infrastructure.Startup.ConfigureServices(services);
-
+            //Configuration.GetConnectionString("ApplicationConnection"))
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("ApplicationConnection")));
+                    Configuration[Resources.ApplicationConnectionStringKey.Replace("__", ":")]));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

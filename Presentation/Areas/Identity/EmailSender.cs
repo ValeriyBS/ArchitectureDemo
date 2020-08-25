@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
+using Presentation.Properties;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -14,7 +15,8 @@ namespace Presentation.Areas.Identity
 
         public EmailSender(IConfiguration config)
         {
-            _apiKey = config["SendGrid:ApiKey"];
+            // replace if using local secrets with config["SendGrid:ApiKey"];
+            _apiKey = config[Resources.SendGridApiKey.Replace("__", ":")];
             _fromName = config["SendGrid:FromName"];
             _fromEmail = config["SendGrid:FromEmail"];
         }
