@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets",
+      "suggestion": "true",
+      "ignored": "true"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/arcitecturedemo/databases/ArchitectureDemo.Authentication",
+      "type": "mssql.azure",
+      "connectionId": "ApplicationConnection",
+      "secretStore": null
+    },
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/arcitecturedemo/databases/ArchitectureDemo",
+      "type": "mssql.azure",
+      "connectionId": "DefaultConnection",
+      "secretStore": null
+    }
+  }
+}
