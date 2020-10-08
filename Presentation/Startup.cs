@@ -1,3 +1,6 @@
+using Application;
+using Common;
+using Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Persistence;
 using Presentation.Areas.Identity;
 using Presentation.Areas.Identity.Data;
 using Presentation.Orders.Services.Commands.SaveApplicationUser;
@@ -41,19 +45,14 @@ namespace Presentation
                 o.AreaPageViewLocationFormats.Add("/Shared/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
             });
 
-            // Common module startup
-            Common.Startup.ConfigureServices(services);
+            services.AddCommonServiceCollection();
 
-            // Persistence module startup
-            //Configuration.GetConnectionString("DefaultConnection")
-            Persistence.Startup.ConfigureServices(services, Configuration[Resources.ConnectionStringKey.Replace("__", ":")]);
+            services.AddPersistenceServiceCollection(Configuration[Resources.ConnectionStringKey.Replace("__", ":")]);
 
-            //Application module startup
-            Application.Startup.ConfigureServices(services);
+            services.AddApplicationServiceCollection();
 
-            //Infrastructure module startup
-            Infrastructure.Startup.ConfigureServices(services);
-            //Configuration.GetConnectionString("ApplicationConnection"))
+            services.AddInfrastructureServiceCollection();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration[Resources.ApplicationConnectionStringKey.Replace("__", ":")]));
