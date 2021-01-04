@@ -1,16 +1,13 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Shared;
 using Scrutor;
 
 namespace Persistence
 {
-    [ExcludeFromCodeCoverage]
-    public static class Startup
+    public static class PersistenceServices
     {
-        public static void ConfigureServices(
-            IServiceCollection services,
+        public static IServiceCollection AddPersistenceServiceCollection(this IServiceCollection services,
             string connectionString)
         {
             services.AddDbContext<DatabaseContext>(options =>
@@ -21,6 +18,8 @@ namespace Persistence
                 .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
+
+            return services;
         }
     }
 }

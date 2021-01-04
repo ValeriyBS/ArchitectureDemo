@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces.Persistence;
 using Domain.Customers;
@@ -27,14 +28,13 @@ namespace Application.Orders.Commands.CreateOrder.Repository
             return _shoppingCartItemRepository
                 .GetAll()
                 .Where(i => i.ShoppingCartId == cartId)
-                .ToList();
+                .ToList() ?? throw new KeyNotFoundException(cartId);
         }
 
         public Customer GetCustomer(string customerId)
         {
             return _customerRepository.GetAll()
-                .SingleOrDefault(c => c.UserId == customerId);
-            //Todo change email to Id in the domain model and database
+                .SingleOrDefault(c => c.UserId == customerId) ?? throw new KeyNotFoundException(customerId);
         }
 
         public void AddOrder(Order order)

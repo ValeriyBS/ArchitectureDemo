@@ -4,11 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
 {
-    public static class Startup
+    public static class InfrastructureServices
     {
-        public static void ConfigureServices(IServiceCollection services)
+        public static IServiceCollection AddInfrastructureServiceCollection(this IServiceCollection services)
         {
             services.AddScoped<IInventoryService, InventoryService>();
+
+            return services;
         }
     }
 }
