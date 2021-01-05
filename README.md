@@ -7,3 +7,6 @@ I have separated the identity and application context into separate databases, s
 In order to do that you have to type in Package Management Console :</br>
 update-database -context ApplicationDbContext</br>
 update-database -context DatabaseContext</br>
+
+Deployed version link:
+https://architecturedemoapp.azurewebsites.net
